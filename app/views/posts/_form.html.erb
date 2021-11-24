@@ -18,7 +18,12 @@
 
   <div class="field">
     <%= form.label :published_at %>
-    <%= form.datetime_select :published_at %>
+    <%= form.datetime_local_field :published_at %>
+  </div>
+
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.rich_text_area :body %>
   </div>
 
   <div class="actions">
