@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all.with_rich_text_content
+    @posts = Post.all.with_rich_text_body
   end
 
   # GET /posts/1 or /posts/1.json
@@ -59,7 +59,7 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.with_rich_text_body.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
