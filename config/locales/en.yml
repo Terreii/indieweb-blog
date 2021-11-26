@@ -30,4 +30,8 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  general:
+    title: Christophers thoughts
+    home: Home
+    portfolio: Portfolio
+    impressum: Impressum

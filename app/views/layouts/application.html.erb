@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>IndiewebBlog</title>
+    <title><%= t('general.title') %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,40 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <h1><%= link_to t('general.title'), root_path %></h1>
+      <nav>
+        <input type="checkbox" id="nav__trigger">
+        <label for="nav__trigger"></label>
+        <div>
+          <span class="nav__item">
+            <%= link_to t('general.home'), root_path, class: 'nav__link' %>
+          </span>
+          <span class="nav__item">
+            <%= link_to t('general.portfolio'), '/portfolio', class: 'nav__link' %>
+          </span>
+          <span class="nav__item">
+            <%= link_to 'usePouchDB', 'https://terreii.github.io/use-pouchdb', class: 'nav__link' %>
+          </span>
+          <span class="nav__item">
+            <%= link_to t('general.impressum'), '/impressum', class: 'nav__link' %>
+          </span>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <footer>
+      <ul>
+        <% Rails.configuration.x.accounts.each do |domain, user| %>
+          <li><%= domain.to_s.split('.').first.capitalize %>:
+            <%= link_to '@' + user, "https://#{domain}/#{user}", rel: 'me' %>
+          </li>
+        <% end %>
+      </ul>
+    </footer>
   </body>
 </html>

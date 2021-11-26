@@ -18,5 +18,9 @@ module IndiewebBlog
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.x.accounts['github.com'] = 'Terreii'
+    config.x.accounts['twitter.com'] = 'terreii'
+    config.x.accounts['linkedin.com/in'] = 'christopher-astfalk'
   end
 end
