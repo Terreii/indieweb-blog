@@ -12,12 +12,12 @@
 
   <body>
     <header>
-      <h1><%= link_to t('general.title'), root_path %></h1>
-      <nav>
-        <input type="checkbox" id="nav__trigger">
-        <label for="nav__trigger"></label>
-        <div>
-          <span class="nav__item">
+      <nav class="header_layout">
+        <h1 id="header__title">
+          <%= link_to t('general.title'), root_path, class: 'header__home' %>
+        </h1>
+        <div id="header__nav">
+          <span class="sr-only">
             <%= link_to t('general.home'), root_path, class: 'nav__link' %>
           </span>
           <span class="nav__item">
@@ -34,6 +34,9 @@
     </header>
 
     <main>
+      <%= content_tag :p, notice, class: 'notice' if notice.present? %>
+      <%= content_tag :p, alert, class: 'alert' if alert.present? %>
+
       <%= yield %>
     </main>
 
