@@ -1,16 +1,17 @@
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
+<article itemscope="" itemtype="http://schema.org/BlogPosting">
+  <h2 class="post__title" itemprop="name headline"><%= @post.title %></h2>
 
-<p>
-  <strong>Published at:</strong>
-  <%= @post.published_at %>
-</p>
+  <p class="post__meta">
+    <% if @post.published? %>
+      <time datetime="<%= @post.published_at.to_json %>" itemprop="dateCreated pubdate datePublished">
+        <%= @post.published_at.to_date.to_s %>
+      </time>
+    <% end %>
 
-<div>
-  <%= @post.body %>
-</div>
+    <%= link_to 'Edit', edit_post_path(@post), class: 'post__edit-link' %>
+  </p>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+  <div itemprop="articleBody">
+    <%= @post.body %>
+  </div>
+</article>

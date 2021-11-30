@@ -18,3 +18,22 @@
     margin-top: 0;
   }
 }
+
+.post__title {
+  font-size: x-large;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.post__meta {
+  display: inline-block;
+  font-size: 14px;
+  margin-top: 0px;
+  margin-bottom: 1.5rem;
+  color: #828282;
+}
+
+.post__edit-link {
+  display: inline-block;
+  margin-left: 0.75rem;
+}
