@@ -16,9 +16,9 @@
 
 :root {
   --text-color: #1F2937;
-  --link-color: #1F2937;
+  --link-color: #2A7AE2;
   --link-color-hover: #4B5563;
-  --link-color-visited: #1F2937;
+  --link-color-visited: #1756A9;
 }
 
 body {
@@ -71,7 +71,11 @@ header {
   text-decoration: none;
   margin: 0px;
 }
+.header__home:visited {
+  color: var(--text-color);
+}
 .header__home:hover, .header__home:focus {
+  color: var(--link-color-hover);
   text-decoration: underline;
 }
 
@@ -80,10 +84,10 @@ header {
 }
 
 .nav__link {
-  color: var(--link-color);
+  color: var(--text-color);
 }
 .nav__link:visited {
-  color: var(--link-color-visited);
+  color: var(--text-color);
 }
 .nav__link:hover, .nav__link:focus {
   color: var(--link-color-hover);

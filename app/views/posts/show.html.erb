@@ -3,7 +3,7 @@
 
   <p class="post__meta">
     <% if @post.published? %>
-      <time datetime="<%= @post.published_at.to_json %>" itemprop="dateCreated pubdate datePublished">
+      <time datetime="<%= @post.published_at.iso8601 %>" itemprop="dateCreated pubdate datePublished">
         <%= @post.published_at.to_date.to_s %>
       </time>
     <% end %>
