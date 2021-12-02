@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all.with_rich_text_body
+    @posts = Post.published.with_rich_text_body.limit 10
   end
 
   # GET /posts/1 or /posts/1.json

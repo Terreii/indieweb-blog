@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>IndiewebBlog</title>
+    <title><%= t('general.title') %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,43 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <nav class="header_layout">
+        <h1 id="header__title">
+          <%= link_to t('general.title'), root_path, class: 'header__home' %>
+        </h1>
+        <div id="header__nav">
+          <span class="sr-only">
+            <%= link_to t('general.home'), root_path, class: 'nav__link' %>
+          </span>
+          <span class="nav__item">
+            <%= link_to t('general.portfolio'), '/portfolio', class: 'nav__link' %>
+          </span>
+          <span class="nav__item">
+            <%= link_to 'usePouchDB', 'https://terreii.github.io/use-pouchdb', class: 'nav__link' %>
+          </span>
+          <span class="nav__item">
+            <%= link_to t('general.impressum'), '/impressum', class: 'nav__link' %>
+          </span>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <%= content_tag :p, notice, class: 'notice' if notice.present? %>
+      <%= content_tag :p, alert, class: 'alert' if alert.present? %>
+
+      <%= yield %>
+    </main>
+
+    <footer>
+      <ul>
+        <% Rails.configuration.x.accounts.each do |domain, user| %>
+          <li><%= domain.to_s.split('.').first.capitalize %>:
+            <%= link_to '@' + user, "https://#{domain}/#{user}", rel: 'me' %>
+          </li>
+        <% end %>
+      </ul>
+    </footer>
   </body>
 </html>
