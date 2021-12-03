@@ -35,3 +35,13 @@ en:
     home: Home
     portfolio: Portfolio
     impressum: Impressum
+
+  sessions:
+    username: Username
+    password: Password
+    name: Session name
+    login: Login
+    logout: Logout
+    successful_login: Logged in successfully
+    invalid_login: Invalid login/password combination
+    logout_success: You successfully logged out
