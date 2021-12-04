@@ -1,4 +1,5 @@
 class UserSessionsController < ApplicationController
+  before_action :authenticate, except: [:new, :create]
   before_action :set_user_session, only: %i[ show edit update destroy ]
 
   # GET /user_sessions or /user_sessions.json
@@ -22,7 +23,7 @@ class UserSessionsController < ApplicationController
   # POST /user_sessions or /user_sessions.json
   def create
     if user_session = UserSession.authenticate(params[:username], params[:password], params[:name])
-      session[:session_id] = user_session.id
+      session[:user_session_id] = user_session.id
       redirect_to root_path, notice: t('sessions.successful_login')
     else
       flash.now[:alert] = t('sessions.invalid_login')

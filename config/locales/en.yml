@@ -36,6 +36,9 @@ en:
     portfolio: Portfolio
     impressum: Impressum
 
+  application:
+    access_denied: Please log in to continue
+
   sessions:
     username: Username
     password: Password
