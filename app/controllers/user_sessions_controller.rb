@@ -48,7 +48,17 @@ class UserSessionsController < ApplicationController
   def destroy
     @user_session.destroy
     respond_to do |format|
-      format.html { redirect_to user_sessions_url, notice: t("sessions.logout_success") }
+      format.html { redirect_to root_path, notice: t("sessions.logout_success") }
+      format.json { head :no_content }
+    end
+  end
+
+  # Not crud, makes destroy and set_user_session simpler
+  def logout
+    current_session.destroy
+    reset_session
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: t("sessions.logout_success") }
       format.json { head :no_content }
     end
   end

@@ -1,8 +1,9 @@
 <h2>Latest Posts</h2>
 
-<%= link_to 'Create new Post', new_post_path %>
-
-<br>
+<% if logged_in? %>
+  <%= link_to 'Create new Post', new_post_path %>
+  <br>
+<% end %>
 
 <% @posts.each do |post| %>
   <section class="post_list__item">
