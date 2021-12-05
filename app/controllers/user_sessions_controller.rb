@@ -1,5 +1,5 @@
 class UserSessionsController < ApplicationController
-  before_action :authenticate, except: [:new, :create]
+  before_action :authenticate, except: %i[ new create ]
   before_action :set_user_session, only: %i[ show edit update destroy ]
 
   # GET /user_sessions or /user_sessions.json
