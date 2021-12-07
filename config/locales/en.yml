@@ -35,3 +35,16 @@ en:
     home: Home
     portfolio: Portfolio
     impressum: Impressum
+
+  application:
+    access_denied: Please log in to continue
+
+  sessions:
+    username: Username
+    password: Password
+    name: Session name
+    login: Login
+    logout: Logout
+    successful_login: Logged in successfully
+    invalid_login: Invalid login/password combination
+    logout_success: You successfully logged out

@@ -1,8 +1,17 @@
-<h2>Latest Posts</h2>
+<% if logged_in? %>
+  <h2>📝 Drafts</h2>
 
-<%= link_to 'Create new Post', new_post_path %>
+  ➕ <%= link_to 'Create new Post', new_post_path %>
+  <br>
 
-<br>
+  <ul class="drafts_list">
+    <% @drafts.each do |draft| %>
+      <li><%= link_to draft.title, edit_post_path(draft) %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h2>📨 Latest Posts</h2>
 
 <% @posts.each do |post| %>
   <section class="post_list__item">

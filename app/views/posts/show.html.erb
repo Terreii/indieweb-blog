@@ -8,7 +8,9 @@
       </time>
     <% end %>
 
-    <%= link_to 'Edit', edit_post_path(@post), class: 'post__edit-link' %>
+    <% if logged_in? %>
+      <%= link_to 'Edit', edit_post_path(@post), class: 'post__edit-link' %>
+    <% end %>
   </p>
 
   <div itemprop="articleBody">

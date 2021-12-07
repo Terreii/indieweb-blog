@@ -8,6 +8,9 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <% if logged_in? %>
+      <%= javascript_pack_tag 'admin', 'data-turbolinks-track': 'reload' %>
+    <% end %>
   </head>
 
   <body>
@@ -29,6 +32,11 @@
           <span class="nav__item">
             <%= link_to t('general.impressum'), '/impressum', class: 'nav__link' %>
           </span>
+          <% if logged_in? %>
+            <span class="nav__item">
+              <%= link_to t('sessions.logout'), logout_path, class: 'nav__link' %>
+            </span>
+          <% end %>
         </div>
       </nav>
     </header>

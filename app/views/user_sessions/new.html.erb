@@ -1,0 +1,22 @@
+<h1><%= t("sessions.login") %></h1>
+
+<%= form_with(url: user_sessions_path, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :username, t("sessions.username") %>
+    <%= form.text_field :username, autocomplete: "username", required: true, minlength: 2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password, t("sessions.password") %>
+    <%= form.password_field :password, autocomplete: "current-password", required: true, minlength: 2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name, t("sessions.name") %>
+    <%= form.text_field :name, value: @default_name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit t("sessions.login") %>
+  </div>
+<% end %>

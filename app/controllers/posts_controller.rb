@@ -1,13 +1,20 @@
 class PostsController < ApplicationController
+  before_action :authenticate, except: %i[ index show ]
   before_action :set_post, only: %i[ show edit update destroy ]
 
   # GET /posts or /posts.json
   def index
+    if logged_in?
+      @drafts = Post.draft.all
+    end
     @posts = Post.published.with_rich_text_body.limit 10
   end
 
   # GET /posts/1 or /posts/1.json
   def show
+    unless @post.published? || logged_in?
+      access_denied
+    end
   end
 
   # GET /posts/new
