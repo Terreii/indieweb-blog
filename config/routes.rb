@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   resources :user_sessions
   get "/login", to: "user_sessions#new", as: "login"
   get "/logout", to: "user_sessions#logout", as: "logout"
+  get "/portfolio", to: "static_pages#portfolio", as: "portfolio"
+  get "/impressum", to: "static_pages#impressum", as: "impressum"
 end
