@@ -1,0 +1,89 @@
+<h1>Portfolio</h1>
+
+<h2>Table of content</h2>
+<ol>
+  <li><a href="#talents">Talents</a></li>
+  <li><a href="#projects">Projects</a>
+    <ul>
+      <li><a href="#blog">This Blog</a></li>
+      <li><a href="#use-pouchdb">usePouchDB</a></li>
+      <li><a href="#hoodie-plugin-store-crypto">hoodie-plugin-store-crypto</a></li>
+      <li><a href="#shift-calendar">Schichtkalender (shift-calendar)</a></li>
+      <li><a href="#open source">open source</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="talents">Talents</h2>
+
+<p>Primarily I program for the web. But it wasn’t where I started programming.</p>
+
+<p>During my education (German “Ausbildung”) to an electronics technicians for automation technology I did learn to program in <strong><a href="https://en.wikipedia.org/wiki/Instruction_list">Instruction list</a></strong> to control production pipelines.</p>
+
+<p>After that I (and the web) taught me <em>web-development</em>. First without any library. Then with <strong><a href="https://reactjs.org/">React</a></strong> and later with <strong><a href="https://preactjs.com/">Preact</a></strong>.</p>
+
+<p>On the server side I started with <strong><a href="https://expressjs.com/">Express.js</a></strong> and I’m learning <strong><a href="https://www.ruby-lang.org/en/">Ruby</a></strong> and <strong><a href="https://rubyonrails.org/">Ruby on Rails</a></strong>. While my database expertise is primarily in <strong><a href="https://pouchdb.com/">PouchDB</a></strong>, <strong><a href="https://couchdb.apache.org/">CouchDB</a></strong> and <strong><a href="https://www.sqlite.org/index.html">SQLite</a></strong>.</p>
+
+<p>I also did program a small iOS app in <strong><a href="https://swift.org/">Swift</a></strong>. However I did never release it. And I’m a beginner in <strong><a href="https://www.java.com/">Java</a></strong> and <strong><a href="https://www.rust-lang.org/">Rust</a></strong>.</p>
+
+
+
+<h2 id="projects">Projects</h2>
+
+<h3 id="blog">This Blog</h3>
+
+<p>Todo …</p>
+
+
+
+<h3 id="use-pouchdb">usePouchDB</h3>
+
+<p><a href="https://github.com/Terreii/use-pouchdb" rel="noopener noreferrer"><%= image_tag "github.png", height: "20", width: "20", alt: "" %> <span>use-pouchdb GitHub repository</span></a></p>
+
+<p>usePouchDB is a collection of <a href="https://reactjs.org/docs/hooks-intro.html">React Hooks</a> to access local PouchDB Databases.</p>
+
+<p>It is intended to be a puzzle piece in replacing the deprecated <a href="https://couchapp.readthedocs.io/en/latest/intro/index.html">CouchApps</a>. And also to make working with PouchDB and CouchDB easier in React Apps.</p>
+
+<p>Every hook corresponds to a PouchDB method. It has the same options and result type. But a different name. A name that is more in the spirit of hooks. For example: PouchDB’s method to load a single <a href="https://pouchdb.com/guides/documents.html" title="PouchDB's Guide for working with documents">document (JSON-Object)</a> <code class="language-plaintext highlighter-rouge">db.get(id)</code> becomes <code class="language-plaintext highlighter-rouge">useDoc(id)</code>.
+<br />
+Additionally every hook subscribes to changes, and updates it’s result to represent the new state in the database.</p>
+
+<p>usePouchDB is entirely written in <strong><a href="https://www.typescriptlang.org/">Typescript</a></strong>.</p>
+
+
+
+<h3 id="hoodie-plugin-store-crypto">hoodie-plugin-store-crypto</h3>
+
+<p><a href="https://github.com/Terreii/hoodie-plugin-store-crypto" rel="noopener noreferrer"><%= image_tag "github.png", height: "20", width: "20", alt: "" %> <span>hoodie-plugin-store-crypto GitHub repository</span></a></p>
+
+<p><em>A plugin for <a href="http://hood.ie/">Hoodie</a> that adds methods to add, read, update and delete encrypted documents and enable end-to-end encryption.</em></p>
+
+<p>I used this package to learn test-driven-development and maintaining a package, that is <a href="https://www.npmjs.com/package/hoodie-plugin-store-crypto">published on npm</a>. It was originally intended to be only a part of an other project of mine, but I quickly recognized that it would be of good use for others.</p>
+
+
+
+<h3 id="shift-calendar">Schichtkalender (shift-calendar)</h3>
+
+<p><a href="https://github.com/Terreii/shift-calendar-rt" rel="noopener noreferrer"><%= image_tag "github.png", height: "20", width: "20", alt: "" %> <span>Schichtkalender (shift-calendar) GitHub repository</span></a></p>
+
+<p><em>Hosted at <a href="https://schichtkalender-rt.vercel.app/">schichtkalender-rt.vercel.app</a>.</em></p>
+
+<p><em>A unofficial shift-calendar for Bosch in Reutlingen.</em></p>
+
+<p>The <a href="https://github.com/Terreii/shift-calendar-rt/tree/gh-pages">original version</a> is one of my oldest projects. But I realized, that it would be easier to re-write it than update it.</p>
+
+<p>With the new version I focused almost exclusively on a mobile experience. With a release size of 459kb (the bundle with 94,51kb no gzip) I’m on a good way.</p>
+
+<p>It is a <a href="https://en.wikipedia.org/wiki/Progressive_web_applications">PWA</a> and would pass as <a href="https://jamstack.org/">JAMstack</a>, but without a API-backend. At the moment it is <em>only in German</em> (because it is a utility app for my work). With it I learned a lot about making a web-app accessible for people with little to almost no computer knowledge.</p>
+
+<div class="display-as-row">
+  <%= image_tag "schichtkalender-rt.vercel.app.png", class: "with-shadow", alt: "schichtkalender-rt.vercel.app", height: "297", width: "200" %>
+
+  <%= image_tag "schichtkalender-rt.vercel.app-menu.png", class: "with-shadow", alt: "schichtkalender-rt.vercel.app  with open menu", height: "297", width: "200" %>
+</div>
+
+
+
+<h3 id="open source">open source</h3>
+
+<p>Todo …</p>
