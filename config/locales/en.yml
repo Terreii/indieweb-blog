@@ -39,12 +39,22 @@ en:
   application:
     access_denied: Please log in to continue
 
+  posts:
+    latest: Latest Posts
+    drafts: Drafts
+    create: Create new Post
+    new: New Post
+    editing: Editing Post
+
   sessions:
     username: Username
     password: Password
     name: Session name
     login: Login
     logout: Logout
+    sessions: Sessions
+    active_list: Active Sessions
+    editing: Editing User Session
     successful_login: Logged in successfully
     invalid_login: Invalid login/password combination
     logout_success: You successfully logged out

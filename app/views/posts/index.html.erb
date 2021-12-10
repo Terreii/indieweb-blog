@@ -1,7 +1,7 @@
 <% if logged_in? %>
-  <h2>📝 Drafts</h2>
+  <h2>📝 <%= t('posts.drafts') %></h2>
 
-  ➕ <%= link_to 'Create new Post', new_post_path %>
+  ➕ <%= link_to t('posts.create'), new_post_path %>
   <br>
 
   <ul class="drafts_list">
@@ -11,7 +11,7 @@
   </ul>
 <% end %>
 
-<h2>📨 Latest Posts</h2>
+<h2>📨 <%= t 'posts.latest' %></h2>
 
 <% @posts.each do |post| %>
   <section class="post_list__item">
