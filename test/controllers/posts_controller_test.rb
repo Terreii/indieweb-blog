@@ -11,11 +11,13 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
+    login
     get new_post_url
     assert_response :success
   end
 
   test "should create post" do
+    login
     assert_difference('Post.count') do
       post posts_url, params: { post: { published_at: @post.published_at, title: @post.title } }
     end
@@ -29,16 +31,19 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get edit" do
+    login
     get edit_post_url(@post)
     assert_response :success
   end
 
   test "should update post" do
+    login
     patch post_url(@post), params: { post: { published_at: @post.published_at, title: @post.title } }
     assert_redirected_to post_url(@post)
   end
 
   test "should destroy post" do
+    login
     assert_difference('Post.count', -1) do
       delete post_url(@post)
     end
