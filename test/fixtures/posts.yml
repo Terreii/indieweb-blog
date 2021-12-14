@@ -1,9 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
+first_post:
+  title: My first Post!
   published_at: 2021-11-24 18:01:58
 
-two:
-  title: MyString
-  published_at: 2021-11-24 18:01:58
+draft_post:
+  title: What I did learn today
