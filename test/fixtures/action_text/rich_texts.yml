@@ -2,3 +2,13 @@
 #   record: name_of_fixture (ClassOfFixture)
 #   name: content
 #   body: <p>In a <i>million</i> stars!</p>
+
+first_post_body:
+  record: first_post (Post)
+  name: body
+  body: <p>Natus ut beatae. Quis magnam architecto. Quod aliquid laboriosam.</p>
+
+draft_post_body:
+  record: draft_post (Post)
+  name: body
+  body: <p>Dear World,<br />today I learned to ...</p>

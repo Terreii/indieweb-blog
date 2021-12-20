@@ -2,26 +2,32 @@ require "application_system_test_case"
 
 class UserSessionsTest < ApplicationSystemTestCase
   setup do
-    @user_session = user_sessions(:one)
+    @user_session = user_sessions(:existing)
   end
 
   test "visiting the index" do
+    sign_in
+
     visit user_sessions_url
-    assert_selector "h1", text: "User Sessions"
+    assert_selector "h1", text: "Active Sessions"
   end
 
   test "creating a User session" do
-    visit user_sessions_url
-    click_on "New User Session"
+    visit login_url
 
-    fill_in "Name", with: @user_session.name
-    click_on "Create User session"
+    fill_in "username", with: Rails.application.credentials.auth[:login]
+    fill_in "password", with: Rails.application.credentials.auth[:password]
+    fill_in "name", with: "Test"
 
-    assert_text "User session was successfully created"
-    click_on "Back"
+    click_button "Login"
+
+    assert_text "Logged in successfully"
+    click_on "Christophers thoughts"
   end
 
   test "updating a User session" do
+    sign_in
+
     visit user_sessions_url
     click_on "Edit", match: :first
 
@@ -33,11 +39,21 @@ class UserSessionsTest < ApplicationSystemTestCase
   end
 
   test "destroying a User session" do
+    sign_in
+
     visit user_sessions_url
     page.accept_confirm do
       click_on "Destroy", match: :first
     end
 
-    assert_text "User session was successfully destroyed"
+    assert_text "You successfully logged out"
+  end
+
+  test "logout" do
+    sign_in
+
+    click_on "Logout"
+
+    assert_text "Please log in to continue"
   end
 end
