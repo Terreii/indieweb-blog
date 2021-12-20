@@ -5,16 +5,6 @@ class PostsTest < ApplicationSystemTestCase
     @post = posts(:first_post)
   end
 
-  def sign_in
-    visit login_url
-
-    fill_in "username", with: Rails.application.credentials.auth[:login]
-    fill_in "password", with: Rails.application.credentials.auth[:password]
-    fill_in "name", with: "Test"
-
-    click_button "Login"
-  end
-
   test "visiting the index" do
     visit posts_url
     assert_selector "h2:last-of-type", text: "📨 Latest Posts"
