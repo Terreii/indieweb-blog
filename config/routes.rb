@@ -8,4 +8,16 @@ Rails.application.routes.draw do
   get "/logout", to: "user_sessions#logout", as: "logout"
   get "/portfolio", to: "static_pages#portfolio", as: "portfolio"
   get "/impressum", to: "static_pages#impressum", as: "impressum"
+
+  get "/:year/:month/:day/:slug", {
+    constraints: {
+      year:   /\d{4}/,
+      month:  /\d{2}/,
+      day:    /\d{2}/
+    },
+    to: redirect { |params, request|
+      slug = params[:slug].sub /\.html$/, ''
+      "/posts/#{slug}"
+    }
+  }
 end
