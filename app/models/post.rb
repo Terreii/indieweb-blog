@@ -4,7 +4,7 @@ class Post < ApplicationRecord
 
   has_rich_text :body
 
-  before_validation :generate_slug
+  before_validation :ensure_slug_has_a_value
 
   scope :published, -> { where.not(published_at: nil).order(published_at: :desc) }
   scope :draft, -> { where(published_at: nil) }
@@ -34,8 +34,9 @@ class Post < ApplicationRecord
 
   private
 
-    def generate_slug
-      return if slug.present?
-      self.slug = Post.string_to_slug title
+    def ensure_slug_has_a_value
+      if slug.nil? || slug.blank?
+        self.slug = Post.string_to_slug(title) unless title.nil? || title.blank?
+      end
     end
 end

@@ -5,7 +5,7 @@ class PostTest < ActiveSupport::TestCase
   test "should create post" do
     post = Post.new
 
-    post.title = Faker::Kpop.girl_groups
+    post.title = Faker::Games::DnD.alignment
     post.body = "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
 
     assert post.save
@@ -49,5 +49,10 @@ class PostTest < ActiveSupport::TestCase
 
     assert_not_empty post.errors[:title]
     assert_equal ["can't be blank"], post.errors[:title]
+  end
+
+  test "should not create a post with a not unique slug" do
+    post = Post.new title: posts(:first_post).title, slug: posts(:first_post).slug, body: ""
+    assert_raise(ActiveRecord::RecordNotUnique) { post.save }
   end
 end

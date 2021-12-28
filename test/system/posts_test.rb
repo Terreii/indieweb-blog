@@ -17,7 +17,7 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Create new Post"
 
     fill_in "Published at", with: @post.published_at
-    fill_in "Title", with: @post.title
+    fill_in "Title", with: Faker::Games::DnD.alignment
     click_on "Create Post"
 
     assert_text "Post was successfully created"
