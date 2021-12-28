@@ -66,11 +66,11 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.with_rich_text_body.find(params[:id])
+      @post = Post.with_rich_text_body.find_by(slug: params[:slug])
     end
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :published_at, :body)
+      params.require(:post).permit(:title, :slug, :published_at, :body)
     end
 end
