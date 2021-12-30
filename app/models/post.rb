@@ -1,6 +1,7 @@
 class Post < ApplicationRecord
   validates :title, :slug, presence: true
-  validates :slug, length: { in: 5..128 }
+  validates :slug, length: { in: 3..128 }
+  validates :slug, format: { with: /\A[a-z0-9][a-z0-9\-_]+[a-z0-9]\z/ }
 
   has_rich_text :body
 
@@ -23,13 +24,13 @@ class Post < ApplicationRecord
     slug[0, first_dot]
       .downcase
       .gsub(/\s+/, '-')
-      .gsub(/['"!?.,:;<>(){}\[\]*#]/, '')
       .gsub(/[äöüß]/, {
         'ä' => 'ae',
         'ö' => 'oe',
         'ü' => 'ue',
         'ß' => 'ss'
       })
+      .gsub(/[^a-z0-9\-_]/, '')
   end
 
   private
