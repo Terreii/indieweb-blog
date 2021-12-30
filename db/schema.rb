@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_230133) do
+ActiveRecord::Schema.define(version: 2021_12_26_165951) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -55,6 +55,9 @@ ActiveRecord::Schema.define(version: 2021_12_03_230133) do
     t.datetime "published_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
+    t.index ["published_at"], name: "index_posts_on_published_at"
+    t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
   create_table "user_sessions", force: :cascade do |t|

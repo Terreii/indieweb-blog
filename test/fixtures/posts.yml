@@ -2,7 +2,9 @@
 
 first_post:
   title: My first Post!
+  slug: my-first-post
   published_at: 2021-11-24 18:01:58
 
 draft_post:
   title: What I did learn today
+  slug: what-i-did-learn-today

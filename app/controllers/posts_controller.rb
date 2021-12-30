@@ -10,7 +10,7 @@ class PostsController < ApplicationController
     @posts = Post.published.with_rich_text_body.limit 10
   end
 
-  # GET /posts/1 or /posts/1.json
+  # GET /posts/slug or /posts/slug.json
   def show
     unless @post.published? || logged_in?
       access_denied
@@ -22,7 +22,7 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
-  # GET /posts/1/edit
+  # GET /posts/slug/edit
   def edit
   end
 
@@ -41,7 +41,7 @@ class PostsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /posts/1 or /posts/1.json
+  # PATCH/PUT /posts/slug or /posts/slug.json
   def update
     respond_to do |format|
       if @post.update(post_params)
@@ -54,7 +54,7 @@ class PostsController < ApplicationController
     end
   end
 
-  # DELETE /posts/1 or /posts/1.json
+  # DELETE /posts/slug or /posts/slug.json
   def destroy
     @post.destroy
     respond_to do |format|
@@ -66,11 +66,11 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.with_rich_text_body.find(params[:id])
+      @post = Post.with_rich_text_body.find_by(slug: params[:slug])
     end
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :published_at, :body)
+      params.require(:post).permit(:title, :slug, :published_at, :body)
     end
 end

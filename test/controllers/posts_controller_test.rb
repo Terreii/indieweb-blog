@@ -24,7 +24,10 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   test "should create post" do
     login
     assert_difference('Post.count') do
-      post posts_url, params: { post: { published_at: @post.published_at, title: @post.title } }
+      post posts_url, params: { post: {
+        published_at: @post.published_at,
+        title: Faker::Games::DnD.alignment
+      } }
     end
 
     assert_redirected_to post_url(Post.last)
