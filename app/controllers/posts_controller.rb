@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate, except: %i[ index show ]
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_all_tags, only: %i[ new edit ]
 
   # GET /posts or /posts.json
   def index
@@ -20,10 +21,12 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @current_tags_ids = []
   end
 
   # GET /posts/slug/edit
   def edit
+    @current_tags_ids = @post.tags.collect { |tag| tag.id }
   end
 
   # POST /posts or /posts.json
@@ -71,6 +74,10 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :slug, :published_at, :body)
+      params.require(:post).permit(:title, :slug, :published_at, :body, tag_list: [])
+    end
+
+    def set_all_tags
+      @tags = Tag.all
     end
 end

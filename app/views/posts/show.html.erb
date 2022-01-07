@@ -11,6 +11,16 @@
     <% if logged_in? %>
       <%= link_to 'Edit', edit_post_path(@post), class: 'post__edit-link' %>
     <% end %>
+
+    <% unless @post.tags.empty? %>
+      <br />
+      <span itemprop="tags">
+        Tags:
+        <% @post.tags.each do |tag| %>
+          <%= tag.name %><% unless tag == @post.tags.last %>, <% end %>
+        <% end %>
+      </span>
+    <% end %>
   </p>
 
   <div itemprop="articleBody">

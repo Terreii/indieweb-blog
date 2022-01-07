@@ -27,6 +27,17 @@
   </div>
 
   <div class="field">
+    <%= form.label :tag_list %>
+    <br />
+    <%= form.select(
+      :tag_list,
+      @tags.collect { |tag| [ tag.name, tag.id, selected: @current_tags_ids.include?(tag.id) ] },
+      {},
+      multiple: true
+    ) %>
+  </div>
+
+  <div class="field">
     <%= form.label :body %>
     <%= form.rich_text_area :body %>
   </div>

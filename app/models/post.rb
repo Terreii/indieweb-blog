@@ -3,6 +3,7 @@ class Post < ApplicationRecord
   validates :slug, length: { in: 3..128 }
   validates :slug, format: { with: /\A[a-z0-9][a-z0-9\-_]+[a-z0-9]\z/ }
 
+  has_and_belongs_to_many :tags
   has_rich_text :body
 
   before_validation :ensure_slug_has_a_value
@@ -16,6 +17,12 @@ class Post < ApplicationRecord
 
   def to_param
     slug
+  end
+
+  def tag_list=(tag_selection)
+    filtered_tags = tag_selection.reject { |tag| tag.empty? }
+    tag_ids = filtered_tags.map { |tag_id| tag_id.strip.to_i }
+    self.tags = Tag.find tag_ids
   end
 
   def self.string_to_slug(text)
