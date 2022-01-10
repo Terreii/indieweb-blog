@@ -17,7 +17,7 @@
       <span itemprop="tags">
         Tags:
         <% @post.tags.each do |tag| %>
-          <%= tag.name %><% unless tag == @post.tags.last %>, <% end %>
+          <%= link_to tag.name, tag %><% unless tag == @post.tags.last %>, <% end %>
         <% end %>
       </span>
     <% end %>

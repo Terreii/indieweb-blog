@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root "posts#index"
 
   resources :posts, param: :slug
-  resources :tags
+  resources :tags, param: :name, only: [:index, :show]
   resources :user_sessions
   get "/login", to: "user_sessions#new", as: "login"
   get "/logout", to: "user_sessions#logout", as: "logout"
