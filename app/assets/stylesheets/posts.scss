@@ -48,16 +48,21 @@ code {
   border: 1px solid #e8e8e8;
   border-radius: 3px;
   background-color: #eef;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
 .with-shadow {
-	box-shadow: 0px 0px 30px -10px black;
-	margin: 30px;
-	border-radius: 5px;
+  box-shadow: 0px 0px 30px -10px black;
+  margin: 30px;
+  border-radius: 5px;
 }
 
 .display-as-row {
-	display: flex;
-	flex-direction: row;
+  display: flex;
+  flex-direction: row;
+}
+
+.gapped {
+  gap: 2rem;
 }

@@ -34,6 +34,8 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
 
     respond_to do |format|
+      add_new_tags(@post)
+
       if @post.save
         format.html { redirect_to @post, notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
@@ -47,7 +49,7 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/slug or /posts/slug.json
   def update
     respond_to do |format|
-      if @post.update(post_params)
+      if @post.update(post_params) && add_new_tags(@post)
         format.html { redirect_to @post, notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -79,5 +81,20 @@ class PostsController < ApplicationController
 
     def set_all_tags
       @tags = Tag.all
+    end
+
+    def new_tags_params
+      params.require(:new_tags)[:new_tags].strip || ''
+    end
+
+    def parse_new_tags
+      new_tags_params.split(",").map {|tag| tag.strip.downcase }
+    end
+
+    def add_new_tags(post)
+      tags_to_add = parse_new_tags.map do |tag|
+        Tag.find_or_create_by name: tag
+      end
+      post.tags << tags_to_add
     end
 end
