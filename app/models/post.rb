@@ -19,12 +19,6 @@ class Post < ApplicationRecord
     slug
   end
 
-  def tag_list=(tag_selection)
-    filtered_tags = tag_selection.reject { |tag| tag.empty? }
-    tag_ids = filtered_tags.map { |tag_id| tag_id.strip.to_i }
-    self.tags = Tag.find tag_ids
-  end
-
   def self.string_to_slug(text)
     slug = text.strip
     first_dot = slug.index('.', 5) || 125

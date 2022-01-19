@@ -21,12 +21,10 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
-    @current_tags_ids = []
   end
 
   # GET /posts/slug/edit
   def edit
-    @current_tags_ids = @post.tags.collect { |tag| tag.id }
   end
 
   # POST /posts or /posts.json
@@ -76,7 +74,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :slug, :published_at, :body, tag_list: [])
+      params.require(:post).permit(:title, :slug, :published_at, :body, tag_ids: [])
     end
 
     def set_all_tags

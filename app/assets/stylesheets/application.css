@@ -15,17 +15,19 @@
  */
 
 :root {
-  --text-color: #1F2937;
-  --link-color: #2A7AE2;
-  --link-color-hover: #4B5563;
-  --link-color-visited: #1756A9;
+  --text-color: #1f2937;
+  --link-color: #2a7ae2;
+  --link-color-hover: #4b5563;
+  --link-color-visited: #1756a9;
 }
 
 body {
   margin: 0px;
   margin-left: env(safe-area-inset-left, 0px);
   margin-right: env(safe-area-inset-right, 0px);
-  font: 400 20px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font: 400 20px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
   color: var(--text-color);
 }
 
@@ -35,12 +37,15 @@ a {
 a:visited {
   color: var(--link-color-visited);
 }
-a:hover, a:focus {
+a:hover,
+a:focus {
   color: var(--link-color-hover);
   text-decoration-thickness: 2px;
 }
 
-header, main, footer {
+header,
+main,
+footer {
   padding-left: 1rem;
   padding-right: 1rem;
   max-width: 80rem;
@@ -72,7 +77,8 @@ header {
 .header__home:visited {
   color: var(--text-color);
 }
-.header__home:hover, .header__home:focus {
+.header__home:hover,
+.header__home:focus {
   color: var(--link-color-hover);
   text-decoration: underline;
 }
@@ -87,7 +93,8 @@ header {
 .nav__link:visited {
   color: var(--text-color);
 }
-.nav__link:hover, .nav__link:focus {
+.nav__link:hover,
+.nav__link:focus {
   color: var(--link-color-hover);
   text-decoration-thickness: 4px;
 }
@@ -129,19 +136,19 @@ footer {
 }
 
 .alert {
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
   border-radius: 0.25rem;
-  color: #DC2626;
+  color: #dc2626;
   padding: 0.75rem;
 }
 
 #error_explanation {
   width: 450px;
   width: fit-content;
-  border: 2px solid #DC2626;
+  border: 2px solid #dc2626;
   border-radius: 0.25rem;
   margin-bottom: 1rem;
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
 }
 
 #error_explanation h2 {
@@ -150,8 +157,8 @@ footer {
   padding: 5px 5px 5px 15px;
   font-size: 14px;
   margin-top: 0px;
-  background-color: #DC2626;
-  color: #FFF;
+  background-color: #dc2626;
+  color: #fff;
 }
 
 #error_explanation ul li {
@@ -169,4 +176,9 @@ footer {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
 }

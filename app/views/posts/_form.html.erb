@@ -26,26 +26,25 @@
     <%= form.datetime_local_field :published_at %>
   </div>
 
-  <div class="display-as-row gapped">
-    <div class="field">
-      <%= form.label :tag_list %>
-      <br />
-      <%= form.select(
-        :tag_list,
-        @tags.collect { |tag| [ tag.name, tag.id, selected: @current_tags_ids.include?(tag.id) ] },
-        {},
-        multiple: true
-      ) %>
-    </div>
+  <details>
+    <summary>Tags</summary>
 
-    <div class="field">
-      <%= fields_for :new_tags do |tags_fields| %>
-        <%= tags_fields.label :new_tags %>
-        <br />
-        <%= tags_fields.text_field :new_tags %>
-      <% end %>
+    <div class="display-as-row gapped">
+      <div class="field flex-col">
+        <%= form.collection_check_boxes :tag_ids, tags, :id, :name do |b|
+          b.label { b.check_box + b.text }
+        end %>
+      </div>
+
+      <div class="field">
+        <%= fields_for :new_tags do |tags_fields| %>
+          <%= tags_fields.label :new_tags %>
+          <br />
+          <%= tags_fields.text_field :new_tags %>
+        <% end %>
+      </div>
     </div>
-  </div>
+  </details>
 
   <div class="field">
     <%= form.label :body %>
