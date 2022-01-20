@@ -82,7 +82,8 @@ class PostsController < ApplicationController
     end
 
     def new_tags_params
-      params.require(:new_tags)[:new_tags].strip || ''
+      return '' unless params.has_key?(:new_tags)
+      params[:new_tags].strip
     end
 
     def parse_new_tags

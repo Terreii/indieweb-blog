@@ -37,11 +37,9 @@
       </div>
 
       <div class="field">
-        <%= fields_for :new_tags do |tags_fields| %>
-          <%= tags_fields.label :new_tags %>
-          <br />
-          <%= tags_fields.text_field :new_tags %>
-        <% end %>
+        <%= label_tag :new_tags %>
+        <br />
+        <%= text_field_tag :new_tags %>
       </div>
     </div>
   </details>

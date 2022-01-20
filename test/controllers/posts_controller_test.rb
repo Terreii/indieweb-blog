@@ -24,12 +24,28 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   test "should create post" do
     login
     assert_difference('Post.count') do
-      post posts_url, params: { post: {
-        published_at: @post.published_at,
-        title: Faker::Games::DnD.alignment
-      } }
+      post posts_url, params: {
+        post: {
+          published_at: @post.published_at,
+          title: Faker::Games::DnD.alignment
+        }
+      }
     end
 
+    assert_redirected_to post_url(Post.last)
+  end
+
+  test "should create post with new tags" do
+    login
+    assert_difference ['Post.count', 'Tag.count'] do
+      post posts_url, params: {
+        post: {
+          published_at: @post.published_at,
+          title: Faker::Games::DnD.alignment
+        },
+        new_tags: 'moar'
+      }
+    end
     assert_redirected_to post_url(Post.last)
   end
 
