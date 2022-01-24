@@ -18,9 +18,17 @@ class PostsTest < ApplicationSystemTestCase
 
     fill_in "Published at", with: @post.published_at
     fill_in "Title", with: Faker::Games::DnD.alignment
+
+    find("details").click
+    check tags(:bands).name
+    fill_in "New tags", with: "dnd,games"
+
     click_on "Create Post"
 
     assert_text "Post was successfully created"
+    assert_link tags(:bands).name
+    assert_link "dnd"
+    assert_link "games"
     click_on "Christophers thoughts"
   end
 
@@ -32,9 +40,17 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Edit"
 
     fill_in "Title", with: @post.title
+
+    find("details").click
+    check tags(:bands).name
+    fill_in "New tags", with: "me,personal"
+
     click_on "Update Post"
 
     assert_text "Post was successfully updated"
+    assert_link tags(:bands).name
+    assert_link "me"
+    assert_link "personal"
     click_on "Christophers thoughts"
   end
 
