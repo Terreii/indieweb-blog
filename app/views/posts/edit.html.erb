@@ -1,6 +1,6 @@
 <h2><%= t('posts.editing') %></h2>
 
-<%= render 'form', post: @post %>
+<%= render 'form', post: @post, tags: @tags %>
 
 <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
 

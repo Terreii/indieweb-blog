@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate, except: %i[ index show ]
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_all_tags, only: %i[ new edit ]
 
   # GET /posts or /posts.json
   def index
@@ -31,6 +32,8 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
 
     respond_to do |format|
+      add_new_tags(@post)
+
       if @post.save
         format.html { redirect_to @post, notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
@@ -44,7 +47,7 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/slug or /posts/slug.json
   def update
     respond_to do |format|
-      if @post.update(post_params)
+      if @post.update(post_params) && add_new_tags(@post)
         format.html { redirect_to @post, notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -71,6 +74,26 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :slug, :published_at, :body)
+      params.require(:post).permit(:title, :slug, :published_at, :body, tag_ids: [])
+    end
+
+    def set_all_tags
+      @tags = Tag.all
+    end
+
+    def new_tags_params
+      return '' unless params.has_key?(:new_tags)
+      params[:new_tags].strip
+    end
+
+    def parse_new_tags
+      new_tags_params.split(",").map {|tag| tag.strip.downcase }
+    end
+
+    def add_new_tags(post)
+      tags_to_add = parse_new_tags.map do |tag|
+        Tag.find_or_create_by name: tag
+      end
+      post.tags << tags_to_add
     end
 end

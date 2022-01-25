@@ -26,6 +26,26 @@
     <%= form.datetime_local_field :published_at %>
   </div>
 
+  <details>
+    <summary>Tags</summary>
+
+    <div class="display-as-row gapped">
+      <div class="field flex-col">
+        <%= form.collection_check_boxes :tag_ids, tags, :id, :name do |b|
+          b.label { b.check_box + b.text }
+        end %>
+      </div>
+
+      <div class="field">
+        <%= label_tag :new_tags %>
+        <br />
+        <%= text_field_tag :new_tags %>
+        <br />
+        <small class="field_description">Separated by commas.</small>
+      </div>
+    </div>
+  </details>
+
   <div class="field">
     <%= form.label :body %>
     <%= form.rich_text_area :body %>

@@ -1,0 +1,13 @@
+<h1>Tag: <%= @tag.name %></h1>
+
+<p>Those posts are tagged with <strong><%= @tag.name %></strong>.</p>
+
+<ul>
+  <% @tag.posts.published.each do |post| %>
+    <li>
+      <%= link_to "#{post.published_at.to_date.to_s} - #{post.title}", post %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Back to all tags", tags_path %>

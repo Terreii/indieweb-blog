@@ -8,6 +8,12 @@
 
 require 'faker'
 
+tags = Tag.create([
+  { name: Faker::Types.rb_string.downcase },
+  { name: Faker::Types.rb_string.downcase },
+  { name: Faker::Types.rb_string.downcase }
+])
+
 first_title = Faker::Books::Dune.quote
 draft_title = Faker::Kpop.girl_groups
 
@@ -15,12 +21,14 @@ Post.create([
   {
     title: first_title,
     slug: Post.string_to_slug(first_title),
+    tags: tags,
     published_at: DateTime.parse('2020-07-10T14:20:00+00:00'),
     body: "<p>#{Faker::Lorem.paragraphs(number: 6).join '</p><p>'}</p>"
   },
   {
     title: draft_title,
     slug: Post.string_to_slug(draft_title),
+    tags: [tags.first],
     body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
   }
 ])
