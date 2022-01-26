@@ -1,6 +1,8 @@
-// Place all the styles related to the posts controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+/*
+ * Place all the styles related to the posts controller here.
+ * They will automatically be included in application.css.
+ * You can use Sass (SCSS) here: https://sass-lang.com/
+ */
 
 .drafts_list {
   list-style: disclosure-closed;
@@ -10,18 +12,16 @@
 .post_list__item {
   padding: 1rem 0rem;
   border-bottom: 1px solid gray;
+}
+.post_list__item:last-of-type {
+  border-bottom-width: 0px;
+}
+.post_list__item + .post_list__item {
+  margin-top: 2rem;
+}
 
-  &:last-of-type {
-    border-bottom-width: 0px;
-  }
-
-  & + & {
-    margin-top: 2rem;
-  }
-
-  h3 {
-    margin-top: 0;
-  }
+.post_list__item h3 {
+  margin-top: 0;
 }
 
 .post__title {
