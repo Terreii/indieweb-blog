@@ -1,6 +1,6 @@
 <h1><%= t("sessions.login") %></h1>
 
-<%= form_with(url: user_sessions_path, local: true) do |form| %>
+<%= form_with url: user_sessions_path do |form| %>
   <div class="field">
     <%= form.label :username, t("sessions.username") %>
     <%= form.text_field :username, autocomplete: "username", required: true, minlength: 2 %>

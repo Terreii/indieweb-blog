@@ -11,5 +11,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     fill_in "name", with: "Test"
 
     click_button "Login"
+    sleep 0.1
   end
 end

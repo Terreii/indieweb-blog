@@ -54,6 +54,6 @@ class UserSessionsTest < ApplicationSystemTestCase
 
     click_on "Logout"
 
-    assert_text "Please log in to continue"
+    assert_text "You successfully logged out"
   end
 end
