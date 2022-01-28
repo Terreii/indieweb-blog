@@ -61,9 +61,11 @@ class PostsTest < ApplicationSystemTestCase
     click_on @post.title
     click_on "Edit"
 
+    sleep 0.1
     page.accept_confirm do
       click_on "Destroy", match: :first
     end
+    sleep 0.1
 
     assert_text "Post was successfully destroyed"
   end
