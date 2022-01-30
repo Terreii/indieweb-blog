@@ -8,6 +8,7 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <link type="application/atom+xml" rel="alternate" href="<%= feed_url + '.atom' %>" title="<%= t('general.title') %>" />
   </head>
 
   <body>

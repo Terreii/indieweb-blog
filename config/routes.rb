@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :posts, param: :slug
   resources :tags, param: :name, only: [:index, :show]
   resources :user_sessions
+  get "/feed", to: "feed#index", defaults: { format: "atom" }, as: "feed"
   get "/login", to: "user_sessions#new", as: "login"
   get "/logout", to: "user_sessions#logout", as: "logout"
   get "/portfolio", to: "static_pages#portfolio", as: "portfolio"
