@@ -7,7 +7,9 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <% if load_scripts? %>
+      <%= javascript_importmap_tags %>
+    <% end %>
     <link type="application/atom+xml" rel="alternate" href="<%= feed_url format: :atom %>" title="<%= t('general.title') %>" />
   </head>
 
