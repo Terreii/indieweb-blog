@@ -32,6 +32,18 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Christophers thoughts"
   end
 
+  test "creating a Post without a title" do
+    sign_in
+
+    visit new_post_url
+
+    click_on "Create Post"
+
+    assert_text "Slug can't be blank"
+    assert_text "Title can't be blank"
+    click_on "Christophers thoughts"
+  end
+
   test "updating a Post" do
     sign_in
 
