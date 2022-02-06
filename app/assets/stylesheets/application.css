@@ -67,6 +67,8 @@ header {
 
 #header__title {
   margin: 0.5rem 0px;
+  font-size: 145%;
+  font-weight: bold;
 }
 
 .header__home {
