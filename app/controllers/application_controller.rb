@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_session, :logged_in?
+  helper_method :current_session, :logged_in?, :load_scripts?
 
   def current_session
     return unless session[:user_session_id]
@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     current_session.present?
+  end
+
+  def load_scripts?
+    logged_in? || !flash[:load_scripts].nil?
   end
 
   def access_denied
