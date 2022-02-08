@@ -11,7 +11,7 @@
   </ul>
 <% end %>
 
-<h1>📨 <%= t 'posts.latest' %></h1>
+<h1>📨 <%= set_title(t 'posts.latest') %></h1>
 
 <% @posts.each do |post| %>
   <section class="post_list__item">

@@ -46,6 +46,10 @@ en:
     new: New Post
     editing: Editing Post
 
+  tags:
+    title: Tags
+    one: Tag
+
   sessions:
     username: Username
     password: Password
