@@ -11,11 +11,11 @@
   </ul>
 <% end %>
 
-<h2>📨 <%= t 'posts.latest' %></h2>
+<h1>📨 <%= set_title(t 'posts.latest') %></h1>
 
 <% @posts.each do |post| %>
   <section class="post_list__item">
-    <h3><%= link_to post.title, post %></h3>
+    <h2><%= link_to post.title, post %></h2>
     <%= post.body %>
   </section>
 <% end %>

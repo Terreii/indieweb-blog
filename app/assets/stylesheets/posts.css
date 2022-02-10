@@ -20,8 +20,9 @@
   margin-top: 2rem;
 }
 
-.post_list__item h3 {
+.post_list__item h2 {
   margin-top: 0;
+  font-size: 120%;
 }
 
 .post__title {

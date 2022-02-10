@@ -1,5 +1,5 @@
 <article itemscope="" itemtype="http://schema.org/BlogPosting">
-  <h2 class="post__title" itemprop="name headline"><%= @post.title %></h2>
+  <h1 class="post__title" itemprop="name headline"><%= set_title(@post.title) %></h1>
 
   <p class="post__meta">
     <% if @post.published? %>
