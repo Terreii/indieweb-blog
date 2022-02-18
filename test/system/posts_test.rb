@@ -7,7 +7,16 @@ class PostsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit posts_url
-    assert_selector "h1", text: "📨 Latest Posts"
+    assert_selector "h1", text: "Hi, I'm Christopher Astfalk!"
+    assert_selector "h2", text: "📨 Latest Posts"
+  end
+
+  test "visiting a Post" do
+    visit post_url @post
+    assert_selector "h1", text: @post.title
+    assert_selector "time", text: @post.published_at.to_date.to_s
+    assert_selector ".p-author.h-card", text: I18n.translate("general.author-full")
+    assert_equal find(".trix-content").native.attribute('outerHTML').strip, @post.body.to_s.strip
   end
 
   test "creating a Post" do

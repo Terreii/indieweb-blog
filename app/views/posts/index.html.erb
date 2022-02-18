@@ -1,3 +1,23 @@
+<h1>
+  Hi, I'm
+  <span class="h-card"><%= t("general.author-full") %></span>!
+</h1>
+
+<p>
+  I'm a hobby web-developer with a focus in the frontend.
+  But recently my interest in the backend was sparked.
+  <br />
+  So <%= link_to "this blog", "https://github.com/Terreii/indieweb-blog", rel: "noopener noreferrer" %>
+  is written in <em>Ruby on Rails</em> and hosted on a Linux server managed by me.
+</p>
+
+<p>
+  You can find my projects
+  <%= link_to "on Github", "https://github.com/Terreii/", rel: "noopener noreferrer" %>
+  or in
+  <%= link_to "my portfolio", portfolio_path %>.
+</p>
+
 <% if logged_in? %>
   <h2>📝 <%= t('posts.drafts') %></h2>
 
@@ -11,11 +31,11 @@
   </ul>
 <% end %>
 
-<h1>📨 <%= set_title(t 'posts.latest') %></h1>
+<h2>📨 <%= set_title(t 'posts.latest') %></h2>
 
 <% @posts.each do |post| %>
-  <section class="post_list__item">
-    <h2><%= link_to post.title, post %></h2>
+  <article class="post_list__item">
+    <h1><%= link_to post.title, post %></h1>
     <%= post.body %>
-  </section>
+  </article>
 <% end %>
