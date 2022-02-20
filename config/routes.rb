@@ -22,4 +22,11 @@ Rails.application.routes.draw do
       "/posts/#{slug}"
     }
   }
+  get "/shift-calendar-rt/", to: redirect("https://schichtkalender-rt.vercel.app/")
+  get "/shift-calendar-rt/service-worker.js", to: redirect(
+    "https://schichtkalender-rt.vercel.app/sw.js"
+  )
+  get "/shift-calendar-rt/*file", to: redirect(
+    "https://schichtkalender-rt.vercel.app/%{file}"
+  )
 end
