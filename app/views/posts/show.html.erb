@@ -1,12 +1,17 @@
-<article itemscope="" itemtype="http://schema.org/BlogPosting">
-  <h1 class="post__title" itemprop="name headline"><%= set_title(@post.title) %></h1>
+<article class="h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <h1 class="post__title p-name" itemprop="name headline"><%= set_title(@post.title) %></h1>
 
   <p class="post__meta">
     <% if @post.published? %>
       By <%= link_to t("general.author-full"), root_url, class: "p-author h-card" %> on
-      <time datetime="<%= @post.published_at.iso8601 %>" itemprop="dateCreated pubdate datePublished">
-        <%= @post.published_at.to_date.to_s %>
-      </time>
+      <%= link_to(
+        time_tag(@post.published_at, @post.published_at.to_date.to_s,
+          class: "dt-published",
+          itemprop: "dateCreated pubdate datePublished"
+        ),
+        post_url(@post),
+        class: "u-url"
+       ) %>
     <% end %>
 
     <% if logged_in? %>
@@ -24,7 +29,7 @@
     <% end %>
   </p>
 
-  <div itemprop="articleBody">
+  <div class="e-content" itemprop="articleBody">
     <%= @post.body %>
   </div>
 </article>

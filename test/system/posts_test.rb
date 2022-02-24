@@ -13,9 +13,11 @@ class PostsTest < ApplicationSystemTestCase
 
   test "visiting a Post" do
     visit post_url @post
-    assert_selector "h1", text: @post.title
-    assert_selector "time", text: @post.published_at.to_date.to_s
+    assert_selector "h1.p-name", text: @post.title
+    assert_selector "time.dt-published", text: @post.published_at.to_date.to_s
     assert_selector ".p-author.h-card", text: I18n.translate("general.author-full")
+    assert_selector ".h-entry"
+    assert_selector ".e-content"
     assert_equal find(".trix-content").native.attribute('outerHTML').strip, @post.body.to_s.strip
   end
 
