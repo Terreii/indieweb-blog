@@ -1,22 +1,26 @@
-<h1>
-  Hi, I'm
-  <span class="h-card"><%= t("general.author-full") %></span>!
-</h1>
+<div class="h-card">
+  <h1>
+    Hi, I'm
+    <span class="p-name"><%= t("general.author-full") %></span>!
+  </h1>
 
-<p>
-  I'm a hobby web-developer with a focus in the frontend.
-  But recently my interest in the backend was sparked.
-  <br />
-  So <%= link_to "this blog", "https://github.com/Terreii/indieweb-blog", rel: "noopener noreferrer" %>
-  is written in <em>Ruby on Rails</em> and hosted on a Linux server managed by me.
-</p>
+  <%= link_to "", root_url, class: "u-url hidden", rel: "me" %>
 
-<p>
-  You can find my projects
-  <%= link_to "on Github", "https://github.com/Terreii/", rel: "noopener noreferrer" %>
-  or in
-  <%= link_to "my portfolio", portfolio_path %>.
-</p>
+  <p class="p-note">
+    I'm a hobby web-developer with a focus in the frontend.
+    But recently my interest in the backend was sparked.
+    <br />
+    So <%= link_to "this blog", "https://github.com/Terreii/indieweb-blog", rel: "noopener noreferrer" %>
+    is written in <em>Ruby on Rails</em> and hosted on a Linux server managed by me.
+  </p>
+
+  <p class="p-note">
+    You can find my projects
+    <%= link_to "on Github", "https://github.com/Terreii/", rel: "noopener noreferrer" %>
+    or in
+    <%= link_to "my portfolio", portfolio_path %>.
+  </p>
+</div>
 
 <% if logged_in? %>
   <h2>📝 <%= t('posts.drafts') %></h2>
