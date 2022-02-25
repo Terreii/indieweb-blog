@@ -19,6 +19,8 @@
   --link-color: #2a7ae2;
   --link-color-hover: #4b5563;
   --link-color-visited: #1756a9;
+  --form-border: #ced4da;
+  --outline-color: rgb(49, 132, 253);
 }
 
 body {
@@ -187,4 +189,63 @@ footer {
 
 .hidden {
   display: none;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.login-form {
+  max-width: 30rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input {
+  display: block;
+  padding: 0.25rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid var(--form-border);
+  border-radius: 0.25rem;
+}
+
+.form-input:focus {
+  outline: 2px solid var(--outline-color);
+}
+
+summary:focus {
+  outline: 2px solid var(--outline-color);
+  border-radius: 0.25rem;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  padding: 0.25rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid var(--link-color);
+  border-radius: 0.25rem;
+  background-color: var(--link-color);
+  color: white;
+}
+
+.btn:hover {
+  border-color: var(--link-color-visited);
+  background-color: var(--link-color-visited);
+}
+
+.btn:focus {
+  border-color: var(--link-color-visited);
+  background-color: var(--link-color-visited);
+  outline: 2px solid var(--outline-color);
 }
