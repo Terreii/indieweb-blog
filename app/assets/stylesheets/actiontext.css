@@ -41,5 +41,5 @@ trix-toolbar {
 }
 
 trix-toolbar button.trix-button {
-  background-color: white;
+  background-color: var(--page-bg-color);
 }

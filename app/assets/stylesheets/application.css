@@ -15,12 +15,23 @@
  */
 
 :root {
+  --page-bg-color: white;
   --text-color: #1f2937;
+  --info-text-color: #828282;
   --link-color: #2a7ae2;
   --link-color-hover: #4b5563;
   --link-color-visited: #1756a9;
-  --form-border: #ced4da;
+  --form-border-color: #ced4da;
   --outline-color: rgb(49, 132, 253);
+  --btn-bg-color: var(--link-color);
+  --btn-hover-bg-color: var(--link-color-visited);
+  --btn-focus-bg-color: var(--link-color-visited);
+  --btn-color: var(--page-bg-color);
+  --dialog-bg-color: #f0f0f0;
+  --alert-color: #dc2626;
+  --notice-color: green;
+  --code-bg-color: #eef;
+  --code-border-color: #e8e8e8;
 }
 
 body {
@@ -31,6 +42,7 @@ body {
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
   color: var(--text-color);
+  background-color: var(--page-bg-color);
 }
 
 a {
@@ -133,26 +145,27 @@ footer {
 }
 
 .notice {
+  background-color: var(--dialog-bg-color);
   border: 1px solid var(--text-color);
   border-radius: 0.25rem;
-  color: green;
+  color: var(--notice-color);
   padding: 0.75rem;
 }
 
 .alert {
-  background-color: #f0f0f0;
+  background-color: var(--dialog-bg-color);
   border-radius: 0.25rem;
-  color: #dc2626;
+  color: var(--alert-color);
   padding: 0.75rem;
 }
 
 #error_explanation {
   width: 450px;
   width: fit-content;
-  border: 2px solid #dc2626;
+  border: 2px solid var(--alert-color);
   border-radius: 0.25rem;
   margin-bottom: 1rem;
-  background-color: #f0f0f0;
+  background-color: var(--dialog-bg-color);
 }
 
 #error_explanation h2 {
@@ -161,7 +174,7 @@ footer {
   padding: 5px 5px 5px 15px;
   font-size: 14px;
   margin-top: 0px;
-  background-color: #dc2626;
+  background-color: var(--alert-color);
   color: #fff;
 }
 
@@ -212,7 +225,7 @@ footer {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  border: 1px solid var(--form-border);
+  border: 1px solid var(--form-border-color);
   border-radius: 0.25rem;
 }
 
@@ -233,19 +246,19 @@ summary:focus {
   user-select: none;
   padding: 0.25rem 0.75rem;
   font-size: 1rem;
-  border: 1px solid var(--link-color);
+  border: 1px solid var(--btn-bg-color);
   border-radius: 0.25rem;
-  background-color: var(--link-color);
-  color: white;
+  background-color: var(--btn-bg-color);
+  color: var(--btn-color);
 }
 
 .btn:hover {
-  border-color: var(--link-color-visited);
-  background-color: var(--link-color-visited);
+  border-color: var(--btn-hover-bg-color);
+  background-color: var(--btn-hover-bg-color);
 }
 
 .btn:focus {
-  border-color: var(--link-color-visited);
-  background-color: var(--link-color-visited);
+  border-color: var(--btn-focus-bg-color);
+  background-color: var(--btn-focus-bg-color);
   outline: 2px solid var(--outline-color);
 }
