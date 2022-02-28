@@ -35,11 +35,15 @@
   max-width: 100% !important;
 }
 
+.trix-content pre {
+  background-color: var(--code-bg-color);
+}
+
 trix-toolbar {
   position: sticky;
   top: 0px;
 }
 
 trix-toolbar button.trix-button {
-  background-color: var(--page-bg-color);
+  background-color: var(--trix-btn-bg-color);
 }

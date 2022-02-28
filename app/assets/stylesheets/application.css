@@ -22,7 +22,7 @@
   --link-color-hover: #4b5563;
   --link-color-visited: #1756a9;
   --form-border-color: #ced4da;
-  --outline-color: rgb(49, 132, 253);
+  --outline-color: #3184fd;
   --btn-bg-color: var(--link-color);
   --btn-hover-bg-color: var(--link-color-visited);
   --btn-focus-bg-color: var(--link-color-visited);
@@ -32,6 +32,31 @@
   --notice-color: green;
   --code-bg-color: #eef;
   --code-border-color: #e8e8e8;
+  --trix-btn-bg-color: var(--page-bg-color);
+  --shadow-color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg-color: #0f172a;
+    --text-color: white;
+    --info-text-color: #94a3b8;
+    --link-color: #2a7ae2;
+    --link-color-hover: #06b6d4;
+    --link-color-visited: #a78bfa;
+    --form-border-color: #1e293b;
+    --form-bg-color: #334155;
+    --form-text-color: #e2e8f0;
+    --outline-color: #3184fd;
+    --btn-color: var(--text-color);
+    --dialog-bg-color: var(--form-bg-color);
+    --alert-color: #f9a8d4;
+    --notice-color: #22c55e;
+    --code-bg-color: #1e293b;
+    --code-border-color: #94a3b8;
+    --trix-btn-bg-color: var(--form-text-color);
+    --shadow-color: #94a3b8;
+  }
 }
 
 body {
@@ -225,8 +250,10 @@ footer {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
+  color: var(--form-text-color);
   border: 1px solid var(--form-border-color);
   border-radius: 0.25rem;
+  background-color: var(--form-bg-color);
 }
 
 .form-input:focus {
