@@ -39,7 +39,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --page-bg-color: #0f172a;
-    --text-color: white;
+    --text-color: #e2e8f0;
     --info-text-color: #94a3b8;
     --link-color: #2a7ae2;
     --link-color-hover: #06b6d4;
