@@ -41,14 +41,13 @@
     --page-bg-color: #0f172a;
     --text-color: #e2e8f0;
     --info-text-color: #94a3b8;
-    --link-color: #2a7ae2;
+    --link-color: #60a5fa;
     --link-color-hover: #06b6d4;
     --link-color-visited: #a78bfa;
     --form-border-color: #1e293b;
     --form-bg-color: #334155;
     --form-text-color: #e2e8f0;
     --outline-color: #3184fd;
-    --btn-color: var(--text-color);
     --dialog-bg-color: var(--form-bg-color);
     --alert-color: #f9a8d4;
     --notice-color: #22c55e;
