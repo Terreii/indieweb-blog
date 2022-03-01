@@ -8,6 +8,11 @@ first_post_body:
   name: body
   body: <p>Natus ut beatae. Quis magnam architecto. Quod aliquid laboriosam.</p>
 
+second_post_body:
+  record: second_post (Post)
+  name: body
+  body: <p>Moar of me!</p>
+
 draft_post_body:
   record: draft_post (Post)
   name: body

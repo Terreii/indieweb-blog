@@ -4,6 +4,13 @@ first_post:
   title: My first Post!
   slug: my-first-post
   published_at: 2021-11-24 18:01:58
+  updated_at: 2022-03-01 19:30:13
+
+second_post:
+  title: Another one
+  slug: another
+  published_at: 2022-03-01 13:45:43
+  updated_at: 2022-03-01 13:45:43
 
 draft_post:
   title: What I did learn today
