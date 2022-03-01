@@ -15,4 +15,11 @@ class FeedControllerTest < ActionDispatch::IntegrationTest
     get feed_url(format: :xml)
     assert_redirected_to feed_url(format: :atom)
   end
+
+  test "should have the latest updated_at as updated" do
+    get feed_url(format: :atom)
+
+    post = posts(:first_post)
+    assert_match "<updated>#{post.updated_at.strftime "%FT%TZ"}</updated>", @response.body
+  end
 end
