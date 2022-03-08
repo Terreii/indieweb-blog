@@ -15,6 +15,7 @@ tags = Tag.create([
 ])
 
 first_title = Faker::Books::Dune.quote
+second_title = Faker::Books::Dune.quote
 draft_title = Faker::Kpop.girl_groups
 
 Post.create([
@@ -23,6 +24,13 @@ Post.create([
     slug: Post.string_to_slug(first_title),
     tags: tags,
     published_at: DateTime.parse('2020-07-10T14:20:00+00:00'),
+    body: "<p>#{Faker::Lorem.paragraphs(number: 6).join '</p><p>'}</p>"
+  },
+  {
+    title: second_title,
+    slug: Post.string_to_slug second_title,
+    tags: [tags.first],
+    published_at: DateTime.parse('2020-09-11T14:20:00+00:00'),
     body: "<p>#{Faker::Lorem.paragraphs(number: 6).join '</p><p>'}</p>"
   },
   {
