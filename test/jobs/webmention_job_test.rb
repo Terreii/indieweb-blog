@@ -1,6 +1,7 @@
 require "test_helper"
 require "webmock/minitest"
 
+# Tests after https://webmention.rocks/
 class WebmentionJobTest < ActiveJob::TestCase
   def source
     "http://local-blog.de/post/test"

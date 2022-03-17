@@ -28,29 +28,23 @@ class WebmentionJob < ApplicationJob
     res = fetch_doc @target
 
     # first check for the endpoint in the link header
-    header = webmention_from_header res
+    header = find_webmention LinkHeader.parse(res.header, @target)
     return header.uri unless header.nil?
 
     # if not then look in the body
-    element = webmention_from_body res
+    element = find_webmention DomElement.parse(res.body, @target)
     return element.uri unless element.nil?
   end
 
-  # Check if the WebMention uri is in a link header and extract it.
-  def webmention_from_header(res)
-    headers = LinkHeader.parse res.header, @target
-    headers.find {|header| header.webmention? && check_uri(header.uri) }
-  end
-
-  # Check if the WebMention uri is in a link or anchor element and extract it.
-  def webmention_from_body(res)
-    elements = DomElement.parse res.body, @target
-    elements.find {|element| element.webmention? && check_uri(element.uri) }
+  # Find the WebMention in a array of WebMentionLink items
+  def find_webmention(items)
+    items.find {|item| item.webmention? && check_uri(item.uri) }
   end
 
   # Get the mentioned (target) page.
   def fetch_doc(target, attempts = 50)
     raise MaxRedirect if attempts < 0
+
     res = Net::HTTP.get_response target
     return res if res.code == "200" || res.code == "304"
 
@@ -66,6 +60,8 @@ class WebmentionJob < ApplicationJob
   # Post the WebMention to the endpoint.
   # The format is from https://www.w3.org/TR/webmention/#sender-notifies-receiver
   def post_mention_to(endpoint, attempts = 50)
+    raise MaxRedirect if attempts < 0
+
     res = Net::HTTP.post_form endpoint, [["source", @source], ["target", @target]]
 
     # follow the redirects
@@ -82,10 +78,21 @@ class WebmentionJob < ApplicationJob
 
 
 
-  # Parse and store a link header
-  class LinkHeader
+  # Base class for a link header, or link or anchor elements with WebMention rel.
+  class WebMentionLink
     attr_reader :uri, :rel
 
+    def self.parse(data, base_uri); end
+
+    # Is this Link a webmention link?
+    def webmention?
+      @rel.include? "webmention"
+    end
+  end
+
+
+  # Parse and store a link header
+  class LinkHeader < WebMentionLink
     # Extract a link header form a headers hash and maps it to LinkHeader instances.
     # Works with comm a-separated link headers.
     def self.parse(headers, base_uri)
@@ -101,11 +108,6 @@ class WebmentionJob < ApplicationJob
       sections = header.split /;\s*/
       @uri = parse_uri sections.first, base_uri
       @rel = parse_rel sections[1..]
-    end
-
-    # Is this Link a webmention link?
-    def webmention?
-      @rel.include? "webmention"
     end
 
     private
@@ -129,12 +131,11 @@ class WebmentionJob < ApplicationJob
 
 
   # Validates a link or anchor element if it is a WebMention link
-  class DomElement
-    attr_reader :uri, :rel
-
+  class DomElement < WebMentionLink
     # Find all link and anchor elements in a HTML body and parse them to DomElement
     def self.parse(body, base_uri)
       parsed_data = Nokogiri::HTML.parse body
+      # Find all Link and anchor elements in order
       elements = parsed_data.css('a[rel], link[rel]')
       elements.map {|element| DomElement.new(element, base_uri) }
     end
@@ -143,11 +144,6 @@ class WebmentionJob < ApplicationJob
       @uri = URI.join base_uri, element.attr(:href) || ''
       rel = element.attr(:rel) || ''
       @rel = rel.downcase.strip.split /\s+/
-    end
-
-    # Is this a webmention link / anchor?
-    def webmention?
-      @rel.include? "webmention"
     end
   end
 end
