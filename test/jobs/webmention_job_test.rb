@@ -551,6 +551,35 @@ class WebmentionJobTest < ActiveJob::TestCase
     assert_requested :post, "http://tester.io/webmention-endpoint/final"
   end
 
+  test "original target is a redirect" do
+    stub_request(:any, /tester\.io/).to_return(
+      {
+        # the redirect
+        status: 302,
+        headers: {
+          location: '1/final'
+        }
+      },
+      {
+        body: <<~HTML
+        <html>
+          <head>
+            <link href="http://tester.io/webmention-endpoint" rel="webmention" />
+          </head>
+          <body></body>
+        </html>
+        HTML
+      },
+      { status: 202 }
+    )
+
+    WebmentionJob.perform_now(source: source, target: "http://tester.io/article/1")
+
+    assert_requested :get, "http://tester.io/article/1"
+    assert_requested :get, "http://tester.io/article/1/final"
+    assert_requested :post, "http://tester.io/webmention-endpoint"
+  end
+
   test "that it does not fetch localhost" do
     stub_request(:any, "localhost")
     target = "http://localhost/article/1"
