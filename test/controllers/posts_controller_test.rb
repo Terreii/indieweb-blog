@@ -1,6 +1,9 @@
 require "test_helper"
+require "webmock/minitest"
 
 class PostsControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+
   setup do
     @post = posts(:first_post)
   end
@@ -99,5 +102,83 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to login_path
+  end
+
+  test "should enqueue a WebMention Job for every uri in the body" do
+    source = post_url(posts(:draft_post))
+    target = "http://tester.io/article/1"
+    login
+
+    assert_enqueued_with job: WebmentionJob, args: [{ source:, target: }] do
+      post = post_params_with_links
+      post[:published_at] = Time.now
+      patch source, params: { post: }
+    end
+  end
+
+  test "should not queue a WebMention Job if post is not published" do
+    source = post_url(posts(:draft_post))
+    login
+
+    assert_no_enqueued_jobs only: WebmentionJob do
+      patch source, params: { post: post_params_with_links }
+    end
+  end
+
+  test "should enqueue a WebMention Job for every uri in a new post body" do
+    source = post_url(posts(:draft_post))
+    target = "http://tester.io/article/1"
+    login
+
+    assert_enqueued_with job: WebmentionJob do
+      post = post_params_with_links
+      post[:published_at] = Time.now
+      post posts_url, params: {
+        post:
+      }
+    end
+  end
+
+  test "should not queue a WebMention Job if new post is not published" do
+    login
+
+    assert_no_enqueued_jobs only: WebmentionJob do
+      post posts_url, params: { post: post_params_with_links }
+    end
+  end
+
+  test "should not queue a Webmention Job for links to own domain" do
+    login
+    link = post_url(posts(:draft_post))
+
+    assert_no_enqueued_jobs only: WebmentionJob do
+      post posts_url, params: {
+        post: {
+          title: Faker::Games::DnD.alignment,
+          published_at: Time.now,
+          body: "<p>Test<a href=\"#{link}\">their post</a></p>"
+        }
+      }
+    end
+  end
+
+  test "should not queue a Webmention Job for not saved posts" do
+    login
+
+    assert_no_enqueued_jobs only: WebmentionJob do
+      post posts_url, params: { post: post_params_with_links }
+    end
+  end
+
+  def post_params_with_links
+    {
+      title: Faker::Games::DnD.alignment,
+      body: <<~HTML
+        <p>
+          Test
+          <a href="http://tester.io/article/1">their post</a>
+        </p>
+      HTML
+    }
   end
 end
