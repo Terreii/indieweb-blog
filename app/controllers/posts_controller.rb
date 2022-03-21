@@ -2,6 +2,7 @@ class PostsController < ApplicationController
   before_action :authenticate, except: %i[ index show ]
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :set_all_tags, only: %i[ new edit ]
+  after_action :webmention, only: %i[ create update ]
 
   # GET /posts or /posts.json
   def index
@@ -101,5 +102,22 @@ class PostsController < ApplicationController
         Tag.find_or_create_by name: tag
       end
       post.tags << tags_to_add
+    end
+
+    # Notifies all links in the post about this published post.
+    def webmention
+      return unless @post.published? && @post.body.saved_changes?
+      return if @post.changed? # changes wasn't saved
+      source = post_url @post
+
+      parsed_body = Nokogiri.parse @post.body.to_s
+      parsed_body.css("a[href]").each do |link|
+        target = link.attr(:href)
+
+        # I don't want to notify myself
+        unless URI(target).hostname == request.host
+          WebmentionJob.perform_later source:, target:
+        end
+      end
     end
 end
