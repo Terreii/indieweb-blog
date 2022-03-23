@@ -43,6 +43,9 @@
   display: inline-block;
   margin-left: 0.75rem;
 }
+.post__edit-link:first-child {
+  margin-left: 0px;
+}
 
 code {
   font-size: 15px;

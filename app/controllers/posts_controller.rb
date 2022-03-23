@@ -112,11 +112,11 @@ class PostsController < ApplicationController
 
       parsed_body = Nokogiri.parse @post.body.to_s
       parsed_body.css("a[href]").each do |link|
-        target = link.attr(:href)
+        target = URI.join source, link.attr(:href)
 
         # I don't want to notify myself
-        unless URI(target).hostname == request.host
-          WebmentionJob.perform_later source:, target:
+        unless target.hostname.nil? || target.hostname == request.host
+          WebmentionJob.perform_later source:, target: target.to_s
         end
       end
     end
