@@ -105,7 +105,7 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    debug (1.4.0)
+    debug (1.5.0)
       irb (>= 1.3.6)
       reline (>= 0.2.7)
     digest (3.1.0)
@@ -121,7 +121,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    good_job (2.11.2)
+    good_job (2.11.3)
       activejob (>= 5.2.0)
       activerecord (>= 5.2.0)
       concurrent-ruby (>= 1.0.2)
@@ -183,7 +183,7 @@ GEM
       racc (~> 1.4)
     pg (1.3.4)
     public_suffix (4.0.6)
-    puma (5.6.2)
+    puma (5.6.4)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.6.0)
@@ -307,4 +307,4 @@ RUBY VERSION
    ruby 3.1.1p18
 
 BUNDLED WITH
-   2.3.8
+   2.3.10
