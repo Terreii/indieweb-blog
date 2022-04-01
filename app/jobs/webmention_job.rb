@@ -1,11 +1,13 @@
 class WebmentionJob < ApplicationJob
   queue_as :default
 
+  class NoWebmentionEndpoint < StandardError; end
   class DisallowedHost < StandardError; end
   class MaxRedirect < StandardError; end
   class HttpRequestError < StandardError; end
 
   discard_on DisallowedHost
+  discard_on NoWebmentionEndpoint
   discard_on MaxRedirect
   discard_on HttpRequestError
 
@@ -18,7 +20,7 @@ class WebmentionJob < ApplicationJob
     raise DisallowedHost unless check_uri @target
 
     webmention_endpoint = fetch_endpoint
-    raise DisallowedHost if webmention_endpoint.nil?
+    raise NoWebmentionEndpoint if webmention_endpoint.nil?
     logger.debug "WebMention endpoint: #{webmention_endpoint}"
 
     post_mention_to webmention_endpoint
