@@ -11,14 +11,18 @@ class WebmentionJob < ApplicationJob
 
   def perform(source:, target:)
     return if source.nil? || target.nil? || source.empty? || target.empty?
+    logger.info "WebMention to #{target}"
+    logger.debug "WebMention from #{source}"
     @source = source
     @target = URI(target)
     raise DisallowedHost unless check_uri @target
 
     webmention_endpoint = fetch_endpoint
     raise DisallowedHost if webmention_endpoint.nil?
+    logger.debug "WebMention endpoint: #{webmention_endpoint}"
 
     post_mention_to webmention_endpoint
+    logger.debug "WebMention success to #{target}"
   end
 
   private
