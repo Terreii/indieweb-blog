@@ -19,7 +19,7 @@ class PostTest < ActiveSupport::TestCase
   test "should find all published posts" do
     posts = Post.published
     post_id = posts(:first_post).id
-    assert_equal 2, posts.count
+    assert_equal 3, posts.count
     assert_equal post_id, posts.last.id
   end
 

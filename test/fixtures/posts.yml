@@ -12,6 +12,11 @@ second_post:
   published_at: 2022-03-01 13:45:43
   updated_at: 2022-03-01 13:45:43
 
+post_with_links:
+  title: A post with a link
+  slug: post-with-link
+  published_at: 2022-04-05 02:12:10
+
 draft_post:
   title: What I did learn today
   slug: what-i-did-learn-today

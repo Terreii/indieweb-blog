@@ -191,6 +191,21 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should enqueue a Webmention Job for removed links" do
+    login
+
+    assert_enqueued_jobs 1, only: WebmentionJob do
+      blog_post = posts(:post_with_links)
+      patch post_url(blog_post), params: {
+        post: {
+          body: <<~HTML
+            <p>This was a post</p>
+          HTML
+        }
+      }
+    end
+  end
+
   def post_params_with_links
     {
       title: Faker::Games::DnD.alignment,
