@@ -110,13 +110,17 @@ class PostsController < ApplicationController
       return if @post.changed? # changes wasn't saved
       source = post_url @post
 
+      posted_uris = Set.new
+
       parsed_body = Nokogiri.parse @post.body.to_s
       parsed_body.css("a[href]").each do |link|
         target = URI.join source, link.attr(:href)
+        target_string = target.to_s
 
-        # I don't want to notify myself
-        unless target.hostname.nil? || target.hostname == request.host
-          WebmentionJob.perform_later source:, target: target.to_s
+        # I don't want to notify myself or notify a page more then 2 times
+        unless target.hostname.nil? || target.hostname == request.host || posted_uris === target_string
+          WebmentionJob.perform_later source:, target: target_string
+          posted_uris.add target_string
         end
       end
     end

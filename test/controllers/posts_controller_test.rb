@@ -170,6 +170,27 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should only enqueue one Webmention Job for a domain" do
+    login
+
+    assert_enqueued_jobs 1, only: WebmentionJob do
+      post posts_url, params: {
+        post: {
+          title: Faker::Games::DnD.alignment,
+          published_at: Time.now,
+          body: <<~HTML
+            <p>
+              Test
+              <a href="http://tester.io/article/1">their post</a>
+              and
+              <a href="http://tester.io/article/1">their post again</a>
+            </p>
+          HTML
+        }
+      }
+    end
+  end
+
   def post_params_with_links
     {
       title: Faker::Games::DnD.alignment,
