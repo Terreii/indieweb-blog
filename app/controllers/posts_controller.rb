@@ -110,13 +110,28 @@ class PostsController < ApplicationController
       return if @post.changed? # changes wasn't saved
       source = post_url @post
 
-      parsed_body = Nokogiri.parse @post.body.to_s
+      # Stores notified URIs, so that a page is not notified twice.
+      posted_uris = Set.new
+
+      # Notify every link
+      webmention_a_body source, posted_uris, @post.body
+
+      # Notify also removed links
+      if @post.body.body_previously_changed? && !@post.body.body_previously_was.nil?
+        webmention_a_body source, posted_uris, @post.body.body_previously_was
+      end
+    end
+
+    def webmention_a_body(source, posted_uris, body)
+      parsed_body = Nokogiri.parse body.to_s
       parsed_body.css("a[href]").each do |link|
         target = URI.join source, link.attr(:href)
+        target_string = target.to_s
 
-        # I don't want to notify myself
-        unless target.hostname.nil? || target.hostname == request.host
-          WebmentionJob.perform_later source:, target: target.to_s
+        # I don't want to notify myself or notify a page more then 2 times
+        unless target.hostname.nil? || target.hostname == request.host || posted_uris === target_string
+          WebmentionJob.perform_later source:, target: target_string
+          posted_uris.add target_string
         end
       end
     end
