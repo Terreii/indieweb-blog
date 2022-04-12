@@ -1,3 +1,5 @@
+require 'net/http'
+
 class WebmentionJob < ApplicationJob
   queue_as :default
 
