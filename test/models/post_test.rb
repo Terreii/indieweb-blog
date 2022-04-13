@@ -37,6 +37,13 @@ class PostTest < ActiveSupport::TestCase
     assert_equal title, post.reload.title
   end
 
+  test "should use the current time when published? is set to true" do
+    post = posts(:draft_post)
+    post.update published: true
+    assert post.published?
+    assert_not_nil post.published_at
+  end
+
   test "should destroy post" do
     post = posts(:first_post)
     post.destroy

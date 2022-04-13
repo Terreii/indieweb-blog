@@ -15,6 +15,15 @@ class Post < ApplicationRecord
     published_at.present?
   end
 
+  def published=(is_published)
+    return if published? == is_published
+    if is_published && !published?
+      self.published_at = Time.now
+    elsif !is_published && published?
+      self.published_at = nil
+    end
+  end
+
   def to_param
     slug
   end
