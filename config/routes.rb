@@ -26,10 +26,5 @@ Rails.application.routes.draw do
   get "/use-pouchdb/", to: redirect("https://terreii.github.io/use-pouchdb/")
   get "/use-pouchdb/*name", to: redirect("https://terreii.github.io/use-pouchdb/%{name}")
   get "/shift-calendar-rt/", to: redirect("https://schichtkalender-rt.vercel.app/")
-  get "/shift-calendar-rt/service-worker.js", to: redirect(
-    "https://schichtkalender-rt.vercel.app/sw.js"
-  )
-  get "/shift-calendar-rt/*file", to: redirect(
-    "https://schichtkalender-rt.vercel.app/%{file}"
-  )
+  get "/shift-calendar-rt/index.html", to: redirect("https://schichtkalender-rt.vercel.app/")
 end
