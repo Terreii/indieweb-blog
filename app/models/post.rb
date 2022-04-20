@@ -15,13 +15,12 @@ class Post < ApplicationRecord
     published_at.present?
   end
 
+  alias_method :published, :published?
+
   def published=(is_published)
-    return if published? == is_published
-    if is_published && !published?
-      self.published_at = Time.now
-    elsif !is_published && published?
-      self.published_at = nil
-    end
+    return published? if published? == is_published
+    self.published_at = is_published ? Time.now : nil
+    published?
   end
 
   def to_param
