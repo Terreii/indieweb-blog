@@ -27,8 +27,8 @@ class PostsTest < ApplicationSystemTestCase
     visit posts_url
     click_on "Create new Post"
 
-    fill_in "Published at", with: @post.published_at
     fill_in "Title", with: Faker::Games::DnD.alignment
+    check "Published"
 
     find("details").click
     check tags(:bands).name

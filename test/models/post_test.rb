@@ -37,6 +37,27 @@ class PostTest < ActiveSupport::TestCase
     assert_equal title, post.reload.title
   end
 
+  test "should use the current time when published? is set to true" do
+    post = posts(:draft_post)
+    post.update published: true
+    assert post.published?
+    assert_not_nil post.published_at
+  end
+
+  test "should unpublish post if published? is set to false" do
+    post = posts(:first_post)
+    post.update published: false
+    assert_not post.published?
+    assert_nil post.published_at
+  end
+
+  test "should not update published_at if published? is updated again" do
+    post = posts(:first_post)
+    published_at = post.published_at
+    post.published = true
+    assert_equal published_at, post.published_at
+  end
+
   test "should destroy post" do
     post = posts(:first_post)
     post.destroy

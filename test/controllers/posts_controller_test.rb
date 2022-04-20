@@ -29,7 +29,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Post.count') do
       post posts_url, params: {
         post: {
-          published_at: @post.published_at,
+          published: true,
           title: Faker::Games::DnD.alignment
         }
       }
@@ -43,7 +43,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_difference ['Post.count', 'Tag.count'] do
       post posts_url, params: {
         post: {
-          published_at: @post.published_at,
+          published: true,
           title: Faker::Games::DnD.alignment
         },
         new_tags: 'moar'
@@ -54,7 +54,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should require a session to create a post" do
     assert_no_difference('Post.count') do
-      post posts_url, params: { post: { published_at: @post.published_at, title: @post.title } }
+      post posts_url, params: { post: { published: true, title: @post.title } }
     end
 
     assert_redirected_to login_path
@@ -78,12 +78,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update post" do
     login
-    patch post_url(@post), params: { post: { published_at: @post.published_at, title: @post.title } }
+    patch post_url(@post), params: { post: { published: true, title: @post.title } }
     assert_redirected_to post_url(@post)
   end
 
   test "should require a session to update a post" do
-    patch post_url(@post), params: { post: { published_at: @post.published_at, title: @post.title } }
+    patch post_url(@post), params: { post: { published: true, title: @post.title } }
     assert_redirected_to login_path
   end
 
@@ -111,7 +111,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_enqueued_with job: WebmentionJob, args: [{ source:, target: }] do
       post = post_params_with_links
-      post[:published_at] = Time.now
+      post[:published] = true
       patch source, params: { post: }
     end
   end
@@ -132,7 +132,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_enqueued_with job: WebmentionJob do
       post = post_params_with_links
-      post[:published_at] = Time.now
+      post[:published] = true
       post posts_url, params: {
         post:
       }
@@ -155,7 +155,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
       post posts_url, params: {
         post: {
           title: Faker::Games::DnD.alignment,
-          published_at: Time.now,
+          published: true,
           body: "<p>Test<a href=\"#{link}\">their post</a></p>"
         }
       }
@@ -177,7 +177,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
       post posts_url, params: {
         post: {
           title: Faker::Games::DnD.alignment,
-          published_at: Time.now,
+          published: true,
           body: <<~HTML
             <p>
               Test
