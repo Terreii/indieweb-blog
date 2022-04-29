@@ -22,7 +22,7 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test "creating a Post" do
-    sign_in
+    login
 
     visit posts_url
     click_on "Create new Post"
@@ -44,7 +44,7 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test "creating a Post without a title" do
-    sign_in
+    login
 
     visit new_post_url
 
@@ -56,7 +56,7 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test "updating a Post" do
-    sign_in
+    login
 
     visit posts_url
     click_on @post.title
@@ -78,7 +78,7 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test "destroying a Post" do
-    sign_in
+    login
 
     visit posts_url
     click_on @post.title

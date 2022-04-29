@@ -6,7 +6,7 @@ class UserSessionsTest < ApplicationSystemTestCase
   end
 
   test "visiting the index" do
-    sign_in
+    login
 
     visit user_sessions_url
     assert_selector "h1", text: "Active Sessions"
@@ -26,7 +26,7 @@ class UserSessionsTest < ApplicationSystemTestCase
   end
 
   test "updating a User session" do
-    sign_in
+    login
 
     visit user_sessions_url
     click_on "Edit", match: :first
@@ -39,7 +39,7 @@ class UserSessionsTest < ApplicationSystemTestCase
   end
 
   test "destroying a User session" do
-    sign_in
+    login
 
     visit user_sessions_url
     page.accept_confirm do
@@ -50,7 +50,7 @@ class UserSessionsTest < ApplicationSystemTestCase
   end
 
   test "logout" do
-    sign_in
+    login
 
     click_on "Logout"
 

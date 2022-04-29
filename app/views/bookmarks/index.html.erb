@@ -1,6 +1,8 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Bookmarks</h1>
+
+<% if logged_in? %>
+  <%= link_to "New bookmark", new_bookmark_path %>
+<% end %>
 
 <div id="bookmarks">
   <% @bookmarks.each do |bookmark| %>
@@ -10,5 +12,3 @@
     </p>
   <% end %>
 </div>
-
-<%= link_to "New bookmark", new_bookmark_path %>

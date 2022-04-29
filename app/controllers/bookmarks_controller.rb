@@ -1,4 +1,5 @@
 class BookmarksController < ApplicationController
+  before_action :authenticate, except: %i[ index show ]
   before_action :set_bookmark, only: %i[ show edit update destroy ]
 
   # GET /bookmarks or /bookmarks.json

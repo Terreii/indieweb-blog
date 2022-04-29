@@ -11,6 +11,8 @@ class BookmarksTest < ApplicationSystemTestCase
   end
 
   test "should create bookmark" do
+    login
+
     visit bookmarks_url
     click_on "New bookmark"
 
@@ -23,6 +25,8 @@ class BookmarksTest < ApplicationSystemTestCase
   end
 
   test "should update Bookmark" do
+    login
+
     visit bookmark_url(@bookmark)
     click_on "Edit this bookmark", match: :first
 
@@ -35,6 +39,8 @@ class BookmarksTest < ApplicationSystemTestCase
   end
 
   test "should destroy Bookmark" do
+    login
+
     visit bookmark_url(@bookmark)
     click_on "Destroy this bookmark", match: :first
 
