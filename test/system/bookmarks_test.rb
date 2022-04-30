@@ -14,7 +14,7 @@ class BookmarksTest < ApplicationSystemTestCase
     login
 
     visit bookmarks_url
-    click_on "New bookmark"
+    click_on "Create new Bookmark"
 
     fill_in "Title", with: Faker::Games::Zelda.game
     fill_in "Url", with: Faker::Internet.url
@@ -42,6 +42,7 @@ class BookmarksTest < ApplicationSystemTestCase
     login
 
     visit bookmark_url(@bookmark)
+    click_on "Edit this bookmark"
     click_on "Destroy this bookmark", match: :first
 
     assert_text "Bookmark was successfully destroyed"

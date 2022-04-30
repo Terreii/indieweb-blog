@@ -42,11 +42,19 @@ en:
     access_denied: Please log in to continue
 
   posts:
+    title: Posts
     latest: Latest Posts
     drafts: Drafts
     create: Create new Post
     new: New Post
     editing: Editing Post
+
+  bookmarks:
+    title: Bookmarks
+    create: Create new Bookmark
+    new: New Bookmark
+    show: Bookmark "%{title}"
+    editing: Editing Bookmark
 
   tags:
     title: Tags

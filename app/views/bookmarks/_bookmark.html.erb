@@ -1,12 +1,19 @@
-<div id="<%= dom_id bookmark %>">
+<article id="<%= dom_id bookmark %>" class="h-entry">
   <p>
-    <strong>Title:</strong>
-    <%= bookmark.title %>
+    Bookmarked:
+    <strong>
+      <%= link_to bookmark.title, bookmark.url, class: "u-bookmark-of h-cite" %>
+    </strong>
   </p>
 
-  <p>
-    <strong>Url:</strong>
-    <%= bookmark.url %>
-  </p>
-
-</div>
+  <footer class="post__meta">
+    At:
+    <%= link_to bookmark, rel: "bookmark" do %>
+      <time datetime="<%= bookmark.created_at.iso8601 %>">
+        <%= bookmark.created_at.localtime.strftime("%Y-%m-%d %H:%M:%S") %>
+      </time>
+    <% end %>
+    by
+    <%= link_to t("general.author-full"), root_url, class: "p-author h-card" %>.
+  </footer>
+</article>
