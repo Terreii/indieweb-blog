@@ -35,6 +35,7 @@ en:
     author: Christopher
     author-full: Christopher Astfalk
     home: Home
+    latest_entries: Latest
     portfolio: Portfolio
     impressum: Impressum
 
@@ -45,6 +46,7 @@ en:
     title: Posts
     latest: Latest Posts
     drafts: Drafts
+    published: Published
     create: Create new Post
     new: New Post
     editing: Editing Post
