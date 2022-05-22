@@ -27,11 +27,13 @@ class Indieweb::AuthorTest < ActiveSupport::TestCase
       </html>
     HTML
 
-    author = Indieweb::Author.new remote_url
+    authors = Indieweb::Author.from remote_url
 
-    assert_equal "William Shakespeare", author.name
-    assert_nil author.url
-    assert_nil author.photo
+    assert_instance_of Array, authors
+    assert_equal 1, authors.count
+    assert_equal "William Shakespeare", authors.first.name
+    assert_nil authors.first.url
+    assert_nil authors.first.photo
   end
 
   # https://authorship.rocks/test/2/
@@ -62,11 +64,12 @@ class Indieweb::AuthorTest < ActiveSupport::TestCase
       </html>
     HTML
 
-    author = Indieweb::Author.new remote_url
+    authors = Indieweb::Author.from remote_url
 
-    assert_equal "Homer", author.name
-    assert_equal "https://en.wikiquote.org/wiki/Homer", author.url
-    assert_equal URI.join(remote_url, "/images/homer.jpg").to_s, author.photo
+    assert_equal 1, authors.count
+    assert_equal "Homer", authors.first.name
+    assert_equal "https://en.wikiquote.org/wiki/Homer", authors.first.url
+    assert_equal URI.join(remote_url, "/images/homer.jpg").to_s, authors.first.photo
   end
 
   # https://authorship.rocks/test/3/
@@ -99,11 +102,12 @@ class Indieweb::AuthorTest < ActiveSupport::TestCase
       </html>
     HTML
 
-    author = Indieweb::Author.new remote_url
+    authors = Indieweb::Author.from remote_url
 
-    assert_equal "Patañjali", author.name
-    assert_equal "https://authorship.rocks/test/3/about-patanjali", author.url
-    assert_nil author.photo
+    assert_equal 1, authors.count
+    assert_equal "Patañjali", authors.first.name
+    assert_equal "https://authorship.rocks/test/3/about-patanjali", authors.first.url
+    assert_nil authors.first.photo
   end
 
   # https://authorship.rocks/test/4/
@@ -157,11 +161,12 @@ class Indieweb::AuthorTest < ActiveSupport::TestCase
       }
     )
 
-    author = Indieweb::Author.new remote_url
+    authors = Indieweb::Author.from remote_url
 
-    assert_equal "Virginia Woolf", author.name
-    assert_equal "https://authorship.rocks/test/4/about-virginia-woolf", author.url
-    assert_equal "https://authorship.rocks/images/virginia-woolf.jpg", author.photo
+    assert_equal 1, authors.count
+    assert_equal "Virginia Woolf", authors.first.name
+    assert_equal "https://authorship.rocks/test/4/about-virginia-woolf", authors.first.url
+    assert_equal "https://authorship.rocks/images/virginia-woolf.jpg", authors.first.photo
   end
 
   # https://authorship.rocks/test/5/
@@ -217,10 +222,11 @@ class Indieweb::AuthorTest < ActiveSupport::TestCase
       }
     )
 
-    author = Indieweb::Author.new remote_url
+    authors = Indieweb::Author.from remote_url
 
-    assert_equal "Basho", author.name
-    assert_equal "https://authorship.rocks/test/5/about-basho", author.url
-    assert_equal "https://authorship.rocks/images/basho.jpg", author.photo
+    assert_equal 1, authors.count
+    assert_equal "Basho", authors.first.name
+    assert_equal "https://authorship.rocks/test/5/about-basho", authors.first.url
+    assert_equal "https://authorship.rocks/images/basho.jpg", authors.first.photo
   end
 end
