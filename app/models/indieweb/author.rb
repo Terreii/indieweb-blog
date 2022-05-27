@@ -15,10 +15,9 @@ class Indieweb::Author
   def self.from(remote_url)
     collection = get_doc URI(remote_url)
     authors = select_authors collection, remote_url
+    return authors unless authors.empty?
 
-    return follow_rel(collection.rel_urls, remote_url) if authors.empty?
-
-    authors
+    follow_rel(collection.rel_urls, remote_url)
   end
 
   class MaxRedirect < StandardError; end
@@ -28,12 +27,8 @@ class Indieweb::Author
     # Select all authors from that parsed page.
     # It gets all authors of the first entry and all cards
     def self.select_authors(collection, remote_url)
-      authors = []
-
-      authors += entry_authors(collection, remote_url)
-      authors += cards(collection, remote_url)
-
-      authors
+      authors = entry_authors(collection, remote_url)
+      authors + cards(collection, remote_url)
     end
 
     # Select and instantiate all authors of the first entry.
