@@ -229,4 +229,39 @@ class Indieweb::AuthorTest < ActiveSupport::TestCase
     assert_equal "https://authorship.rocks/test/5/about-basho", authors.first.url
     assert_equal "https://authorship.rocks/images/basho.jpg", authors.first.photo
   end
+
+  test "to_hash should create a hash" do
+    stub_request(:get, remote_url).to_return body: <<~HTML
+      <html>
+        <head></head>
+        <body>
+          <div class="post-container h-entry">
+            <div class="post-main">
+              <div class="left">
+                <div class="p-author h-card">
+                  <a href="https://en.wikiquote.org/wiki/Homer" class="u-url">
+                    <img src="/images/homer.jpg" class="u-photo" width="80">
+                    <div class="p-name">Homer</div>
+                  </a>
+                </div>
+              </div>
+              <div class="right">
+                <p class="p-name e-content">
+                  Even in the house of Hades there is left something,
+                  a soul and an image, but there is no real heart of life in it.
+                </p>
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
+    HTML
+
+    authors = Indieweb::Author.from remote_url
+    hash = authors.first.to_hash
+    assert_instance_of Hash, hash
+    assert_equal "Homer", hash[:name]
+    assert_equal "https://en.wikiquote.org/wiki/Homer", hash[:url]
+    assert_equal URI.join(remote_url, "/images/homer.jpg").to_s, hash[:photo]
+  end
 end

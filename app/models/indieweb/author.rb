@@ -11,6 +11,14 @@ class Indieweb::Author
     @photo = URI.join(remote_url, author.photo).to_s if author.respond_to? :photo
   end
 
+  def to_hash
+    {
+      name: name,
+      url: url,
+      photo: photo
+    }
+  end
+
   # Loads a remote url and queries all authors from it.
   def self.from(remote_url)
     collection = get_doc URI(remote_url)
