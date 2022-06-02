@@ -75,3 +75,9 @@ code {
   font-size: small;
   color: var(--info-text-color);
 }
+
+@media print {
+  .post_list__item a::after {
+    content: ' (' attr(href) ')';
+  }
+}
