@@ -1,9 +1,17 @@
 <article id="<%= dom_id bookmark %>" class="h-entry post_list__item">
-  <p>
+  <p class="u-bookmark-of h-cite">
     Bookmarked:
     <strong>
-      <%= link_to bookmark.title, bookmark.url, class: "u-bookmark-of h-cite" %>
+      <%= link_to bookmark.title, bookmark.url %>
     </strong>
+
+    <% if bookmark.authors.any? %>
+      by
+      <% bookmark.authors.each do |author| %>
+        <%= link_to author.name, author.url, class: "h-card p-author" %>
+        <span class="author_joiner">&</span>
+      <% end %>
+    <% end %>
   </p>
 
   <footer class="post__meta">
@@ -14,6 +22,6 @@
       </time>
     <% end %>
     by
-    <%= link_to t("general.author-full"), root_url, class: "p-author h-card" %>.
+    <%= link_to t("general.author-full"), root_url, class: "p-author h-card u-url" %>.
   </footer>
 </article>
