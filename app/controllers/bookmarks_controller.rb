@@ -1,6 +1,7 @@
 class BookmarksController < ApplicationController
   before_action :authenticate, except: %i[ index show ]
   before_action :set_bookmark, only: %i[ show edit update destroy ]
+  after_action :enqueue_jobs, only: %i[ create update ]
 
   # GET /bookmarks or /bookmarks.json
   def index
@@ -59,7 +60,6 @@ class BookmarksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_bookmark
       @bookmark = Bookmark.find(params[:id])
     end
@@ -67,5 +67,11 @@ class BookmarksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def bookmark_params
       params.require(:bookmark).permit(:title, :url)
+    end
+
+    def enqueue_jobs
+      return if @bookmark.changed? # changes weren't saved
+      BookmarkAuthorsJob.perform_later @bookmark
+      WebmentionJob.perform_later source: bookmark_url(@bookmark), target: @bookmark.url
     end
 end

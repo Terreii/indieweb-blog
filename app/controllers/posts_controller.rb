@@ -107,7 +107,7 @@ class PostsController < ApplicationController
     # Notifies all links in the post about this published post.
     def webmention
       return unless @post.published? && @post.body.saved_changes?
-      return if @post.changed? # changes wasn't saved
+      return if @post.changed? # changes weren't saved
       source = post_url @post
 
       # Stores notified URIs, so that a page is not notified twice.

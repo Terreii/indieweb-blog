@@ -92,4 +92,80 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to login_path
   end
+
+  test "should enqueue a BookmarkAuthors Job if bookmark is created" do
+    login
+
+    assert_enqueued_with job: BookmarkAuthorsJob do
+      post bookmarks_url, params: {
+        bookmark: {
+          title: Faker::Games::Zelda.game,
+          url: Faker::Internet.url
+        }
+      }
+    end
+  end
+
+  test "should enqueue a BookmarkAuthors Job if bookmark is updated" do
+    login
+
+    assert_enqueued_with job: BookmarkAuthorsJob, args: [@bookmark] do
+      patch bookmark_url(@bookmark), params: {
+        bookmark: {
+          title: @bookmark.title,
+          url: @bookmark.url
+        }
+      }
+    end
+  end
+
+  test "should enqueue a WebMention Job when the bookmark is created" do
+    login
+
+    assert_enqueued_with job: WebmentionJob do
+      post bookmarks_url, params: {
+        bookmark: {
+          title: Faker::Games::Zelda.game,
+          url: Faker::Internet.url
+        }
+      }
+    end
+  end
+
+  test "should enqueue a WebMention Job for the url of the bookmark" do
+    login
+    source = bookmark_url(@bookmark)
+    target = @bookmark.url
+
+    assert_enqueued_with job: WebmentionJob, args: [{ source:, target: }] do
+      patch source, params: {
+        bookmark: {
+          title: @bookmark.title,
+          url: target
+        }
+      }
+    end
+  end
+
+  test "should not enqueue WebMention or BookmarkAuthors jobs if invalid" do
+    login
+
+    assert_no_enqueued_jobs do
+      post bookmarks_url, params: {
+        bookmark: {
+          title: "",
+          url: Faker::Games::Zelda.game
+        }
+      }
+    end
+
+    assert_no_enqueued_jobs do
+      patch bookmark_url(@bookmark), params: {
+        bookmark: {
+          title: "",
+          url: Faker::Games::Zelda.game
+        }
+      }
+    end
+  end
 end
