@@ -36,6 +36,22 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to bookmark_url(Bookmark.first)
   end
 
+  test "should create a bookmark with a comment" do
+    login
+
+    assert_difference("Bookmark.count") do
+      post bookmarks_url, params: {
+        bookmark: {
+          title: Faker::Games::Zelda.game,
+          url: Faker::Internet.url,
+          summary: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+        }
+      }
+    end
+
+    assert_redirected_to bookmark_url(Bookmark.first)
+  end
+
   test "create should require a session" do
     assert_no_difference("Bookmark.count") do
       post bookmarks_url, params: {
@@ -68,6 +84,18 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
   test "should update bookmark" do
     login
     patch bookmark_url(@bookmark), params: { bookmark: { title: @bookmark.title, url: @bookmark.url } }
+    assert_redirected_to bookmark_url(@bookmark)
+  end
+
+  test "should update bookmark with a summary" do
+    login
+    patch bookmark_url(@bookmark), params: {
+      bookmark: {
+        title: @bookmark.title,
+        url: @bookmark.url,
+        summary: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+      }
+    }
     assert_redirected_to bookmark_url(@bookmark)
   end
 

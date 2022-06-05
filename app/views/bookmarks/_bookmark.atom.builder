@@ -6,6 +6,8 @@ feed.entry bookmark do |entry|
 
   entry.category term: "bookmark"
 
+  entry.summary bookmark.summary, type: "html"
+
   entry.source do |source|
     source.id bookmark.url
     source.title bookmark.title

@@ -82,6 +82,10 @@ code {
   }
 }
 
+.u-bookmark-of {
+  font-size: 110%;
+}
+
 .author_joiner:last-of-type {
   display: none;
 }

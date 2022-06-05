@@ -22,12 +22,20 @@ class ApplicationController < ActionController::Base
     redirect_to(login_path, notice: t('application.access_denied')) and return false
   end
 
-  # Get all published entries combined and sorted by published_at.
+  # Get published entries combined and sorted by published_at.
   # Entries are posts and bookmarks. For short: all that is displayed on the root page.
-  def all_published_entries
-    posts = Post.published.with_rich_text_body.limit 10
-    bookmarks = Bookmark.includes(:authors).all.limit 10
-    entries = (posts + bookmarks).sort_by { |entry| entry.published_at }
+  def published_entries
+    entries = (published_posts + published_bookmarks).sort_by do |entry|
+      entry.published_at
+    end
     entries.reverse
+  end
+
+  def published_posts
+    Post.published.with_rich_text_body.limit 10
+  end
+
+  def published_bookmarks
+    Bookmark.includes(:authors).with_rich_text_summary.all.limit 10
   end
 end

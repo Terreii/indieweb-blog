@@ -14,6 +14,10 @@
     <% end %>
   </p>
 
+  <% unless bookmark.summary.nil? || bookmark.summary.empty? %>
+    <div class="e-content"><%= bookmark.summary %></div>
+  <% end %>
+
   <footer class="post__meta">
     At:
     <%= link_to bookmark, rel: "bookmark" do %>

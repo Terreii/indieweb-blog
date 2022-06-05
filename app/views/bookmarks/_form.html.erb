@@ -21,6 +21,11 @@
     <%= form.text_field :url, class: "form-input" %>
   </div>
 
+  <div class="field">
+    <%= form.label :summary %>
+    <%= form.rich_text_area :summary %>
+  </div>
+
   <div>
     <%= form.submit nil, class: "btn" %>
   </div>

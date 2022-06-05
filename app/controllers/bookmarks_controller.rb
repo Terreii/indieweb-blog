@@ -5,7 +5,7 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks or /bookmarks.json
   def index
-    @bookmarks = Bookmark.includes(:authors).all
+    @bookmarks = Bookmark.includes(:authors).with_rich_text_summary.all
   end
 
   # GET /bookmarks/1 or /bookmarks/1.json
@@ -66,7 +66,7 @@ class BookmarksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def bookmark_params
-      params.require(:bookmark).permit(:title, :url)
+      params.require(:bookmark).permit(:title, :url, :summary)
     end
 
     def enqueue_jobs

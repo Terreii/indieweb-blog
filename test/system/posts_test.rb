@@ -36,6 +36,7 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Create new Post"
 
     fill_in "Title", with: Faker::Games::DnD.alignment
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
     check "Published"
 
     find("details").click
@@ -56,6 +57,7 @@ class PostsTest < ApplicationSystemTestCase
 
     visit new_post_url
 
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
     click_on "Create Post"
 
     assert_text "Slug can't be blank"
@@ -75,6 +77,7 @@ class PostsTest < ApplicationSystemTestCase
     find("details").click
     check tags(:bands).name
     fill_in "New tags", with: "me,personal"
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
 
     click_on "Update Post"
 
