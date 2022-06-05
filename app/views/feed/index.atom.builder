@@ -6,7 +6,7 @@ atom_feed do |feed|
     author.name "Christopher Astfalk"
   end
 
-  @posts.each do |entry|
+  @entries.each do |entry|
     render entry, feed:
   end
 end

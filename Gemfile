@@ -58,6 +58,9 @@ gem "capistrano-rbenv", "~> 2.1", ">= 2.1.4"
 gem "ed25519"
 gem "bcrypt_pbkdf"
 
+# Parsing microformats [https://github.com/microformats/microformats-ruby]
+gem 'microformats', '~> 4.4', '>= 4.4.1'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

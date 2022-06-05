@@ -1,0 +1,11 @@
+<h1><%= set_title t("bookmarks.title") %></h1>
+
+<% if logged_in? %>
+  <%= link_to t("bookmarks.create"), new_bookmark_path %>
+<% end %>
+
+<div id="bookmarks">
+  <% @bookmarks.each do |bookmark| %>
+    <%= render bookmark %>
+  <% end %>
+</div>

@@ -7,8 +7,16 @@ class PostsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit posts_url
-    assert_selector "h1", text: "Hi, I'm Christopher Astfalk!"
-    assert_selector "h2", text: "📨 Latest Posts"
+    assert_selector "h1", text: "📨 Latest Posts"
+  end
+
+  test "visiting the index logged in" do
+    login
+
+    visit posts_url
+    assert_selector "h1", text: "📨 Latest Posts"
+    assert_selector "h2", text: "📝 Drafts"
+    assert_selector "h2", text: "📤 Published"
   end
 
   test "visiting a Post" do
@@ -22,12 +30,13 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test "creating a Post" do
-    sign_in
+    login
 
     visit posts_url
     click_on "Create new Post"
 
     fill_in "Title", with: Faker::Games::DnD.alignment
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
     check "Published"
 
     find("details").click
@@ -44,10 +53,11 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test "creating a Post without a title" do
-    sign_in
+    login
 
     visit new_post_url
 
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
     click_on "Create Post"
 
     assert_text "Slug can't be blank"
@@ -56,7 +66,7 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test "updating a Post" do
-    sign_in
+    login
 
     visit posts_url
     click_on @post.title
@@ -67,6 +77,7 @@ class PostsTest < ApplicationSystemTestCase
     find("details").click
     check tags(:bands).name
     fill_in "New tags", with: "me,personal"
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
 
     click_on "Update Post"
 
@@ -78,7 +89,7 @@ class PostsTest < ApplicationSystemTestCase
   end
 
   test "destroying a Post" do
-    sign_in
+    login
 
     visit posts_url
     click_on @post.title

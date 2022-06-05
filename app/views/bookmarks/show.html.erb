@@ -1,0 +1,9 @@
+<% set_title t("bookmarks.show", title: @bookmark.title) %>
+<%= render @bookmark %>
+
+<% if logged_in? %>
+  <div>
+    <%= link_to "Edit this bookmark", edit_bookmark_path(@bookmark) %> |
+    <%= link_to "Back to bookmarks", bookmarks_path %>
+  </div>
+<% end %>

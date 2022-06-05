@@ -1,4 +1,4 @@
-<%= render "static_pages/me" %>
+<h1>📨 <%= set_title(t 'posts.latest') %></h1>
 
 <% if logged_in? %>
   <h2>📝 <%= t('posts.drafts') %></h2>
@@ -11,13 +11,10 @@
       <li><%= link_to draft.title, edit_post_path(draft) %></li>
     <% end %>
   </ul>
+
+  <h2>📤 <%= t("posts.published") %></h2>
 <% end %>
 
-<h2>📨 <%= set_title(t 'posts.latest') %></h2>
-
 <% @posts.each do |post| %>
-  <article class="post_list__item">
-    <h1><%= link_to post.title, post %></h1>
-    <%= post.body %>
-  </article>
+  <%= render post %>
 <% end %>

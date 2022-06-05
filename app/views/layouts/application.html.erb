@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <header>
+    <header class="header">
       <nav class="header_layout">
         <div id="header__title">
           <%= link_to t('general.title'), root_path, class: 'c-site-title header__home' %>
@@ -22,6 +22,12 @@
         <div id="header__nav">
           <span class="sr-only">
             <%= link_to t('general.home'), root_path, class: 'nav__link' %>
+          </span>
+          <span class="nav__item">
+            <%= link_to t('posts.title'), posts_path, class: 'nav__link' %>
+          </span>
+          <span class="nav__item">
+            <%= link_to t('bookmarks.title'), bookmarks_path, class: 'nav__link' %>
           </span>
           <span class="nav__item">
             <%= link_to t('general.portfolio'), '/portfolio', class: 'nav__link' %>
@@ -51,7 +57,7 @@
       <%= yield %>
     </main>
 
-    <footer>
+    <footer class="footer">
       <ul>
         <% Rails.configuration.x.accounts.each do |domain, user| %>
           <li><%= domain.to_s.split('.').first.capitalize %>:

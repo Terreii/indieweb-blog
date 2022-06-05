@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root "posts#index"
+  root "home#index"
 
+  resources :bookmarks
   resources :posts, param: :slug
   resources :tags, param: :name, only: [:index, :show]
   resources :user_sessions

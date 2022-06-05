@@ -24,6 +24,7 @@
   --form-border-color: #ced4da;
   --outline-color: #3184fd;
   --btn-bg-color: var(--link-color);
+  --btn-danger-color: #dc2626;
   --btn-hover-bg-color: var(--link-color-visited);
   --btn-focus-bg-color: var(--link-color-visited);
   --btn-color: var(--page-bg-color);
@@ -81,9 +82,9 @@ a:focus {
   text-decoration-thickness: 2px;
 }
 
-header,
+header.header,
 main,
-footer {
+footer.footer {
   padding-left: 1rem;
   padding-right: 1rem;
   max-width: 80rem;
@@ -91,7 +92,7 @@ footer {
   margin-right: auto;
 }
 
-header {
+header.header {
   padding-top: env(safe-area-inset-top);
   border-bottom: 1px solid grey;
   padding-bottom: 0.5rem;
@@ -139,7 +140,7 @@ header {
   text-decoration-thickness: 4px;
 }
 
-footer {
+footer.footer {
   border-top: 1px solid grey;
   margin-top: 1rem;
   padding-top: 0.5rem;
@@ -148,7 +149,7 @@ footer {
 }
 
 @media (min-width: 640px) {
-  header {
+  header.header {
     padding-bottom: 0px;
   }
 
@@ -294,4 +295,9 @@ summary:focus {
   border-color: var(--btn-focus-bg-color);
   background-color: var(--btn-focus-bg-color);
   outline: 2px solid var(--outline-color);
+}
+
+.btn.btn-danger {
+  --btn-bg-color: var(--btn-danger-color);
+  --btn-color: var(--text-color);
 }

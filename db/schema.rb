@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_20_180820) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_27_205927) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -51,6 +51,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_20_180820) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "authors", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "url"
+    t.string "photo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_authors_on_name"
+    t.index ["url"], name: "index_authors_on_url"
+  end
+
+  create_table "authors_bookmarks", id: false, force: :cascade do |t|
+    t.bigint "author_id", null: false
+    t.bigint "bookmark_id", null: false
+    t.index ["author_id", "bookmark_id"], name: "index_authors_bookmarks_on_author_id_and_bookmark_id", unique: true
+    t.index ["bookmark_id", "author_id"], name: "index_authors_bookmarks_on_bookmark_id_and_author_id"
+  end
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.string "title"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url"], name: "index_bookmarks_on_url", unique: true
   end
 
   create_table "good_job_processes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
