@@ -1,6 +1,10 @@
 class BookmarkAuthorsJob < ApplicationJob
   queue_as :default
 
+  discard_on URI::InvalidURIError
+  discard_on Indieweb::Author::MaxRedirect
+  discard_on Indieweb::Author::HttpRequestError
+
   def perform(bookmark)
     @bookmark = bookmark
     ids_of_old_authors = []

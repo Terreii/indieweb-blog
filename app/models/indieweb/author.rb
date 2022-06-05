@@ -29,6 +29,7 @@ class Indieweb::Author
   end
 
   class MaxRedirect < StandardError; end
+  class HttpRequestError < StandardError; end
 
   private
 
