@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :bookmarks
   resources :posts, param: :slug
-  resources :tags, param: :name, only: [:index, :show]
+  resources :tags, param: :name, only: [:index, :show, :create]
   resources :user_sessions
   get "/feed", to: "feed#index", as: "feed"
   get "/login", to: "user_sessions#new", as: "login"
