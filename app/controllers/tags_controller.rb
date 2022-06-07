@@ -12,6 +12,7 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       if @tag.save
+        format.turbo_stream
         format.html { redirect_to @tag, notice: "Tag was successfully created." }
         format.json { render :show, status: :created, location: @tag }
       else
@@ -24,6 +25,6 @@ class TagsController < ApplicationController
   private
 
     def tags_params
-      params[:name].strip.downcase
+      params.require(:tag)[:name].strip.downcase
     end
 end

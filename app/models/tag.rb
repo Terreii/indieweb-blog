@@ -11,4 +11,11 @@ class Tag < ApplicationRecord
   def to_param
     name
   end
+
+  after_create_commit {
+    broadcast_append_later_to "tags", target: "post_tags_list", partial: "tags/checkbox", locals: {
+      tag: self,
+      model_name: "post"
+    }
+  }
 end

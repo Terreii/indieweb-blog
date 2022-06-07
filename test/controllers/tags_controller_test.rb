@@ -24,7 +24,7 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
     name = save_name
 
     assert_difference('Tag.count') do
-      post tags_url, params: { name: }
+      post tags_url, params: { tag: { name: } }
     end
 
     assert_redirected_to tag_url(Tag.find_by(name:))
@@ -35,7 +35,9 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_difference("Tag.count") do
       post tags_url, params: {
-        name: tags(:bands).name
+        tag: {
+          name: tags(:bands).name
+        }
       }
     end
 
@@ -45,7 +47,7 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
   test "create should require a session" do
     name = save_name
     assert_no_difference('Post.count') do
-      post posts_url, params: { name: }
+      post posts_url, params: { tag: { name: } }
     end
 
     assert_redirected_to login_path
