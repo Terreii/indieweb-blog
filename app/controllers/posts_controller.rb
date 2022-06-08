@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate, except: %i[ index show ]
   before_action :set_post, only: %i[ show edit update destroy ]
-  before_action :set_all_tags, only: %i[ new edit ]
   after_action :webmention, only: %i[ create update ]
 
   # GET /posts or /posts.json
@@ -33,16 +32,11 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
 
     respond_to do |format|
-      add_new_tags(@post)
-
       if @post.save
         format.html { redirect_to @post, notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html {
-          set_all_tags
-          render :new, status: :unprocessable_entity
-        }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -51,7 +45,7 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/slug or /posts/slug.json
   def update
     respond_to do |format|
-      if @post.update(post_params) && add_new_tags(@post)
+      if @post.update(post_params)
         format.html { redirect_to @post, notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -82,26 +76,6 @@ class PostsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:title, :slug, :published, :body, tag_ids: [])
-    end
-
-    def set_all_tags
-      @tags = Tag.all
-    end
-
-    def new_tags_params
-      return '' unless params.has_key?(:new_tags)
-      params[:new_tags].strip
-    end
-
-    def parse_new_tags
-      new_tags_params.split(",").map {|tag| tag.strip.downcase }
-    end
-
-    def add_new_tags(post)
-      tags_to_add = parse_new_tags.map do |tag|
-        Tag.find_or_create_by name: tag
-      end
-      post.tags << tags_to_add
     end
 
     # Notifies all links in the post about this published post.
