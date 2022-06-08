@@ -22,9 +22,7 @@
       <br />
       <span itemprop="tags">
         Tags:
-        <% @post.tags.each do |tag| %>
-          <%= link_to tag.name, tag, class: "p-category" %><% unless tag == @post.tags.last %>, <% end %>
-        <% end %>
+        <%= render @post.tags %>
       </span>
     <% end %>
   </p>

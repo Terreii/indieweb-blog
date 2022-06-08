@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_27_205927) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_08_174324) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -78,6 +78,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_27_205927) do
     t.index ["url"], name: "index_bookmarks_on_url", unique: true
   end
 
+  create_table "bookmarks_tags", id: false, force: :cascade do |t|
+    t.bigint "bookmark_id", null: false
+    t.bigint "tag_id", null: false
+    t.index ["bookmark_id", "tag_id"], name: "index_bookmarks_tags_on_bookmark_id_and_tag_id"
+    t.index ["tag_id", "bookmark_id"], name: "index_bookmarks_tags_on_tag_id_and_bookmark_id", unique: true
+  end
+
   create_table "good_job_processes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -123,7 +130,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_27_205927) do
     t.bigint "post_id", null: false
     t.bigint "tag_id", null: false
     t.index ["post_id", "tag_id"], name: "index_posts_tags_on_post_id_and_tag_id"
-    t.index ["tag_id", "post_id"], name: "index_posts_tags_on_tag_id_and_post_id"
+    t.index ["tag_id", "post_id"], name: "index_posts_tags_on_tag_id_and_post_id", unique: true
   end
 
   create_table "tags", force: :cascade do |t|

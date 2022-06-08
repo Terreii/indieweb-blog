@@ -29,4 +29,12 @@
   <div>
     <%= form.submit nil, class: "btn" %>
   </div>
+
+  <%= render "tags/form", form: form, name: "bookmark" %>
 <% end %>
+
+<br>
+
+<div class="display-as-row gapped">
+  <%= render "tags/create" %>
+</div>

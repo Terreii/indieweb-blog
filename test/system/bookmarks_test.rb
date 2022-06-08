@@ -66,7 +66,7 @@ class BookmarksTest < ApplicationSystemTestCase
     click_on "Update Bookmark"
 
     assert_text "Bookmark was successfully updated"
-    assert_link "games"
+    assert_link "rails"
     assert_link tags(:programming).name
     click_on "Back"
   end

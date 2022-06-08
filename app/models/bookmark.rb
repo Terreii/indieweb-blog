@@ -3,6 +3,7 @@ class Bookmark < ApplicationRecord
   validates :url, presence: true, format: { with: URI.regexp }
 
   has_and_belongs_to_many :authors
+  has_and_belongs_to_many :tags
   has_rich_text :summary
 
   default_scope { order created_at: :desc }
