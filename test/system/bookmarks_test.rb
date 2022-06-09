@@ -33,9 +33,18 @@ class BookmarksTest < ApplicationSystemTestCase
     fill_in "Title", with: Faker::Games::Zelda.game
     fill_in "Url", with: Faker::Internet.url
     fill_in_rich_text_area "Summary", with: Faker::Lorem.paragraphs
+
+    fill_in "Create new tag", with: "games"
+    click_on "Create Tag"
+    assert_text "games"
+    check "games"
+    check tags(:bands).name
+
     click_on "Create Bookmark"
 
     assert_text "Bookmark was successfully created"
+    assert_link "games"
+    assert_link tags(:bands).name
     click_on "Back"
   end
 
@@ -47,9 +56,18 @@ class BookmarksTest < ApplicationSystemTestCase
 
     fill_in "Title", with: @bookmark.title
     fill_in "Url", with: @bookmark.url
+
+    fill_in "Create new tag", with: "rails"
+    click_on "Create Tag"
+    assert_text "rails"
+    check "rails"
+    check tags(:programming).name
+
     click_on "Update Bookmark"
 
     assert_text "Bookmark was successfully updated"
+    assert_link "rails"
+    assert_link tags(:programming).name
     click_on "Back"
   end
 

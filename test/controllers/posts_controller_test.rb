@@ -38,20 +38,6 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to post_url(Post.last)
   end
 
-  test "should create post with new tags" do
-    login
-    assert_difference ['Post.count', 'Tag.count'] do
-      post posts_url, params: {
-        post: {
-          published: true,
-          title: Faker::Games::DnD.alignment
-        },
-        new_tags: 'moar'
-      }
-    end
-    assert_redirected_to post_url(Post.last)
-  end
-
   test "should require a session to create a post" do
     assert_no_difference('Post.count') do
       post posts_url, params: { post: { published: true, title: @post.title } }

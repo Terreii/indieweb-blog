@@ -1,0 +1,9 @@
+<%= form_with model: Tag.new, id: dom_id(Tag.new), class: "form" do |form| %>
+  <div class="field">
+    <%= form.label :name, "Create new tag" %>
+    <br />
+    <%= form.text_field :name, class: "form-input" %>
+    <br />
+    <%= form.submit nil, class: 'btn' %>
+  </div>
+<% end %>

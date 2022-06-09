@@ -1,11 +1,23 @@
 <h1><%= set_title("#{t('tags.one')}: #{@tag.name}") %></h1>
 
-<p>Those posts are tagged with <strong><%= @tag.name %></strong>.</p>
+<p>Everything tagged with <strong><%= @tag.name %></strong>.</p>
+
+<h2>Posts</h2>
 
 <ul>
   <% @tag.posts.published.each do |post| %>
     <li>
       <%= link_to "#{post.published_at.to_date.to_s} - #{post.title}", post %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>Bookmarks</h2>
+
+<ul>
+  <% @tag.bookmarks.each do |bookmark| %>
+    <li>
+      <%= link_to "#{bookmark.created_at.to_date.to_s} - #{bookmark.title}", bookmark %>
     </li>
   <% end %>
 </ul>

@@ -86,6 +86,6 @@ code {
   font-size: 110%;
 }
 
-.author_joiner:last-of-type {
+.list_joiner:last-of-type {
   display: none;
 }

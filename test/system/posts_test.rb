@@ -39,16 +39,18 @@ class PostsTest < ApplicationSystemTestCase
     fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
     check "Published"
 
-    find("details").click
+    fill_in "Create new tag", with: "dnd"
+    click_on "Create Tag"
+    assert_text "dnd"
+    check "dnd"
+
     check tags(:bands).name
-    fill_in "New tags", with: "dnd,games"
 
     click_on "Create Post"
 
     assert_text "Post was successfully created"
     assert_link tags(:bands).name
     assert_link "dnd"
-    assert_link "games"
     click_on "Christophers thoughts"
   end
 
@@ -74,17 +76,19 @@ class PostsTest < ApplicationSystemTestCase
 
     fill_in "Title", with: @post.title
 
-    find("details").click
+    fill_in "Create new tag", with: "music"
+    click_on "Create Tag"
+    assert_text "music"
+    check "music"
+
     check tags(:bands).name
-    fill_in "New tags", with: "me,personal"
     fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
 
     click_on "Update Post"
 
     assert_text "Post was successfully updated"
     assert_link tags(:bands).name
-    assert_link "me"
-    assert_link "personal"
+    assert_link "music"
     click_on "Christophers thoughts"
   end
 

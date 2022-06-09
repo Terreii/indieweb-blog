@@ -9,7 +9,7 @@
       by
       <% bookmark.authors.each do |author| %>
         <%= link_to author.name, author.url, class: "h-card p-author" %>
-        <span class="author_joiner">&</span>
+        <span class="list_joiner">&</span>
       <% end %>
     <% end %>
   </p>
@@ -27,5 +27,13 @@
     <% end %>
     by
     <%= link_to t("general.author-full"), root_url, class: "p-author h-card u-url" %>.
+
+    <% unless bookmark.tags.empty? %>
+      <br />
+      <span itemprop="tags">
+        Tags:
+        <%= render bookmark.tags %>
+      </span>
+    <% end %>
   </footer>
 </article>
