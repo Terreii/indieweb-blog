@@ -18,6 +18,7 @@ class Post < ApplicationRecord
   alias_method :published, :published?
 
   def published=(is_published)
+    is_published = is_published == "1" || is_published == "true" if is_published.instance_of? String
     return published? if published? == is_published
     self.published_at = is_published ? Time.now : nil
     published?
