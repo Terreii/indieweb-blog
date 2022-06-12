@@ -54,6 +54,23 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Christophers thoughts"
   end
 
+  test "creating a draft Post" do
+    login
+
+    visit posts_url
+    click_on "Create new Post"
+    title = Faker::Games::DnD.alignment
+
+    fill_in "Title", with: title
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
+    click_on "Create Post"
+
+    assert_text "Post was successfully created"
+
+    click_on "Logout"
+    assert_no_text title
+  end
+
   test "creating a Post without a title" do
     login
 
