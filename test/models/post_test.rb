@@ -88,4 +88,12 @@ class PostTest < ActiveSupport::TestCase
     assert_not_empty post.errors[:slug]
     assert_equal ["is invalid"], post.errors[:slug]
   end
+
+  test "published should cast 1 and 0 strings to booleans" do
+    post = posts(:draft_post)
+    post.published = "1"
+    assert post.published?
+    post.published = "0"
+    assert_not post.published?
+  end
 end

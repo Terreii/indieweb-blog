@@ -29,7 +29,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Post.count') do
       post posts_url, params: {
         post: {
-          published: true,
+          published: "1",
           title: Faker::Games::DnD.alignment
         }
       }
@@ -40,7 +40,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should require a session to create a post" do
     assert_no_difference('Post.count') do
-      post posts_url, params: { post: { published: true, title: @post.title } }
+      post posts_url, params: { post: { published: "1", title: @post.title } }
     end
 
     assert_redirected_to login_path
@@ -64,12 +64,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update post" do
     login
-    patch post_url(@post), params: { post: { published: true, title: @post.title } }
+    patch post_url(@post), params: { post: { published: "1", title: @post.title } }
     assert_redirected_to post_url(@post)
   end
 
   test "should require a session to update a post" do
-    patch post_url(@post), params: { post: { published: true, title: @post.title } }
+    patch post_url(@post), params: { post: { published: "1", title: @post.title } }
     assert_redirected_to login_path
   end
 
@@ -97,7 +97,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_enqueued_with job: WebmentionJob, args: [{ source:, target: }] do
       post = post_params_with_links
-      post[:published] = true
+      post[:published] = "1"
       patch source, params: { post: }
     end
   end
@@ -118,7 +118,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_enqueued_with job: WebmentionJob do
       post = post_params_with_links
-      post[:published] = true
+      post[:published] = "1"
       post posts_url, params: {
         post:
       }
@@ -141,7 +141,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
       post posts_url, params: {
         post: {
           title: Faker::Games::DnD.alignment,
-          published: true,
+          published: "1",
           body: "<p>Test<a href=\"#{link}\">their post</a></p>"
         }
       }
@@ -163,7 +163,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
       post posts_url, params: {
         post: {
           title: Faker::Games::DnD.alignment,
-          published: true,
+          published: "1",
           body: <<~HTML
             <p>
               Test
@@ -195,6 +195,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   def post_params_with_links
     {
       title: Faker::Games::DnD.alignment,
+      published: "0",
       body: <<~HTML
         <p>
           Test
