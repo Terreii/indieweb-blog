@@ -21,14 +21,14 @@
     <%= form.text_field :slug, pattern: "^[a-z0-9][a-z0-9\-_]+[a-z0-9]$", class: "form-input" %>
   </div>
 
-  <div class="checkbox_field">
-    <%= form.check_box :published %>
-    <%= form.label :published %>
-  </div>
-
   <div class="field">
     <%= form.label :body %>
     <%= form.rich_text_area :body %>
+  </div>
+
+  <div class="checkbox_field">
+    <%= form.check_box :published %>
+    <%= form.label :published %>
   </div>
 
   <div class="actions">
