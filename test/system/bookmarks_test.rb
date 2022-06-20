@@ -8,6 +8,7 @@ class BookmarksTest < ApplicationSystemTestCase
   test "visiting the index" do
     visit bookmarks_url
     assert_selector "h1", text: "Bookmarks"
+    assert_css ".h-feed .h-entry", count: 2
   end
 
   test "should create bookmark" do

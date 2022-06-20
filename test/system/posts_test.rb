@@ -8,6 +8,7 @@ class PostsTest < ApplicationSystemTestCase
   test "visiting the index" do
     visit posts_url
     assert_selector "h1", text: "📨 Latest Posts"
+    assert_css ".h-feed .h-entry", count: 3
   end
 
   test "visiting the index logged in" do
