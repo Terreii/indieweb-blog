@@ -15,6 +15,10 @@
   <h2>📤 <%= t("posts.published") %></h2>
 <% end %>
 
-<% @posts.each do |post| %>
-  <%= render post %>
-<% end %>
+<div class="h-feed">
+  <span class="p-name hidden">Posts Feed</span>
+
+  <% @posts.each do |post| %>
+    <%= render post %>
+  <% end %>
+</div>

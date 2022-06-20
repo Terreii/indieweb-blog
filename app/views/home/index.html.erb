@@ -2,6 +2,10 @@
 
 <h2>📨 <%= t 'general.latest_entries' %></h2>
 
-<% @entries.each do |entry| %>
-  <%= render entry %>
-<% end %>
+<div class="h-feed">
+  <span class="p-name hidden">Main Feed</span>
+
+  <% @entries.each do |entry| %>
+    <%= render entry %>
+  <% end %>
+</div>
