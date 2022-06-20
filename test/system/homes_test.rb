@@ -8,5 +8,6 @@ class HomesTest < ApplicationSystemTestCase
     assert_selector "h2", text: "📨 Latest"
     assert_selector "h1", text: posts(:first_post).title
     assert_selector "p", text: "Bookmarked: #{bookmarks(:one).title}"
+    assert_css ".h-feed .h-entry", count: 5
   end
 end
