@@ -27,6 +27,12 @@
     <% end %>
   </p>
 
+  <% if @post.thumbnail.present? %>
+    <div>
+      <%= image_tag @post.thumbnail, id: "thumbnail" %>
+    </div>
+  <% end %>
+
   <div class="e-content" itemprop="articleBody">
     <%= @post.body %>
   </div>

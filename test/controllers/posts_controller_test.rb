@@ -38,6 +38,22 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to post_url(Post.last)
   end
 
+  test "should create post with thumbnail" do
+    login
+    assert_difference('Post.count') do
+      post posts_url, params: {
+        post: {
+          published: "1",
+          title: Faker::Games::DnD.alignment,
+          thumbnail: fixture_file_upload("sample.jpg", "image/jpeg", :binary)
+        }
+      }
+    end
+
+    assert_redirected_to post_url(Post.last)
+    assert Post.last.thumbnail.present?
+  end
+
   test "should require a session to create a post" do
     assert_no_difference('Post.count') do
       post posts_url, params: { post: { published: "1", title: @post.title } }

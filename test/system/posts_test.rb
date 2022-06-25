@@ -55,6 +55,26 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Christophers thoughts"
   end
 
+  test "creating a Post with thumbnail" do
+    login
+
+    visit posts_url
+    click_on "Create new Post"
+
+    fill_in "Title", with: Faker::Games::DnD.alignment
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
+    attach_file "Thumbnail", file_fixture("sample.jpg")
+    check "Published"
+
+    check tags(:bands).name
+
+    click_on "Create Post"
+
+    assert_text "Post was successfully created"
+    assert_css "img#thumbnail"
+    click_on "Christophers thoughts"
+  end
+
   test "creating a draft Post" do
     login
 
