@@ -30,7 +30,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
       post posts_url, params: {
         post: {
           published: "1",
-          title: Faker::Games::DnD.alignment
+          title: Faker::Games::DnD.alignment,
+          summary: Faker::Lorem.paragraph
         }
       }
     end
@@ -45,7 +46,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
         post: {
           published: "1",
           title: Faker::Games::DnD.alignment,
-          thumbnail: fixture_file_upload("sample.jpg", "image/jpeg", :binary)
+          thumbnail: fixture_file_upload("sample.jpg", "image/jpeg", :binary),
+          body: "<div>#{Faker::Lorem.paragraph}"
         }
       }
     end
@@ -212,6 +214,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     {
       title: Faker::Games::DnD.alignment,
       published: "0",
+      summary: Faker::Lorem.paragraph,
       body: <<~HTML
         <p>
           Test

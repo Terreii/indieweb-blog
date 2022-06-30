@@ -27,6 +27,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :summary %>
+    <%= form.text_area :summary, class: "form-input", maxlength: 200 %>
+  </div>
+
+  <div class="field">
     <%= form.label :body %>
     <%= form.rich_text_area :body %>
   </div>
