@@ -1,4 +1,15 @@
 <article id="<%= dom_id post %>" class="post_list__item h-entry">
   <h1><%= link_to post.title, post %></h1>
-  <%= post.body %>
+  <% unless post.summary.empty? %>
+    <p>
+      <% post.summary.each_line.each_with_index do |line, index| %>
+        <% unless index == 0 %>
+          <br>
+        <% end %>
+        <%= line %>
+      <% end %>
+    </p>
+  <% else %>
+    <%= post.body %>
+  <% end %>
 </article>

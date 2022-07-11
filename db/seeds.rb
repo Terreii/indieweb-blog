@@ -24,6 +24,7 @@ Post.create([
     slug: Post.string_to_slug(first_title),
     tags: tags,
     published_at: DateTime.parse('2020-07-10T14:20:00+00:00'),
+    summary: Faker::Lorem.paragraph,
     body: "<p>#{Faker::Lorem.paragraphs(number: 6).join '</p><p>'}</p>"
   },
   {
@@ -31,6 +32,7 @@ Post.create([
     slug: Post.string_to_slug(second_title),
     tags: [tags.first],
     published_at: DateTime.parse('2020-09-11T14:20:00+00:00'),
+    summary: Faker::Lorem.paragraph,
     body: "<p>#{Faker::Lorem.paragraphs(number: 6).join '</p><p>'}</p>"
   },
   {
