@@ -17,10 +17,10 @@
 :root {
   --page-bg-color: white;
   --text-color: #1f2937;
-  --info-text-color: #828282;
-  --link-color: #2a7ae2;
-  --link-color-hover: #4b5563;
-  --link-color-visited: #1756a9;
+  --info-text-color: #495057;
+  --link-color: #1864ab;
+  --link-color-hover: #364fc7;
+  --link-color-visited: #0b7285;
   --form-border-color: #ced4da;
   --outline-color: #3184fd;
   --btn-bg-color: var(--link-color);
@@ -41,10 +41,10 @@
   :root {
     --page-bg-color: #0f172a;
     --text-color: #e2e8f0;
-    --info-text-color: #94a3b8;
-    --link-color: #60a5fa;
-    --link-color-hover: #06b6d4;
-    --link-color-visited: #a78bfa;
+    --info-text-color: #adb5bd;
+    --link-color: #51cf66;
+    --link-color-hover: #b2f2bb;
+    --link-color-visited: #69db7c;
     --form-border-color: #1e293b;
     --form-bg-color: #334155;
     --form-text-color: #e2e8f0;
