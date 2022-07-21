@@ -13,11 +13,17 @@
   padding: 1rem;
   margin: 2rem 0rem;
   background-color: var(--dialog-bg-color);
+  display: flex;
+  flex-direction: row;
 }
 
 .post_list__item h1 {
   margin-top: 0;
   font-size: 120%;
+}
+
+.post_list__item_thumbnail {
+  margin-right: 1rem;
 }
 
 .post__title {
