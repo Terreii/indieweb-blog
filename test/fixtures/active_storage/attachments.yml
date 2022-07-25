@@ -1,0 +1,4 @@
+first_post_attachment:
+  name: thumbnail
+  record: first_post (Post)
+  blob: first_post_thumbnail

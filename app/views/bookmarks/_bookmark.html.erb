@@ -8,9 +8,11 @@
 
       <% if bookmark.authors.any? %>
         from
-        <% bookmark.authors.each do |author| %>
+        <% bookmark.authors.each_with_index do |author, index| %>
+          <% unless index == 0 %>
+            <span>&amp;</span>
+          <% end %>
           <%= link_to author.name, author.url, class: "h-card p-author" %>
-          <span class="list_joiner">&</span>
         <% end %>
       <% end %>
     </p>

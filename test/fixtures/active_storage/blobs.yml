@@ -1,0 +1,1 @@
+first_post_thumbnail: <%= ActiveStorage::FixtureSet.blob filename: "sample.jpg" %>
