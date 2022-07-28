@@ -11,6 +11,18 @@
       <%= javascript_importmap_tags %>
     <% end %>
     <link type="application/atom+xml" rel="alternate" href="<%= feed_url format: :atom %>" title="<%= t('general.title') %>" />
+    <meta property="og:title" content="<%= content_for?(:title) ? yield(:title) : t('general.title') %>">
+    <meta property="og:type" content="article" />
+    <% if content_for? :description %>
+      <meta property="og:description" content="<%= yield(:description) %>">
+    <% end %>
+    <% if content_for? :thumbnail %>
+      <meta property="og:image" content="<%= yield(:thumbnail) %>">
+      <meta name="twitter:card" content="summary_large_image">
+    <% end %>
+    <% if content_for? :share_url %>
+      <meta property="og:url" content="<%= yield(:share_url) %>">
+    <% end %>
   </head>
 
   <body>

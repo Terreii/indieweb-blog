@@ -1,4 +1,5 @@
 <article class="h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <% set_meta_data description: @post.summary, thumbnail: @post.thumbnail, url: full_url_for(@post) %>
   <h1 class="post__title p-name" itemprop="name headline"><%= set_title(@post.title) %></h1>
 
   <p class="post__meta">

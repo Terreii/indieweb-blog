@@ -38,7 +38,7 @@ class PostsTest < ApplicationSystemTestCase
     assert_css "meta[property=\"og:description\"][content*=\"#{@post.summary}\"]", visible: false
     assert_css "meta[property=\"og:image\"][content*=\"#{url_for @post.thumbnail}\"]", visible: false
     assert_css "meta[property=\"og:url\"][content*=\"#{post_url @post}\"]", visible: false
-    assert_css "meta[property=\"twitter:card\"][content*=\"summary_large_image\"]", visible: false
+    assert_css "meta[name=\"twitter:card\"][content*=\"summary_large_image\"]", visible: false
   end
 
   test "creating a Post" do
