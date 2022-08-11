@@ -40,6 +40,13 @@
   color: var(--info-text-color);
 }
 
+.post_thumbnail {
+  max-height: 25rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: var(--dialog-bg-color);
+}
+
 .post__edit-link {
   display: inline-block;
   margin-left: 0.75rem;

@@ -1,5 +1,9 @@
 <article class="h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
-  <% set_meta_data description: @post.summary, thumbnail: @post.thumbnail, url: full_url_for(@post) %>
+  <% set_meta_data(
+    description: @post.summary,
+    thumbnail: @post.thumbnail.present? ? @post.thumbnail : nil,
+    url: full_url_for(@post)
+  ) %>
   <h1 class="post__title p-name" itemprop="name headline"><%= set_title(@post.title) %></h1>
 
   <p class="post__meta">
@@ -30,7 +34,9 @@
 
   <% if @post.thumbnail.present? %>
     <div>
-      <%= image_tag @post.thumbnail, id: "thumbnail" %>
+      <%= link_to @post.thumbnail do %>
+        <%= image_tag @post.thumbnail, id: "thumbnail", class: "post_thumbnail", alt: "" %>
+      <% end %>
     </div>
   <% end %>
 

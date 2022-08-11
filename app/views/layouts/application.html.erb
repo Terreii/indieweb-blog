@@ -63,8 +63,8 @@
     </header>
 
     <main>
-      <%= content_tag :p, notice, class: 'notice' if notice.present? %>
-      <%= content_tag :p, alert, class: 'alert' if alert.present? %>
+      <%= content_tag :p, notice, class: 'notice', data: { "turbo-cache": false } if notice.present? %>
+      <%= content_tag :p, alert, class: 'alert', data: { "turbo-cache": false } if alert.present? %>
 
       <%= yield %>
     </main>
