@@ -33,7 +33,7 @@ class ApplicationHelperTest < ActionView::TestCase
     post = posts :first_post
     set_meta_data description: "Test page", thumbnail: nil, url: url_for(post)
 
-    assert_equal gravatar_url, content_for(:thumbnail)
+    assert_equal gravatar_url(200), content_for(:thumbnail)
   end
 
   test "gravatar_url should return the gravatar" do

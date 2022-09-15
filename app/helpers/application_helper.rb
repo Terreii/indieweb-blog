@@ -6,7 +6,15 @@ module ApplicationHelper
 
   def set_meta_data(description:, thumbnail:, url:)
     content_for(:description, description) unless description.nil?
-    content_for(:thumbnail, thumbnail.nil? ? gravatar_url : full_url_for(thumbnail))
+    if thumbnail.nil?
+      content_for(:thumbnail, gravatar_url(200))
+      content_for(:thumbnail_whith, 200)
+      content_for(:thumbnail_height, 200)
+    else
+      content_for(:thumbnail, full_url_for(thumbnail))
+      content_for(:thumbnail_whith, thumbnail.metadata["width"])
+      content_for(:thumbnail_height, thumbnail.metadata["height"])
+    end
     content_for(:share_url, url || request.original_url)
   end
 
