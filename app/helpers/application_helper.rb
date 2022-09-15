@@ -10,7 +10,9 @@ module ApplicationHelper
     content_for(:share_url, url || request.original_url)
   end
 
-  def gravatar_url
-    "https://www.gravatar.com/avatar/#{Rails.application.credentials.gravatar}"
+  def gravatar_url(size = nil)
+    url = "https://www.gravatar.com/avatar/#{Rails.application.credentials.gravatar}"
+    return "#{url}?s=#{size}" unless size.nil?
+    url
   end
 end

@@ -35,4 +35,12 @@ class ApplicationHelperTest < ActionView::TestCase
 
     assert_equal gravatar_url, content_for(:thumbnail)
   end
+
+  test "gravatar_url should return the gravatar" do
+    assert_match Rails.application.credentials.gravatar, gravatar_url
+  end
+
+  test "gravatar_url should take a optionnal size" do
+    assert_match /\?s=200\z/, gravatar_url(200)
+  end
 end
