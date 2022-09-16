@@ -8,7 +8,10 @@
 
   <p class="post__meta">
     <% if @post.published? %>
-      By <%= link_to t("general.author-full"), root_url, class: "p-author h-card" %> on
+      By <%= link_to root_url, class: "p-author h-card" do %>
+        <%= image_tag gravatar_url(200), alt: "", height: 200, width: 200, class: "u-photo", hidden: true %>
+        <%= t("general.author-full") %>
+      <% end %> on
       <%= link_to(
         time_tag(@post.published_at, @post.published_at.to_date.to_s,
           class: "dt-published",
