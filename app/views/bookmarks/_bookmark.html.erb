@@ -1,6 +1,6 @@
 <article id="<%= dom_id bookmark %>" class="h-entry post_list__item">
   <div>
-    <p class="u-bookmark-of h-cite">
+    <h1 class="u-bookmark-of h-cite">
       <span class="p-name">
         Bookmarked:
         <strong>
@@ -17,7 +17,7 @@
           <%= link_to author.name, author.url, class: "h-card p-author" %>
         <% end %>
       <% end %>
-    </p>
+    </h1>
 
     <% unless bookmark.summary.nil? || bookmark.summary.empty? %>
       <div class="e-content"><%= bookmark.summary %></div>
@@ -25,7 +25,7 @@
 
     <footer class="post__meta">
       <%= link_to bookmark, rel: "bookmark" do %>
-        <time datetime="<%= bookmark.created_at.iso8601 %>" class="dt-publishe">
+        <time datetime="<%= bookmark.created_at.iso8601 %>" class="dt-published">
           <%= bookmark.created_at.localtime.strftime("%Y-%m-%d %H:%M:%S") %>
         </time>
       <% end %>
