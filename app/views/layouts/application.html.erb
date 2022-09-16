@@ -26,6 +26,7 @@
     <% if content_for? :share_url %>
       <meta property="og:url" content="<%= yield(:share_url) %>">
     <% end %>
+    <meta name="twitter:creator" content="<%= Rails.configuration.x.accounts['twitter.com'] %>" />
   </head>
 
   <body>
