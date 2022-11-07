@@ -43,6 +43,7 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://indieweb_blog:pass@localhost/indieweb_blog_test
+          RAILS_MASTER_KEY: ${{ secrets.test }}
         run: bin/rails t
 
   system-tests:
@@ -86,5 +87,6 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://indieweb_blog:pass@localhost/indieweb_blog_test
+          RAILS_MASTER_KEY: ${{ secrets.test }}
         run: bin/rails test:system
 
