@@ -1,0 +1,84 @@
+name: Verify
+on: [push]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: indieweb_blog
+          POSTGRES_DB: indieweb_blog_test
+          POSTGRES_PASSWORD: "pass"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://indieweb_blog:pass@localhost/indieweb_blog_test
+        run: |
+          bin/rails db:setup
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://indieweb_blog:pass@localhost/indieweb_blog_test
+        run: bin/rails t
+
+  system-tests:
+    name: System Tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: indieweb_blog
+          POSTGRES_DB: indieweb_blog_test
+          POSTGRES_PASSWORD: "pass"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://indieweb_blog:pass@localhost/indieweb_blog_test
+        run: |
+          bin/rails db:setup
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://indieweb_blog:pass@localhost/indieweb_blog_test
+        run: bin/rails test:system
+
