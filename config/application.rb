@@ -19,8 +19,29 @@ module IndiewebBlog
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.x.accounts['github.com'] = 'Terreii'
-    config.x.accounts['twitter.com'] = 'terreii'
-    config.x.accounts['linkedin.com/in'] = 'christopher-astfalk'
+    config.x.accounts[:github] = {
+      name: "GitHub",
+      user: "@Terreii",
+      domain: "github.com",
+      profile: "https://github.com/Terreii"
+    }
+    config.x.accounts[:twitter] = {
+      name: "Twitter",
+      user: "@Terreii",
+      domain: "twitter.com",
+      profile: "https://twitter.com/terreii"
+    }
+    config.x.accounts[:mastodon] = {
+      name: "Mastodon",
+      user: "@Terreii@indieweb.social",
+      domain: "indieweb.social",
+      profile: "https://indieweb.social/@Terreii"
+    }
+    config.x.accounts[:linkedin] = {
+      name: "LinkedIn",
+      user: "christopher-astfalk",
+      domain: "linkedin.com",
+      profile: "https://www.linkedin.com/in/christopher-astfalk"
+    }
   end
 end
