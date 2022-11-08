@@ -80,6 +80,12 @@ jobs:
         run: |
           bin/rails db:setup
 
+      - name: Install libvips
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
+
       - name: Build assets
         run: bin/rails assets:precompile
 
