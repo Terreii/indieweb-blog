@@ -66,6 +66,8 @@ en:
     username: Username
     password: Password
     name: Session name
+    last_online: Last Online
+    current: Current
     login: Login
     logout: Logout
     sessions: Sessions

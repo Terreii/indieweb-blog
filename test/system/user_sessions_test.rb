@@ -1,6 +1,8 @@
 require "application_system_test_case"
 
 class UserSessionsTest < ApplicationSystemTestCase
+  include ActionView::Helpers::DateHelper
+
   setup do
     @user_session = user_sessions(:existing)
   end
@@ -10,6 +12,10 @@ class UserSessionsTest < ApplicationSystemTestCase
 
     visit user_sessions_url
     assert_selector "h1", text: "Active Sessions"
+    # List active sessions
+    assert_selector "td", text: "Current" # Current Session
+    other_session = time_ago_in_words user_sessions(:existing).last_online
+    assert_selector "td > time", text: other_session
   end
 
   test "creating a User session" do
