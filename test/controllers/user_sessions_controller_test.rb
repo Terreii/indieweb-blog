@@ -88,7 +88,7 @@ class UserSessionsControllerTest < ActionDispatch::IntegrationTest
       delete user_session_url(user_session)
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to user_sessions_path
   end
 
   test "should require a session to destroy user_session" do

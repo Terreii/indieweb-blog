@@ -2,10 +2,9 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user_session.name %>
-</p>
+<h1>Session Info</h1>
 
-<%= link_to 'Edit', edit_user_session_path(@user_session) %> |
+<%= render @user_session %>
+
+<br>
 <%= link_to 'Back', user_sessions_path %>

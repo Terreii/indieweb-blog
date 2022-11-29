@@ -1,6 +1,9 @@
 <h1><%= set_title(t 'sessions.editing') %></h1>
 
-<%= render 'form', user_session: @user_session %>
+<%= turbo_frame_tag dom_id(@user_session) do %>
+  <%= render 'form', user_session: @user_session %>
 
-<%= link_to 'Show', @user_session %> |
-<%= link_to 'Back', user_sessions_path %>
+  <%= link_to 'Cancel', @user_session %>
+<% end %>
+
+| <%= link_to 'Back', user_sessions_path %>

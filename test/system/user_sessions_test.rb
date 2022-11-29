@@ -40,26 +40,29 @@ class UserSessionsTest < ApplicationSystemTestCase
     fill_in "Name", with: @user_session.name
     click_on "Update User session"
 
-    assert_text "User session was successfully updated"
     click_on "Back"
   end
 
   test "destroying a User session" do
     login
-
     visit user_sessions_url
-    page.accept_confirm do
-      click_on "Destroy", match: :first
-    end
 
-    assert_text "You successfully logged out"
+    assert_difference 'UserSession.count', -1 do
+      page.accept_confirm do
+        click_on "Destroy", match: :first
+      end
+
+      click_on "Christophers thoughts"
+    end
   end
 
   test "logout" do
     login
 
-    click_on "Logout"
+    assert_difference 'UserSession.count', -1 do
+      click_on "Logout"
 
-    assert_text "You successfully logged out"
+      assert_text "You successfully logged out"
+    end
   end
 end
