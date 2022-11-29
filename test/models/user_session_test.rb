@@ -29,6 +29,13 @@ class UserSessionTest < ActiveSupport::TestCase
     assert_equal name, found_session.name
   end
 
+  test "should find_and_log_current session" do
+    user_session_id = user_sessions(:existing).id
+    user_session = UserSession.find_and_log_current user_session_id
+    assert_not_nil user_session
+    assert_in_delta DateTime.now.to_i, user_session.last_online.to_i, 5
+  end
+
   test "should update session" do
     user_session = user_sessions(:existing)
     name = Faker::Kpop.iii_groups

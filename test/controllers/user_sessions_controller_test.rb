@@ -71,6 +71,16 @@ class UserSessionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_path
   end
 
+  test "should update last_online of the current session" do
+    travel_to 1.day.ago do
+      login
+    end
+    id = session[:user_session_id]
+    assert_changes "UserSession.find(#{id}).last_online" do
+      get root_url
+    end
+  end
+
   test "should destroy user_session" do
     login
     user_session = UserSession.last

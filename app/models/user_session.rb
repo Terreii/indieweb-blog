@@ -7,4 +7,11 @@ class UserSession < ApplicationRecord
     user_session = UserSession.new name: name
     return user_session if user_session.save
   end
+
+  def self.find_and_log_current(session_id)
+    user_session = find_by(id: session_id)
+    return if user_session.nil?
+    user_session.update last_online: DateTime.now
+    user_session
+  end
 end
