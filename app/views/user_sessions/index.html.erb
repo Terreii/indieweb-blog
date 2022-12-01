@@ -2,6 +2,8 @@
 
 <h1 class="text-center"><%= set_title(t 'sessions.active_list') %></h1>
 
+<%= turbo_stream_from "user_sessions" %>
+
 <div id="session_list">
   <%= render partial: @user_sessions %>
 </div>
