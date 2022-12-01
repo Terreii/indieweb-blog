@@ -1,6 +1,6 @@
 <h1><%= set_title(t 'sessions.editing') %></h1>
 
-<%= turbo_frame_tag frame_id(@user_session) do %>
+<%= turbo_frame_tag dom_id(@user_session) do %>
   <div class="session_info session_info--form">
     <%= render 'form', user_session: @user_session %>
 

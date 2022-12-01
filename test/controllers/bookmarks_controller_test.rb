@@ -178,7 +178,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
   test "should not enqueue WebMention or BookmarkAuthors jobs if invalid" do
     login
 
-    assert_no_enqueued_jobs except: Turbo::Streams::ActionBroadcastJob do
+    assert_no_enqueued_jobs do
       post bookmarks_url, params: {
         bookmark: {
           title: "",
@@ -187,7 +187,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_no_enqueued_jobs except: Turbo::Streams::ActionBroadcastJob do
+    assert_no_enqueued_jobs do
       patch bookmark_url(@bookmark), params: {
         bookmark: {
           title: "",
