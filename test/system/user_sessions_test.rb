@@ -13,9 +13,9 @@ class UserSessionsTest < ApplicationSystemTestCase
     visit user_sessions_url
     assert_selector "h1", text: "Active Sessions"
     # List active sessions
-    assert_selector "td", text: "Current" # Current Session
+    assert_selector "span", text: "Current" # Current Session
     other_session = time_ago_in_words user_sessions(:existing).last_online
-    assert_selector "td > time", text: other_session
+    assert_selector "time", text: other_session
   end
 
   test "creating a User session" do
@@ -37,10 +37,11 @@ class UserSessionsTest < ApplicationSystemTestCase
     visit user_sessions_url
     click_on "Edit", match: :first
 
-    fill_in "Name", with: @user_session.name
+    name = Faker::Games::Zelda.character
+    fill_in "Name", with: name
     click_on "Update User session"
 
-    click_on "Back"
+    assert_selector "h2", text: name
   end
 
   test "destroying a User session" do

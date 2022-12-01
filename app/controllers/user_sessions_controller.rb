@@ -4,7 +4,7 @@ class UserSessionsController < ApplicationController
 
   # GET /user_sessions or /user_sessions.json
   def index
-    @user_sessions = UserSession.all
+    @user_sessions = UserSession.all.order last_online: "desc"
   end
 
   # GET /user_sessions/1 or /user_sessions/1.json
