@@ -2,3 +2,4 @@
 
 existing:
   name: Firefox ESR
+  last_online: <%= 7.days.ago %>

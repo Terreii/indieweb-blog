@@ -301,3 +301,7 @@ summary:focus {
   --btn-bg-color: var(--btn-danger-color);
   --btn-color: var(--text-color);
 }
+
+.text-center {
+  text-align: center;
+}

@@ -1,23 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= set_title(t 'sessions.active_list') %></h1>
+<h1 class="text-center"><%= set_title(t 'sessions.active_list') %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th><%= t("sessions.name") %></th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= turbo_stream_from "user_sessions" %>
 
-  <tbody>
-    <% @user_sessions.each do |user_session| %>
-      <tr>
-        <td><%= user_session.name %></td>
-        <td><%= link_to 'Show', user_session %></td>
-        <td><%= link_to 'Edit', edit_user_session_path(user_session) %></td>
-        <td><%= link_to 'Destroy', user_session, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div id="session_list">
+  <%= render partial: @user_sessions %>
+</div>

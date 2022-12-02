@@ -4,7 +4,7 @@ class UserSessionsController < ApplicationController
 
   # GET /user_sessions or /user_sessions.json
   def index
-    @user_sessions = UserSession.all
+    @user_sessions = UserSession.all.order last_online: "desc"
   end
 
   # GET /user_sessions/1 or /user_sessions/1.json
@@ -48,7 +48,7 @@ class UserSessionsController < ApplicationController
   def destroy
     @user_session.destroy
     respond_to do |format|
-      format.html { redirect_to root_path, notice: t("sessions.logout_success"), status: :see_other }
+      format.html { redirect_to user_sessions_path, notice: t("sessions.logout_success"), status: :see_other }
       format.json { head :no_content }
     end
   end

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def current_session
     return unless session[:user_session_id]
-    @current_session ||= UserSession.find_by(id: session[:user_session_id])
+    @current_session ||= UserSession.find_and_log_current(session[:user_session_id])
   end
 
   def authenticate

@@ -1,0 +1,29 @@
+<%= turbo_frame_tag dom_id(user_session) do %>
+  <section class="session_info">
+    <h2><%= user_session.name %></h2>
+
+    <p>
+      <strong>Last Online:</strong>
+      <% if user_session == current_session %>
+        <%= tag.span t("sessions.current"), title: user_session.last_online.localtime.strftime("%F %T %:z") %>
+      <% else %>
+        <%= tag.time(
+          datetime: user_session.last_online.iso8601,
+          title: user_session.last_online.localtime.strftime("%F %T %:z")
+        ) do %>
+          <%= time_ago_in_words(user_session.last_online) %> ago.
+        <% end %>
+      <% end %>
+    </p>
+
+    <div>
+      <%= link_to 'Edit', edit_user_session_path(user_session) %>
+      <% unless user_session == current_session %>
+        | <%= link_to 'Destroy', user_session, data: {
+          turbo_method: :delete,
+          turbo_confirm: 'Are you sure?'
+        } %>
+      <% end %>
+    </div>
+  </section>
+<% end %>
