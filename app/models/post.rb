@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
-  validates :title, :slug, presence: true
+  include Entryable
+
   validates :slug, length: { in: 3..128 }
   validates :slug, format: { with: /\A[a-z0-9][a-z0-9\-_]+[a-z0-9]\z/ }
   validates :summary, if: :published_at?, length: { minimum: 3 }
@@ -12,22 +13,6 @@ class Post < ApplicationRecord
   before_validation :ensure_slug_has_a_value
   before_validation :ensure_summary_has_a_value
   before_validation :trim_summary
-
-  scope :published, -> { where.not(published_at: nil).order(published_at: :desc) }
-  scope :draft, -> { where(published_at: nil) }
-
-  def published?
-    published_at.present?
-  end
-
-  alias_method :published, :published?
-
-  def published=(is_published)
-    is_published = is_published == "1" || is_published == "true" if is_published.instance_of? String
-    return published? if published? == is_published
-    self.published_at = is_published ? Time.now : nil
-    published?
-  end
 
   def to_param
     slug
