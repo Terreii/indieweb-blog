@@ -14,6 +14,12 @@ class Post < ApplicationRecord
   before_validation :ensure_summary_has_a_value
   before_validation :trim_summary
 
+  default_scope do
+    with_all_rich_text
+      .with_attached_thumbnail
+      .preload(:tags)
+  end
+
   def to_param
     slug
   end

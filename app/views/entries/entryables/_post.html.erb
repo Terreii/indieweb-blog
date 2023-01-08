@@ -1,0 +1,41 @@
+<% if entry.post.thumbnail.present? %>
+  <%= link_to entry.post, class: "post_list__item_thumbnail" do %>
+    <%= image_tag entry.post.thumbnail.variant(resize_to_limit: [150, 150]), alt: "" %>
+  <% end %>
+<% end %>
+
+<div>
+  <h1><%= link_to entry.title, entry.post %></h1>
+  <% unless entry.post.summary.empty? %>
+    <p>
+      <% entry.post.summary.each_line.each_with_index do |line, index| %>
+        <% unless index == 0 %>
+          <br>
+        <% end %>
+        <%= line %>
+      <% end %>
+    </p>
+  <% else %>
+    <%= entry.post.body %>
+  <% end %>
+
+  <footer class="post__meta">
+    <%= link_to entry.post do %>
+      <time datetime="<%= entry.published_at.iso8601 %>">
+        <%= entry.published_at.localtime.strftime("%Y-%m-%d %H:%M:%S") %>
+      </time>
+    <% end %>
+
+    <span class="hidden">
+      <%= link_to t("general.author-full"), root_url, class: "p-author h-card u-url" %>
+    </span>
+
+    <% unless entry.post.tags.empty? %>
+      <br />
+      <span itemprop="tags">
+        Tags:
+        <%= render entry.post.tags %>
+      </span>
+    <% end %>
+  </footer>
+</div>

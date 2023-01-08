@@ -1,8 +1,8 @@
 <article class="h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
   <% set_meta_data(
-    description: @post.summary,
-    thumbnail: @post.thumbnail.present? ? @post.thumbnail : nil,
-    url: full_url_for(@post)
+    description: @post.post.summary,
+    thumbnail: @post.post.thumbnail.present? ? @post.post.thumbnail : nil,
+    url: full_url_for(@post.post)
   ) %>
   <h1 class="post__title p-name" itemprop="name headline"><%= set_title(@post.title) %></h1>
 
@@ -17,33 +17,33 @@
           class: "dt-published",
           itemprop: "dateCreated pubdate datePublished"
         ),
-        post_url(@post),
+        post_url(@post.post),
         class: "u-url"
       ) %>
     <% end %>
 
     <% if logged_in? %>
-      <%= link_to 'Edit', edit_post_path(@post), class: 'post__edit-link' %>
+      <%= link_to 'Edit', edit_post_path(@post.post), class: 'post__edit-link' %>
     <% end %>
 
-    <% unless @post.tags.empty? %>
+    <% unless @post.post.tags.empty? %>
       <br />
       <span itemprop="tags">
         Tags:
-        <%= render @post.tags %>
+        <%= render @post.post.tags %>
       </span>
     <% end %>
   </p>
 
-  <% if @post.thumbnail.present? %>
+  <% if @post.post.thumbnail.present? %>
     <div>
-      <%= link_to @post.thumbnail do %>
-        <%= image_tag @post.thumbnail, id: "thumbnail", class: "post_thumbnail", alt: "" %>
+      <%= link_to @post.post.thumbnail do %>
+        <%= image_tag @post.post.thumbnail, id: "thumbnail", class: "post_thumbnail", alt: "" %>
       <% end %>
     </div>
   <% end %>
 
   <div class="e-content" itemprop="articleBody">
-    <%= @post.body %>
+    <%= @post.post.body %>
   </div>
 </article>

@@ -6,6 +6,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @post = posts(:first_post)
+    @entry = @post.entry
   end
 
   test "should get index" do
@@ -31,7 +32,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
         post: {
           published: "1",
           title: Faker::Games::DnD.alignment,
-          summary: Faker::Lorem.paragraph
+          summary: Faker::Lorem.paragraph,
+          body: "<p>#{Faker::Lorem.paragraphs.join "</p><p>"}</p>"
         }
       }
     end
@@ -93,7 +95,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy post" do
     login
-    assert_difference('Post.count', -1) do
+    assert_difference ['Entry.count', 'Post.count'], -1  do
       delete post_url(@post)
     end
 
@@ -101,7 +103,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should require a session to destroy post" do
-    assert_no_difference('Post.count') do
+    assert_no_difference ['Entry.count', 'Post.count'] do
       delete post_url(@post)
     end
 

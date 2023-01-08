@@ -6,9 +6,9 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     if logged_in?
-      @drafts = Post.draft.all
+      @drafts = Entry.posts.draft.all
     end
-    @posts = Post.published.with_rich_text_body.limit 10
+    @posts = Entry.posts.published.limit 10
   end
 
   # GET /posts/slug or /posts/slug.json
@@ -29,11 +29,11 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
+    @post = Entry.create_with_post(post_params)
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: "Post was successfully created." }
+        format.html { redirect_to @post.post, notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -70,29 +70,29 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.with_rich_text_body.find_by(slug: params[:slug])
+      @post = Post.with_rich_text_body.find_by(slug: params[:slug]).entry
     end
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :slug, :summary, :thumbnail, :published, :body, tag_ids: [])
+      params.require(:post).permit(:title, :slug, :summary, :thumbnail, :published, :body, tag_ids: []).to_h
     end
 
     # Notifies all links in the post about this published post.
     def webmention
-      return unless @post.published? && @post.body.saved_changes?
+      return unless @post.published? && @post.post.body.saved_changes?
       return if @post.changed? # changes weren't saved
-      source = post_url @post
+      source = post_url @post.post
 
       # Stores notified URIs, so that a page is not notified twice.
       posted_uris = Set.new
 
       # Notify every link
-      webmention_a_body source, posted_uris, @post.body
+      webmention_a_body source, posted_uris, @post.post.body
 
       # Notify also removed links
-      if @post.body.body_previously_changed? && !@post.body.body_previously_was.nil?
-        webmention_a_body source, posted_uris, @post.body.body_previously_was
+      if @post.post.body.body_previously_changed? && !@post.post.body.body_previously_was.nil?
+        webmention_a_body source, posted_uris, @post.post.body.body_previously_was
       end
     end
 
