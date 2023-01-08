@@ -1,9 +1,9 @@
 class Post < ApplicationRecord
   include Entryable
 
-  validates :slug, length: { in: 3..128 }
+  validates :slug, presence: true, length: { in: 3..128 }
   validates :slug, format: { with: /\A[a-z0-9][a-z0-9\-_]+[a-z0-9]\z/ }
-  validates :summary, if: :published_at?, length: { minimum: 3 }
+  validates :summary, if: -> { entry && entry.published_at? }, length: { minimum: 3 }
   validates :summary, length: { maximum: 200 }
 
   has_and_belongs_to_many :tags
@@ -36,13 +36,15 @@ class Post < ApplicationRecord
   private
 
     def ensure_slug_has_a_value
+      return if entry.nil?
       if slug.nil? || slug.blank?
-        self.slug = Post.string_to_slug(title) unless title.nil? || title.blank?
+        self.slug = Post.string_to_slug(entry.title) unless entry.title.nil? || entry.title.blank?
       end
     end
 
     def ensure_summary_has_a_value
-      return unless published? && !summary? && body?
+      return if entry.nil?
+      return unless entry.published? && !summary? && body?
       body_doc = Nokogiri.HTML5 body.to_s
       self.summary = body_doc.at_css(".trix-content > *").content
     end

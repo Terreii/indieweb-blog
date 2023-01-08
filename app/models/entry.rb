@@ -1,11 +1,20 @@
 class Entry < ApplicationRecord
-  delegated_type :entryable, types: %w[ Post ]
+  delegated_type :entryable, types: %w[ Post ], dependent: :destroy
   accepts_nested_attributes_for :entryable
 
-  validates :title, :slug, presence: true
+  validates :title, presence: true
 
+  scope :with_entryables, -> { includes(:entryable) }
   scope :published, -> { where.not(published_at: nil).order(published_at: :desc) }
   scope :draft, -> { where(published_at: nil) }
+  scope :posts, -> { where entryable_type: Post.name }
+
+  def self.create_with_post(title:, published: false, **args)
+    post = Post.new(args.merge slug: Post.string_to_slug(title))
+    entry = create!(title:, entryable: post)
+    entry.update(published: published) if published
+    entry
+  end
 
   def published?
     published_at.present?
