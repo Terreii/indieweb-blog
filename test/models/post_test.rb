@@ -5,7 +5,9 @@ class PostTest < ActiveSupport::TestCase
   test "should create post" do
     post = Entry.create_with_post(
       title: Faker::Games::DnD.alignment,
-      body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+      entryable_attributes: {
+        body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+      }
     )
 
     assert post.valid?
@@ -47,8 +49,10 @@ class PostTest < ActiveSupport::TestCase
     assert_raise(ActiveRecord::RecordNotUnique) {
       Entry.create_with_post(
         title: entries(:first_post).title,
-        slug: posts(:first_post).slug,
-        body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+        entryable_attributes: {
+          slug: posts(:first_post).slug,
+          body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+        }
       )
     }
   end

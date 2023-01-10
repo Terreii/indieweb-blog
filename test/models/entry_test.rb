@@ -1,6 +1,19 @@
 require "test_helper"
 
 class EntryTest < ActiveSupport::TestCase
+  test "should create post" do
+    args = {
+      title: Faker::Games::Zelda.game,
+      published: true,
+      entryable_attributes: {
+        body: "<p>Test Body</p>"
+      }
+    }
+    entry = Entry.create_with_post **args
+    assert entry.save
+    assert entry.published?
+  end
+
   test "should update post" do
     entry = entries(:draft_post)
     title = Faker::Kpop.boy_bands

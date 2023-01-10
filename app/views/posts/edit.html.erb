@@ -1,6 +1,6 @@
 <h1><%= set_title(t('posts.editing')) %></h1>
 
-<%= render 'form', post: @post, tags: @tags %>
+<%= render 'form', entry: @post, tags: @tags %>
 
 <%= link_to 'Destroy', @post, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
 

@@ -1,10 +1,10 @@
-<%= form_with model: post, class: "form" do |form| %>
-  <% if post.errors.any? %>
+<%= form_with model: entry, url: entry.entryable, class: "form" do |form| %>
+  <% if entry.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <h2><%= pluralize(entry.errors.count, "error") %> prohibited this post from being saved:</h2>
 
       <ul>
-        <% post.errors.each do |error| %>
+        <% entry.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -16,25 +16,27 @@
     <%= form.text_field :title, class: "form-input" %>
   </div>
 
-  <div class="field">
-    <%= form.label :slug %>
-    <%= form.text_field :slug, pattern: "^[a-z0-9][a-z0-9\-_]+[a-z0-9]$", class: "form-input" %>
-  </div>
+  <%= form.fields_for :entryable, entry.entryable do |entry_form| %>
+    <div class="field">
+      <%= entry_form.label :slug %>
+      <%= entry_form.text_field :slug, pattern: "^[a-z0-9][a-z0-9\-_]+[a-z0-9]$", class: "form-input" %>
+    </div>
 
-  <div class="field">
-    <%= form.label :thumbnail %>
-    <%= form.file_field :thumbnail, class: "form-input" %>
-  </div>
+    <div class="field">
+      <%= entry_form.label :thumbnail %>
+      <%= entry_form.file_field :thumbnail, class: "form-input" %>
+    </div>
 
-  <div class="field">
-    <%= form.label :summary %>
-    <%= form.text_area :summary, class: "form-input", maxlength: 200 %>
-  </div>
+    <div class="field">
+      <%= entry_form.label :summary %>
+      <%= entry_form.text_area :summary, class: "form-input", maxlength: 200 %>
+    </div>
 
-  <div class="field">
-    <%= form.label :body %>
-    <%= form.rich_text_area :body %>
-  </div>
+    <div class="field">
+      <%= entry_form.label :body %>
+      <%= entry_form.rich_text_area :body %>
+    </div>
+  <% end %>
 
   <div class="checkbox_field">
     <%= form.check_box :published %>
@@ -45,7 +47,7 @@
     <%= form.submit nil, class: 'btn' %>
   </div>
 
-  <%= render "tags/form", form: form, name: "post" %>
+  <%# <%= render "tags/form", form: form, name: "post" %1> %>
 <% end %>
 
 <br>

@@ -20,7 +20,7 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
+    @entry = Entry.new entryable: Post.new
   end
 
   # GET /posts/slug/edit
@@ -34,7 +34,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post.post, notice: "Post was successfully created." }
-        format.json { render :show, status: :created, location: @post }
+        format.json { render :show, status: :created, location: @post.post }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
@@ -46,8 +46,8 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: "Post was successfully updated." }
-        format.json { render :show, status: :ok, location: @post }
+        format.html { redirect_to @post.post, notice: "Post was successfully updated." }
+        format.json { render :show, status: :ok, location: @post.post }
       else
         format.html {
           set_all_tags
@@ -75,7 +75,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :slug, :summary, :thumbnail, :published, :body, tag_ids: []).to_h
+      params.require(:entry).permit(:title, :published, entryable_attributes: [:slug, :summary, :thumbnail, :body, tag_ids: []])
     end
 
     # Notifies all links in the post about this published post.

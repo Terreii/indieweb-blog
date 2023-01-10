@@ -29,11 +29,13 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
     assert_difference('Post.count') do
       post posts_url, params: {
-        post: {
+        entry: {
           published: "1",
           title: Faker::Games::DnD.alignment,
-          summary: Faker::Lorem.paragraph,
-          body: "<p>#{Faker::Lorem.paragraphs.join "</p><p>"}</p>"
+          entryable_attributes: {
+            summary: Faker::Lorem.paragraph,
+            body: "<p>#{Faker::Lorem.paragraphs.join "</p><p>"}</p>"
+          }
         }
       }
     end
@@ -45,11 +47,13 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
     assert_difference('Post.count') do
       post posts_url, params: {
-        post: {
+        entry: {
           published: "1",
           title: Faker::Games::DnD.alignment,
-          thumbnail: fixture_file_upload("sample.jpg", "image/jpeg", :binary),
-          body: "<div>#{Faker::Lorem.paragraph}"
+          entryable_attributes: {
+            thumbnail: fixture_file_upload("sample.jpg", "image/jpeg", :binary),
+            body: "<div>#{Faker::Lorem.paragraph}"
+          }
         }
       }
     end
@@ -60,7 +64,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should require a session to create a post" do
     assert_no_difference('Post.count') do
-      post posts_url, params: { post: { published: "1", title: @post.title } }
+      post posts_url, params: { entry: { published: "1", title: @entry.title } }
     end
 
     assert_redirected_to login_path
@@ -84,12 +88,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update post" do
     login
-    patch post_url(@post), params: { post: { published: "1", title: @post.title } }
+    patch post_url(@post), params: { entry: { published: "1", title: @entry.title } }
     assert_redirected_to post_url(@post)
   end
 
   test "should require a session to update a post" do
-    patch post_url(@post), params: { post: { published: "1", title: @post.title } }
+    patch post_url(@post), params: { entry: { published: "1", title: @entry.title } }
     assert_redirected_to login_path
   end
 
@@ -216,13 +220,15 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     {
       title: Faker::Games::DnD.alignment,
       published: "0",
-      summary: Faker::Lorem.paragraph,
-      body: <<~HTML
-        <p>
-          Test
-          <a href="http://tester.io/article/1">their post</a>
-        </p>
-      HTML
+      entryable_attributes: {
+        summary: Faker::Lorem.paragraph,
+        body: <<~HTML
+          <p>
+            Test
+            <a href="http://tester.io/article/1">their post</a>
+          </p>
+        HTML
+      }
     }
   end
 end
