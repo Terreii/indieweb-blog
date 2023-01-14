@@ -120,9 +120,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
 
     assert_enqueued_with job: WebmentionJob, args: [{ source:, target: }] do
-      post = post_params_with_links
-      post[:published] = "1"
-      patch source, params: { post: }
+      entry = entry_to_request_body entries(:draft_post), published: true
+      patch source, params: { entry: }
     end
   end
 
@@ -131,7 +130,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
 
     assert_no_enqueued_jobs only: WebmentionJob do
-      patch source, params: { post: post_params_with_links }
+      entry = entry_to_request_body entries(:draft_post)
+      patch source, params: { entry: }
     end
   end
 
@@ -141,11 +141,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
 
     assert_enqueued_with job: WebmentionJob do
-      post = post_params_with_links
-      post[:published] = "1"
-      post posts_url, params: {
-        post:
-      }
+      entry = post_params_with_links published: true
+      post posts_url, params: { entry: }
     end
   end
 
@@ -153,7 +150,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
 
     assert_no_enqueued_jobs only: WebmentionJob do
-      post posts_url, params: { post: post_params_with_links }
+      post posts_url, params: { entry: post_params_with_links }
     end
   end
 
@@ -163,11 +160,10 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_enqueued_jobs only: WebmentionJob do
       post posts_url, params: {
-        post: {
-          title: Faker::Games::DnD.alignment,
-          published: "1",
+        entry: post_params_with_links(
+          published: true,
           body: "<p>Test<a href=\"#{link}\">their post</a></p>"
-        }
+        )
       }
     end
   end
@@ -176,7 +172,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
 
     assert_no_enqueued_jobs only: WebmentionJob do
-      post posts_url, params: { post: post_params_with_links }
+      post posts_url, params: { entry: post_params_with_links }
     end
   end
 
@@ -185,9 +181,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_enqueued_jobs 1, only: WebmentionJob do
       post posts_url, params: {
-        post: {
-          title: Faker::Games::DnD.alignment,
-          published: "1",
+        entry: post_params_with_links(
+          published: true,
           body: <<~HTML
             <p>
               Test
@@ -196,7 +191,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
               <a href="http://tester.io/article/1">their post again</a>
             </p>
           HTML
-        }
+        )
       }
     end
   end
@@ -207,28 +202,47 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_enqueued_jobs 1, only: WebmentionJob do
       blog_post = posts(:post_with_links)
       patch post_url(blog_post), params: {
-        post: {
+        entry: post_params_with_links(
+          published: true,
           body: <<~HTML
             <p>This was a post</p>
           HTML
-        }
+        )
       }
     end
   end
 
-  def post_params_with_links
+  def post_params_with_links(published: false, body: body_with_links)
+    title = Faker::Games::DnD.alignment
     {
-      title: Faker::Games::DnD.alignment,
-      published: "0",
+      title:,
+      published: published ? "1" : "0",
       entryable_attributes: {
+        slug: Post.string_to_slug(title),
         summary: Faker::Lorem.paragraph,
-        body: <<~HTML
-          <p>
-            Test
-            <a href="http://tester.io/article/1">their post</a>
-          </p>
-        HTML
+        body:
       }
     }
+  end
+
+  def entry_to_request_body(entry, published: entry.published?)
+    {
+      title: entry.title,
+      published: published ? "1" : "0",
+      entryable_attributes: {
+        slug: entry.post.slug || Post.string_to_slug(entry.title),
+        summary: entry.post.summary || Faker::Lorem.paragraph,
+        body: body_with_links
+      }
+    }
+  end
+
+  def body_with_links
+    <<~HTML
+      <p>
+        Test
+        <a href="http://tester.io/article/1">their post</a>
+      </p>
+    HTML
   end
 end

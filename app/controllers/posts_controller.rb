@@ -49,10 +49,7 @@ class PostsController < ApplicationController
         format.html { redirect_to @entry.post, notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @entry.post }
       else
-        format.html {
-          set_all_tags
-          render :edit, status: :unprocessable_entity
-        }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
