@@ -16,7 +16,7 @@
     <%= form.text_field :title, class: "form-input" %>
   </div>
 
-  <%= form.fields_for :entryable, entry.entryable do |entry_form| %>
+  <%= form.fields_for :entryable do |entry_form| %>
     <div class="field">
       <%= entry_form.label :slug %>
       <%= entry_form.text_field :slug, pattern: "^[a-z0-9][a-z0-9\-_]+[a-z0-9]$", class: "form-input" %>
