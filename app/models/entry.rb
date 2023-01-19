@@ -9,13 +9,13 @@ class Entry < ApplicationRecord
   scope :draft, -> { where(published_at: nil) }
   scope :posts, -> { where(entryable_type: Post.name).includes(:entryable) }
 
-  def self.create_with_post(args)
+  def self.build_with_post(args)
     title = args.fetch(:title)
     published = args[:published].presence || false
     entryable_attributes = args[:entryable_attributes]
     entryable_attributes[:slug] = Post.string_to_slug(title) unless entryable_attributes[:slug].present?
-    entry = create!(title:, entryable: Post.new(entryable_attributes))
-    entry.update(published: published) if published
+    entry = self.new(title:, entryable: Post.new(entryable_attributes))
+    entry.save && entry.update(published: published)
     entry
   end
 

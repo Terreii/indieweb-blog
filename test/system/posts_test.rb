@@ -112,7 +112,7 @@ class PostsTest < ApplicationSystemTestCase
     fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
     click_on "Create Entry"
 
-    assert_text "Slug can't be blank"
+    assert_text "Entryable slug can't be blank"
     assert_text "Title can't be blank"
     click_on "Christophers thoughts"
   end

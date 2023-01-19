@@ -29,7 +29,7 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @entry = Entry.create_with_post(post_params)
+    @entry = Entry.build_with_post(post_params)
 
     respond_to do |format|
       if @entry.save

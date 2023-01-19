@@ -9,7 +9,7 @@ class EntryTest < ActiveSupport::TestCase
         body: "<p>Test Body</p>"
       }
     }
-    entry = Entry.create_with_post **args
+    entry = Entry.build_with_post **args
     assert entry.save
     assert entry.published?
   end

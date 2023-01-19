@@ -3,14 +3,14 @@ require "test_helper"
 
 class PostTest < ActiveSupport::TestCase
   test "should create post" do
-    post = Entry.create_with_post(
+    post = Entry.build_with_post(
       title: Faker::Games::DnD.alignment,
       entryable_attributes: {
         body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
       }
     )
 
-    assert post.valid?
+    assert post.save
   end
 
   test "should find post" do
@@ -47,13 +47,14 @@ class PostTest < ActiveSupport::TestCase
 
   test "should not create a post with a not unique slug" do
     assert_raise(ActiveRecord::RecordNotUnique) {
-      Entry.create_with_post(
+      entry = Entry.build_with_post(
         title: entries(:first_post).title,
         entryable_attributes: {
           slug: posts(:first_post).slug,
           body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
         }
       )
+      entry.save
     }
   end
 
