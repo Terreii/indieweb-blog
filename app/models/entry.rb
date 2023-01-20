@@ -9,15 +9,7 @@ class Entry < ApplicationRecord
   scope :draft, -> { where(published_at: nil) }
   scope :posts, -> { where(entryable_type: Post.name).includes(:entryable) }
 
-  def self.build_with_post(args)
-    title = args.fetch(:title)
-    published = args[:published].presence || false
-    entryable_attributes = args[:entryable_attributes]
-    entryable_attributes[:slug] = Post.string_to_slug(title) unless entryable_attributes[:slug].present?
-    entry = self.new(title:, entryable: Post.new(entryable_attributes))
-    entry.save && entry.update(published: published)
-    entry
-  end
+  before_validation :set_self_on_new_entryable
 
   def published?
     published_at.present?
@@ -31,4 +23,16 @@ class Entry < ApplicationRecord
     self.published_at = is_published ? Time.now : nil
     published?
   end
+
+  private
+
+    # Sets the entry property of an entryable model to self.
+    # This way, it can be created in one go.
+    # Normaly the entry reference is only set once both models are saved,
+    # but for new entries, it is not. Which doesn't allow it to use
+    # it for validations.
+    def set_self_on_new_entryable
+      return unless entryable.entry.nil?
+      entryable.entry = self
+    end
 end

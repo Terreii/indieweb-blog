@@ -29,7 +29,7 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @entry = Entry.build_with_post(post_params)
+    @entry = Entry.new(post_params.merge entryable_type: Post.name)
 
     respond_to do |format|
       if @entry.save

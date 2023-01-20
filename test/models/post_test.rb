@@ -3,11 +3,12 @@ require "test_helper"
 
 class PostTest < ActiveSupport::TestCase
   test "should create post" do
-    post = Entry.build_with_post(
+    post = Entry.new(
       title: Faker::Games::DnD.alignment,
-      entryable_attributes: {
+      entryable: Post.new(
+        summary: Faker::Lorem.paragraph,
         body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
-      }
+      )
     )
 
     assert post.save
@@ -47,10 +48,12 @@ class PostTest < ActiveSupport::TestCase
 
   test "should not create a post with a not unique slug" do
     assert_raise(ActiveRecord::RecordNotUnique) {
-      entry = Entry.build_with_post(
+      entry = Entry.new(
         title: entries(:first_post).title,
+        entryable_type: Post.name,
         entryable_attributes: {
           slug: posts(:first_post).slug,
+          summary: Faker::Lorem.paragraph,
           body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
         }
       )
@@ -58,14 +61,39 @@ class PostTest < ActiveSupport::TestCase
     }
   end
 
+  test "should not publish a post without a summary" do
+    entry = entries(:draft_post)
+    assert_not entry.update(
+      published: true,
+      entryable_attributes: {
+        summary: "a"
+      }
+    )
+  end
+
+  test "should not create and publish a post without a summary" do
+    post = Entry.new(
+      title: Faker::Games::Zelda.game,
+      published: true,
+      entryable: Post.new(
+        summary: "a",
+        body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+      )
+    )
+    assert_not post.save
+  end
+
   test "should validate a posts slug" do
-    post = Post.new({
-      slug: "some!_not allowed",
-      body: "<p>Test</p>"
-    })
+    post = Entry.new(
+      title: "something",
+      entryable: Post.new(
+        slug: "some!_not allowed",
+        body: "<p>Test</p>"
+      )
+    )
     assert_not post.save
 
-    assert_not_empty post.errors[:slug]
-    assert_equal ["is invalid"], post.errors[:slug]
+    assert_not_empty post.errors["entryable.slug"]
+    assert_equal ["is invalid"], post.errors["entryable.slug"]
   end
 end

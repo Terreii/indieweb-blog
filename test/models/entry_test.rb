@@ -2,14 +2,14 @@ require "test_helper"
 
 class EntryTest < ActiveSupport::TestCase
   test "should create post" do
-    args = {
+    entry = Entry.new(
       title: Faker::Games::Zelda.game,
       published: true,
+      entryable_type: Post.name,
       entryable_attributes: {
         body: "<p>Test Body</p>"
       }
-    }
-    entry = Entry.build_with_post **args
+    )
     assert entry.save
     assert entry.published?
   end
@@ -49,7 +49,7 @@ class EntryTest < ActiveSupport::TestCase
   end
 
   test "should not create an entry without title" do
-    entry = Entry.new
+    entry = Entry.new entryable: Post.new(summary: "Hello")
     assert_not entry.save
 
     assert_not_empty entry.errors[:title]
