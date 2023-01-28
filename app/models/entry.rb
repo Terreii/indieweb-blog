@@ -5,10 +5,10 @@ class Entry < ApplicationRecord
 
   validates :title, presence: true
 
-  scope :with_entryables, -> { includes(:entryable) }
+  scope :with_entryables, -> { includes(:entryable, :tags) }
   scope :published, -> { where.not(published_at: nil).order(published_at: :desc) }
   scope :draft, -> { where(published_at: nil) }
-  scope :posts, -> { where(entryable_type: Post.name).includes(:entryable) }
+  scope :posts, -> { where(entryable_type: Post.name).includes(:entryable, :tags) }
 
   before_validation :set_self_on_new_entryable
 

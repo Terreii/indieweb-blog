@@ -5,9 +5,9 @@
 <h2>Posts</h2>
 
 <ul>
-  <% @tag.posts.published.each do |post| %>
+  <% @tag.entries.published.each do |entry| %>
     <li>
-      <%= link_to "#{post.published_at.to_date.to_s} - #{post.title}", post %>
+      <%= link_to "#{entry.published_at.to_date.to_s} - #{entry.title}", entry.entryable %>
     </li>
   <% end %>
 </ul>

@@ -5,7 +5,6 @@ class Post < ApplicationRecord
   validates :slug, format: { with: /\A[a-z0-9][a-z0-9\-_]+[a-z0-9]\z/ }
   validates :summary, length: { minimum: 3, maximum: 200 }
 
-  has_and_belongs_to_many :tags
   has_one_attached :thumbnail
   has_rich_text :body
 
@@ -16,7 +15,6 @@ class Post < ApplicationRecord
   default_scope do
     with_all_rich_text
       .with_attached_thumbnail
-      .preload(:tags)
   end
 
   def to_param

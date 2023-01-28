@@ -6,7 +6,6 @@ class Tag < ApplicationRecord
 
   has_and_belongs_to_many :entries
   has_and_belongs_to_many :bookmarks
-  has_and_belongs_to_many :posts
 
   default_scope { order :name }
 
@@ -17,7 +16,7 @@ class Tag < ApplicationRecord
   after_create_commit {
     broadcast_append_later_to "tags", target: "post_tags_list", partial: "tags/checkbox", locals: {
       tag: self,
-      model_name: "entry[entryable_attributes]"
+      model_name: "entry"
     }
     broadcast_append_later_to "tags", target: "bookmark_tags_list", partial: "tags/checkbox", locals: {
       tag: self,

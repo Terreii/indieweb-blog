@@ -47,9 +47,7 @@
     <%= form.submit nil, class: 'btn' %>
   </div>
 
-  <%= form.fields_for :entryable, include_id: false do |entry_form| %>
-    <%= render "tags/form", form: entry_form, name: "post" %>
-  <% end %>
+  <%= render "tags/form", form: form, name: "post" %>
 <% end %>
 
 <br>

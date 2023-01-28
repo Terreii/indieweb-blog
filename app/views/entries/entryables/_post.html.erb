@@ -30,11 +30,11 @@
       <%= link_to t("general.author-full"), root_url, class: "p-author h-card u-url" %>
     </span>
 
-    <% unless entry.post.tags.empty? %>
+    <% unless entry.tags.empty? %>
       <br />
       <span itemprop="tags">
         Tags:
-        <%= render entry.post.tags %>
+        <%= render entry.tags %>
       </span>
     <% end %>
   </footer>

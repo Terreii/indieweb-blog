@@ -26,11 +26,11 @@
       <%= link_to 'Edit', edit_post_path(@entry.post), class: 'post__edit-link' %>
     <% end %>
 
-    <% unless @entry.post.tags.empty? %>
+    <% unless @entry.tags.empty? %>
       <br />
       <span itemprop="tags">
         Tags:
-        <%= render @entry.post.tags %>
+        <%= render @entry.tags %>
       </span>
     <% end %>
   </p>

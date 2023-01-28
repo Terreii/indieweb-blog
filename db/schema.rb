@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_28_164049) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_28_184630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -138,13 +138,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_28_164049) do
     t.string "slug"
     t.text "summary", default: "", null: false
     t.index ["slug"], name: "index_posts_on_slug", unique: true
-  end
-
-  create_table "posts_tags", id: false, force: :cascade do |t|
-    t.bigint "post_id", null: false
-    t.bigint "tag_id", null: false
-    t.index ["post_id", "tag_id"], name: "index_posts_tags_on_post_id_and_tag_id"
-    t.index ["tag_id", "post_id"], name: "index_posts_tags_on_tag_id_and_post_id", unique: true
   end
 
   create_table "tags", force: :cascade do |t|

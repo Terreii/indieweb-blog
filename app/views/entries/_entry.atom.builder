@@ -12,5 +12,9 @@ feed.entry entry, {
 
   feed_entry.category term: entry.entryable_type.downcase
 
+  entry.tags.each do |tag|
+    feed_entry.category term: tag.name
+  end
+
   render "entries/entryables/#{entry.entryable_name}", entry: feed_entry, entry.entryable_type.downcase.to_sym => entry.entryable
 end
