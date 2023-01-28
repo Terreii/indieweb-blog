@@ -1,6 +1,7 @@
 class Entry < ApplicationRecord
   delegated_type :entryable, types: %w[ Post ], dependent: :destroy
   accepts_nested_attributes_for :entryable, update_only: true
+  has_and_belongs_to_many :tags
 
   validates :title, presence: true
 

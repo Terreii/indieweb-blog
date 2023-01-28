@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_02_195557) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_28_164049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -94,6 +94,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_02_195557) do
     t.datetime "updated_at", null: false
     t.index ["entryable_type", "entryable_id"], name: "index_entries_on_entryable"
     t.index ["published_at"], name: "index_entries_on_published_at"
+  end
+
+  create_table "entries_tags", id: false, force: :cascade do |t|
+    t.bigint "entry_id", null: false
+    t.bigint "tag_id", null: false
+    t.index ["entry_id", "tag_id"], name: "index_entries_tags_on_entry_id_and_tag_id", unique: true
+    t.index ["tag_id", "entry_id"], name: "index_entries_tags_on_tag_id_and_entry_id"
   end
 
   create_table "good_job_processes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

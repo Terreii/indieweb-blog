@@ -28,6 +28,11 @@ class EntryTest < ActiveSupport::TestCase
     assert_not_nil entry.published_at
   end
 
+  test "should have may tags" do
+    entry = entries(:first_post)
+    assert_equal 2, entry.tags.count
+  end
+
   test "should unpublish entry if published? is set to false" do
     entry = entries(:first_post)
     entry.update published: false
