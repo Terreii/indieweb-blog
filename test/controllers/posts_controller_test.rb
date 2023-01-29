@@ -14,6 +14,11 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get index as json" do
+    get posts_url, as: :json
+    assert_equal 3, response.parsed_body.length
+  end
+
   test "should get new" do
     login
     get new_post_url
@@ -73,6 +78,22 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   test "should show post" do
     get post_url(@post)
     assert_response :success
+  end
+
+  test "should get a post as json" do
+    get post_url(@post), as: :json
+    expected = {
+      "id" => @entry.id,
+      "title" => @entry.title,
+      "published_at" => @entry.published_at.to_json.gsub("\"", ""),
+      "created_at" => @entry.created_at.to_json.gsub("\"", ""),
+      "updated_at" => @entry.updated_at.to_json.gsub("\"", ""),
+      "slug" => @post.slug,
+      "body" => @post.body.body.as_json,
+      "url" => post_url(@post, format: :json),
+      "tags" => @entry.tags.pluck(:name)
+    }
+    assert_equal expected, response.parsed_body
   end
 
   test "should get edit" do
