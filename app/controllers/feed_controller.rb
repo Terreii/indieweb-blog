@@ -1,4 +1,6 @@
 class FeedController < ApplicationController
+  include PublishedEntries # adds published_entries
+
   def index
     @entries = published_entries
     @updated = @entries.empty? ? Time.new(0) : @entries.max_by{ |entry| entry.updated_at }.updated_at
