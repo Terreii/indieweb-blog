@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+first_post:
+  title: My first Post!
+  published_at: 2021-11-24 18:01:58
+  updated_at: 2022-03-01 19:30:13
+  tags: [bands, programming]
+  entryable: first_post
+  entryable_type: Post
+
+second_post:
+  title: Another one
+  published_at: 2022-03-01 13:45:43
+  updated_at: 2022-03-01 13:45:43
+  entryable: second_post
+  entryable_type: Post
+
+post_with_links:
+  title: A post with a link
+  published_at: 2022-04-05 02:12:10
+  entryable: post_with_links
+  entryable_type: Post
+
+draft_post:
+  title: What I did learn today
+  entryable: draft_post
+  entryable_type: Post

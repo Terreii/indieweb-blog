@@ -6,11 +6,17 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @post = posts(:first_post)
+    @entry = @post.entry
   end
 
   test "should get index" do
     get posts_url
     assert_response :success
+  end
+
+  test "should get index as json" do
+    get posts_url, as: :json
+    assert_equal 3, response.parsed_body.length
   end
 
   test "should get new" do
@@ -28,10 +34,13 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
     assert_difference('Post.count') do
       post posts_url, params: {
-        post: {
+        entry: {
           published: "1",
           title: Faker::Games::DnD.alignment,
-          summary: Faker::Lorem.paragraph
+          entryable_attributes: {
+            summary: Faker::Lorem.paragraph,
+            body: "<p>#{Faker::Lorem.paragraphs.join "</p><p>"}</p>"
+          }
         }
       }
     end
@@ -43,11 +52,13 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
     assert_difference('Post.count') do
       post posts_url, params: {
-        post: {
+        entry: {
           published: "1",
           title: Faker::Games::DnD.alignment,
-          thumbnail: fixture_file_upload("sample.jpg", "image/jpeg", :binary),
-          body: "<div>#{Faker::Lorem.paragraph}"
+          entryable_attributes: {
+            thumbnail: fixture_file_upload("sample.jpg", "image/jpeg", :binary),
+            body: "<div>#{Faker::Lorem.paragraph}"
+          }
         }
       }
     end
@@ -58,7 +69,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should require a session to create a post" do
     assert_no_difference('Post.count') do
-      post posts_url, params: { post: { published: "1", title: @post.title } }
+      post posts_url, params: { entry: { published: "1", title: @entry.title } }
     end
 
     assert_redirected_to login_path
@@ -67,6 +78,22 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   test "should show post" do
     get post_url(@post)
     assert_response :success
+  end
+
+  test "should get a post as json" do
+    get post_url(@post), as: :json
+    expected = {
+      "id" => @entry.id,
+      "title" => @entry.title,
+      "published_at" => @entry.published_at.to_json.gsub("\"", ""),
+      "created_at" => @entry.created_at.to_json.gsub("\"", ""),
+      "updated_at" => @entry.updated_at.to_json.gsub("\"", ""),
+      "slug" => @post.slug,
+      "body" => @post.body.body.as_json,
+      "url" => post_url(@post, format: :json),
+      "tags" => @entry.tags.pluck(:name)
+    }
+    assert_equal expected, response.parsed_body
   end
 
   test "should get edit" do
@@ -82,18 +109,18 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update post" do
     login
-    patch post_url(@post), params: { post: { published: "1", title: @post.title } }
+    patch post_url(@post), params: { entry: { published: "1", title: @entry.title } }
     assert_redirected_to post_url(@post)
   end
 
   test "should require a session to update a post" do
-    patch post_url(@post), params: { post: { published: "1", title: @post.title } }
+    patch post_url(@post), params: { entry: { published: "1", title: @entry.title } }
     assert_redirected_to login_path
   end
 
   test "should destroy post" do
     login
-    assert_difference('Post.count', -1) do
+    assert_difference ['Entry.count', 'Post.count'], -1  do
       delete post_url(@post)
     end
 
@@ -101,7 +128,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should require a session to destroy post" do
-    assert_no_difference('Post.count') do
+    assert_no_difference ['Entry.count', 'Post.count'] do
       delete post_url(@post)
     end
 
@@ -114,9 +141,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
 
     assert_enqueued_with job: WebmentionJob, args: [{ source:, target: }] do
-      post = post_params_with_links
-      post[:published] = "1"
-      patch source, params: { post: }
+      entry = entry_to_request_body entries(:draft_post), published: true
+      patch source, params: { entry: }
     end
   end
 
@@ -125,7 +151,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
 
     assert_no_enqueued_jobs only: WebmentionJob do
-      patch source, params: { post: post_params_with_links }
+      entry = entry_to_request_body entries(:draft_post)
+      patch source, params: { entry: }
     end
   end
 
@@ -135,11 +162,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
 
     assert_enqueued_with job: WebmentionJob do
-      post = post_params_with_links
-      post[:published] = "1"
-      post posts_url, params: {
-        post:
-      }
+      entry = post_params_with_links published: true
+      post posts_url, params: { entry: }
     end
   end
 
@@ -147,7 +171,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
 
     assert_no_enqueued_jobs only: WebmentionJob do
-      post posts_url, params: { post: post_params_with_links }
+      post posts_url, params: { entry: post_params_with_links }
     end
   end
 
@@ -157,11 +181,10 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_enqueued_jobs only: WebmentionJob do
       post posts_url, params: {
-        post: {
-          title: Faker::Games::DnD.alignment,
-          published: "1",
+        entry: post_params_with_links(
+          published: true,
           body: "<p>Test<a href=\"#{link}\">their post</a></p>"
-        }
+        )
       }
     end
   end
@@ -170,7 +193,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     login
 
     assert_no_enqueued_jobs only: WebmentionJob do
-      post posts_url, params: { post: post_params_with_links }
+      post posts_url, params: { entry: post_params_with_links }
     end
   end
 
@@ -179,9 +202,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_enqueued_jobs 1, only: WebmentionJob do
       post posts_url, params: {
-        post: {
-          title: Faker::Games::DnD.alignment,
-          published: "1",
+        entry: post_params_with_links(
+          published: true,
           body: <<~HTML
             <p>
               Test
@@ -190,7 +212,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
               <a href="http://tester.io/article/1">their post again</a>
             </p>
           HTML
-        }
+        )
       }
     end
   end
@@ -201,26 +223,47 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_enqueued_jobs 1, only: WebmentionJob do
       blog_post = posts(:post_with_links)
       patch post_url(blog_post), params: {
-        post: {
+        entry: post_params_with_links(
+          published: true,
           body: <<~HTML
             <p>This was a post</p>
           HTML
-        }
+        )
       }
     end
   end
 
-  def post_params_with_links
+  def post_params_with_links(published: false, body: body_with_links)
+    title = Faker::Games::DnD.alignment
     {
-      title: Faker::Games::DnD.alignment,
-      published: "0",
-      summary: Faker::Lorem.paragraph,
-      body: <<~HTML
-        <p>
-          Test
-          <a href="http://tester.io/article/1">their post</a>
-        </p>
-      HTML
+      title:,
+      published: published ? "1" : "0",
+      entryable_attributes: {
+        slug: Post.string_to_slug(title),
+        summary: Faker::Lorem.paragraph,
+        body:
+      }
     }
+  end
+
+  def entry_to_request_body(entry, published: entry.published?)
+    {
+      title: entry.title,
+      published: published ? "1" : "0",
+      entryable_attributes: {
+        slug: entry.post.slug || Post.string_to_slug(entry.title),
+        summary: entry.post.summary || Faker::Lorem.paragraph,
+        body: body_with_links
+      }
+    }
+  end
+
+  def body_with_links
+    <<~HTML
+      <p>
+        Test
+        <a href="http://tester.io/article/1">their post</a>
+      </p>
+    HTML
   end
 end

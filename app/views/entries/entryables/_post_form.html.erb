@@ -1,0 +1,21 @@
+<%= entry_form.fields_for :entryable do |form| %>
+  <div class="field">
+    <%= form.label :slug %>
+    <%= form.text_field :slug, pattern: "^[a-z0-9][a-z0-9\-_]+[a-z0-9]$", class: "form-input" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :thumbnail %>
+    <%= form.file_field :thumbnail, class: "form-input" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :summary %>
+    <%= form.text_area :summary, class: "form-input", maxlength: 200 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.rich_text_area :body %>
+  </div>
+<% end %>

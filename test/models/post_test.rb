@@ -3,10 +3,13 @@ require "test_helper"
 
 class PostTest < ActiveSupport::TestCase
   test "should create post" do
-    post = Post.new
-
-    post.title = Faker::Games::DnD.alignment
-    post.body = "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+    post = Entry.new(
+      title: Faker::Games::DnD.alignment,
+      entryable: Post.new(
+        summary: Faker::Lorem.paragraph,
+        body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+      )
+    )
 
     assert post.save
   end
@@ -17,83 +20,80 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "should find all published posts" do
-    posts = Post.published
+    posts = Entry.published.posts
     post_id = posts(:first_post).id
     assert_equal 3, posts.count
     assert_equal post_id, posts.last.id
   end
 
   test "should find all draft posts" do
-    posts = Post.draft
+    posts = Entry.draft.posts
     post_id = posts(:draft_post).id
     assert_equal 1, posts.count
     assert_equal post_id, posts.first.id
   end
 
   test "should update post" do
-    post = posts(:first_post)
-    title = Faker::Kpop.boy_bands
-    post.update(title: title)
-    assert_equal title, post.reload.title
-  end
-
-  test "should use the current time when published? is set to true" do
     post = posts(:draft_post)
-    post.update published: true
-    assert post.published?
-    assert_not_nil post.published_at
-  end
-
-  test "should unpublish post if published? is set to false" do
-    post = posts(:first_post)
-    post.update published: false
-    assert_not post.published?
-    assert_nil post.published_at
-  end
-
-  test "should not update published_at if published? is updated again" do
-    post = posts(:first_post)
-    published_at = post.published_at
-    post.published = true
-    assert_equal published_at, post.published_at
+    summary = Faker::Lorem.paragraph
+    post.update(summary:)
+    assert_equal summary, post.reload.summary
   end
 
   test "should destroy post" do
-    post = posts(:first_post)
+    post = entries(:first_post)
     post.destroy
-    assert_raise(ActiveRecord::RecordNotFound) { Post.find(post.id) }
-  end
-
-  test "should not create a post without title" do
-    post = Post.new
-    assert_not post.save
-
-    assert_not_empty post.errors[:title]
-    assert_equal ["can't be blank"], post.errors[:title]
+    assert_raise(ActiveRecord::RecordNotFound) { Entry.find(post.id) }
   end
 
   test "should not create a post with a not unique slug" do
-    post = Post.new title: posts(:first_post).title, slug: posts(:first_post).slug, body: ""
-    assert_raise(ActiveRecord::RecordNotUnique) { post.save }
+    assert_raise(ActiveRecord::RecordNotUnique) {
+      entry = Entry.new(
+        title: entries(:first_post).title,
+        entryable_type: Post.name,
+        entryable_attributes: {
+          slug: posts(:first_post).slug,
+          summary: Faker::Lorem.paragraph,
+          body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+        }
+      )
+      entry.save
+    }
+  end
+
+  test "should not publish a post without a summary" do
+    entry = entries(:draft_post)
+    assert_not entry.update(
+      published: true,
+      entryable_attributes: {
+        summary: "a"
+      }
+    )
+  end
+
+  test "should not create and publish a post without a summary" do
+    post = Entry.new(
+      title: Faker::Games::Zelda.game,
+      published: true,
+      entryable: Post.new(
+        summary: "a",
+        body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+      )
+    )
+    assert_not post.save
   end
 
   test "should validate a posts slug" do
-    post = Post.new({
-      title: Faker::Games::DnD.alignment,
-      slug: "some!_not allowed",
-      body: "<p>Test</p>"
-    })
+    post = Entry.new(
+      title: "something",
+      entryable: Post.new(
+        slug: "some!_not allowed",
+        body: "<p>Test</p>"
+      )
+    )
     assert_not post.save
 
-    assert_not_empty post.errors[:slug]
-    assert_equal ["is invalid"], post.errors[:slug]
-  end
-
-  test "published should cast 1 and 0 strings to booleans" do
-    post = posts(:draft_post)
-    post.published = "1"
-    assert post.published?
-    post.published = "0"
-    assert_not post.published?
+    assert_not_empty post.errors["entryable.slug"]
+    assert_equal ["is invalid"], post.errors["entryable.slug"]
   end
 end

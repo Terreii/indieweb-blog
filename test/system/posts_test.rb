@@ -3,6 +3,7 @@ require "application_system_test_case"
 class PostsTest < ApplicationSystemTestCase
   setup do
     @post = posts(:first_post)
+    @entry = @post.entry
   end
 
   test "visiting the index" do
@@ -22,8 +23,8 @@ class PostsTest < ApplicationSystemTestCase
 
   test "visiting a Post" do
     visit post_url @post
-    assert_selector "h1.p-name", text: @post.title
-    assert_selector "time.dt-published", text: @post.published_at.to_date.to_s
+    assert_selector "h1.p-name", text: @entry.title
+    assert_selector "time.dt-published", text: @entry.published_at.to_date.to_s
     assert_selector ".p-author.h-card", text: I18n.translate("general.author-full")
     assert_selector ".h-entry"
     assert_selector ".e-content"
@@ -33,7 +34,7 @@ class PostsTest < ApplicationSystemTestCase
   test "Post should set Open Graph meta tags" do
     visit post_url @post
 
-    assert_css "meta[property=\"og:title\"][content*=\"#{@post.title}\"]", visible: false
+    assert_css "meta[property=\"og:title\"][content*=\"#{@entry.title}\"]", visible: false
     assert_css "meta[property=\"og:type\"][content*=article]", visible: false
     assert_css "meta[property=\"og:description\"][content*=\"#{@post.summary}\"]", visible: false
     assert_css "meta[property=\"og:image\"][content*=\"#{url_for @post.thumbnail}\"]", visible: false
@@ -48,7 +49,7 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Create new Post"
 
     fill_in "Title", with: Faker::Games::DnD.alignment
-    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs.join("\n")
     check "Published"
 
     fill_in "Create new tag", with: "dnd"
@@ -58,7 +59,7 @@ class PostsTest < ApplicationSystemTestCase
 
     check tags(:bands).name
 
-    click_on "Create Post"
+    click_on "Create Entry"
 
     assert_text "Post was successfully created"
     assert_link tags(:bands).name
@@ -73,13 +74,13 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Create new Post"
 
     fill_in "Title", with: Faker::Games::DnD.alignment
-    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs.join("\n")
     attach_file "Thumbnail", file_fixture("sample.jpg")
     check "Published"
 
     check tags(:bands).name
 
-    click_on "Create Post"
+    click_on "Create Entry"
 
     assert_text "Post was successfully created"
     assert_css "img#thumbnail"
@@ -95,7 +96,7 @@ class PostsTest < ApplicationSystemTestCase
 
     fill_in "Title", with: title
     fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
-    click_on "Create Post"
+    click_on "Create Entry"
 
     assert_text "Post was successfully created"
 
@@ -109,9 +110,9 @@ class PostsTest < ApplicationSystemTestCase
     visit new_post_url
 
     fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
-    click_on "Create Post"
+    click_on "Create Entry"
 
-    assert_text "Slug can't be blank"
+    assert_text "Entryable slug can't be blank"
     assert_text "Title can't be blank"
     click_on "Christophers thoughts"
   end
@@ -120,10 +121,10 @@ class PostsTest < ApplicationSystemTestCase
     login
 
     visit posts_url
-    click_on @post.title
+    click_on @entry.title
     click_on "Edit"
 
-    fill_in "Title", with: @post.title
+    fill_in "Title", with: @entry.title
 
     fill_in "Create new tag", with: "music"
     click_on "Create Tag"
@@ -133,7 +134,7 @@ class PostsTest < ApplicationSystemTestCase
     check tags(:bands).name
     fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
 
-    click_on "Update Post"
+    click_on "Update Entry"
 
     assert_text "Post was successfully updated"
     assert_link tags(:bands).name
@@ -145,7 +146,7 @@ class PostsTest < ApplicationSystemTestCase
     login
 
     visit posts_url
-    click_on @post.title
+    click_on @entry.title
     click_on "Edit"
 
     sleep 0.1

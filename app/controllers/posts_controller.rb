@@ -6,21 +6,21 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     if logged_in?
-      @drafts = Post.draft.all
+      @drafts = Entry.posts.draft.all
     end
-    @posts = Post.published.with_rich_text_body.limit 10
+    @posts = Entry.posts.published.limit 10
   end
 
   # GET /posts/slug or /posts/slug.json
   def show
-    unless @post.published? || logged_in?
+    unless @entry.published? || logged_in?
       access_denied
     end
   end
 
   # GET /posts/new
   def new
-    @post = Post.new
+    @entry = Entry.new entryable: Post.new
   end
 
   # GET /posts/slug/edit
@@ -29,15 +29,15 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
+    @entry = Entry.new(post_params.merge entryable_type: Post.name)
 
     respond_to do |format|
-      if @post.save
-        format.html { redirect_to @post, notice: "Post was successfully created." }
-        format.json { render :show, status: :created, location: @post }
+      if @entry.save
+        format.html { redirect_to @entry.post, notice: "Post was successfully created." }
+        format.json { render :show, status: :created, location: @entry.post }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -45,22 +45,19 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/slug or /posts/slug.json
   def update
     respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to @post, notice: "Post was successfully updated." }
-        format.json { render :show, status: :ok, location: @post }
+      if @entry.update(post_params)
+        format.html { redirect_to @entry.post, notice: "Post was successfully updated." }
+        format.json { render :show, status: :ok, location: @entry.post }
       else
-        format.html {
-          set_all_tags
-          render :edit, status: :unprocessable_entity
-        }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /posts/slug or /posts/slug.json
   def destroy
-    @post.destroy
+    @entry.destroy
     respond_to do |format|
       format.html { redirect_to posts_url, notice: "Post was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
@@ -70,29 +67,29 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.with_rich_text_body.find_by(slug: params[:slug])
+      @entry = Post.with_rich_text_body.find_by(slug: params[:slug]).entry
     end
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :slug, :summary, :thumbnail, :published, :body, tag_ids: [])
+      params.require(:entry).permit(:title, :published, tag_ids: [], entryable_attributes: [:id, :slug, :summary, :thumbnail, :body])
     end
 
     # Notifies all links in the post about this published post.
     def webmention
-      return unless @post.published? && @post.body.saved_changes?
-      return if @post.changed? # changes weren't saved
-      source = post_url @post
+      return unless @entry.published? && @entry.post.body.saved_changes?
+      return if @entry.changed? # changes weren't saved
+      source = post_url @entry.post
 
       # Stores notified URIs, so that a page is not notified twice.
       posted_uris = Set.new
 
       # Notify every link
-      webmention_a_body source, posted_uris, @post.body
+      webmention_a_body source, posted_uris, @entry.post.body
 
       # Notify also removed links
-      if @post.body.body_previously_changed? && !@post.body.body_previously_was.nil?
-        webmention_a_body source, posted_uris, @post.body.body_previously_was
+      if @entry.post.body.body_previously_changed? && !@entry.post.body.body_previously_was.nil?
+        webmention_a_body source, posted_uris, @entry.post.body.body_previously_was
       end
     end
 
