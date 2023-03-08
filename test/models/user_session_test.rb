@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: user_sessions
+#
+#  id          :bigint           not null, primary key
+#  last_online :datetime         not null
+#  name        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 require "test_helper"
 
 class UserSessionTest < ActiveSupport::TestCase

@@ -1,4 +1,15 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: posts
+#
+#  id      :bigint           not null, primary key
+#  slug    :string
+#  summary :text             default(""), not null
+#
+# Indexes
+#
+#  index_posts_on_slug  (slug) UNIQUE
+#
 
 first_post:
   slug: my-first-post

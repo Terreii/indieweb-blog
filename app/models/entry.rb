@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: entries
+#
+#  id             :bigint           not null, primary key
+#  entryable_type :string           not null
+#  published_at   :datetime
+#  title          :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  entryable_id   :bigint           not null
+#
+# Indexes
+#
+#  index_entries_on_entryable     (entryable_type,entryable_id)
+#  index_entries_on_published_at  (published_at)
+#
 class Entry < ApplicationRecord
   delegated_type :entryable, types: %w[ Post ], dependent: :destroy
   accepts_nested_attributes_for :entryable, update_only: true
