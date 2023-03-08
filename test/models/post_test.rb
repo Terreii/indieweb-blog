@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: posts
+#
+#  id      :bigint           not null, primary key
+#  slug    :string
+#  summary :text             default(""), not null
+#
+# Indexes
+#
+#  index_posts_on_slug  (slug) UNIQUE
+#
 require 'faker'
 require "test_helper"
 

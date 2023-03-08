@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: user_sessions
+#
+#  id          :bigint           not null, primary key
+#  last_online :datetime         not null
+#  name        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 class UserSession < ApplicationRecord
   # Stores an active session, so that it can be deleted.
   def self.authenticate(username, password, name)

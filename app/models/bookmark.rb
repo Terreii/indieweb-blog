@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: bookmarks
+#
+#  id         :bigint           not null, primary key
+#  title      :string
+#  url        :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_bookmarks_on_url  (url) UNIQUE
+#
 class Bookmark < ApplicationRecord
   validates :title, presence: true, length: { minimum: 2 }
   validates :url, presence: true, format: { with: URI.regexp }
