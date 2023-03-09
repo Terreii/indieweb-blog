@@ -62,7 +62,7 @@ gem "bcrypt_pbkdf"
 gem 'microformats', '~> 4.4', '>= 4.4.1'
 
 # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-gem "rack-mini-profiler", group: [:production, :development]
+gem "rack-mini-profiler"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
