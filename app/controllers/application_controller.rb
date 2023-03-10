@@ -1,6 +1,12 @@
 class ApplicationController < ActionController::Base
   helper_method :current_session, :logged_in?, :load_scripts?
 
+  before_action do
+    if logged_in?
+      Rack::MiniProfiler.authorize_request
+    end
+  end
+
   def current_session
     return unless session[:user_session_id]
     @current_session ||= UserSession.find_and_log_current(session[:user_session_id])
