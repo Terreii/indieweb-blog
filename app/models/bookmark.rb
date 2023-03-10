@@ -10,14 +10,14 @@
 #  index_bookmarks_on_url  (url) UNIQUE
 #
 class Bookmark < ApplicationRecord
-  validates :title, presence: true, length: { minimum: 2 }
+  include Entryable
+
   validates :url, presence: true, format: { with: URI.regexp }
 
   has_and_belongs_to_many :authors
-  has_and_belongs_to_many :tags
   has_rich_text :summary
 
-  default_scope { order created_at: :desc }
+  default_scope { with_all_rich_text }
 
   def published_at
     created_at

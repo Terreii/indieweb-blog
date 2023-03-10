@@ -16,7 +16,7 @@
 #  index_entries_on_published_at  (published_at)
 #
 class Entry < ApplicationRecord
-  delegated_type :entryable, types: %w[ Post ], dependent: :destroy
+  delegated_type :entryable, types: %w[ Bookmark Post ], dependent: :destroy
   accepts_nested_attributes_for :entryable, update_only: true
   has_and_belongs_to_many :tags
 
@@ -25,6 +25,7 @@ class Entry < ApplicationRecord
   scope :with_entryables, -> { includes(:entryable, :tags) }
   scope :published, -> { where.not(published_at: nil).order(published_at: :desc) }
   scope :draft, -> { where(published_at: nil) }
+  scope :bookmarks, -> { where(entryable_type: Bookmark.name).includes(:entryable, :tags) }
   scope :posts, -> { where(entryable_type: Post.name).includes(:entryable, :tags) }
 
   before_validation :set_self_on_new_entryable

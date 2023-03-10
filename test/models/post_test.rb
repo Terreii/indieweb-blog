@@ -35,7 +35,7 @@ class PostTest < ActiveSupport::TestCase
     posts = Entry.published.posts
     post_id = posts(:first_post).id
     assert_equal 3, posts.count
-    assert_equal post_id, posts.last.id
+    assert_equal post_id, posts.last.entryable_id
   end
 
   test "should find all draft posts" do
