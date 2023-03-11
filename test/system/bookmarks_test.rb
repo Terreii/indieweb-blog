@@ -2,7 +2,8 @@ require "application_system_test_case"
 
 class BookmarksTest < ApplicationSystemTestCase
   setup do
-    @bookmark = bookmarks(:one)
+    @bookmark = bookmarks(:first_bookmark)
+    @entry = @bookmark.entry
   end
 
   test "visiting the index" do
@@ -55,7 +56,7 @@ class BookmarksTest < ApplicationSystemTestCase
     visit bookmark_url(@bookmark)
     click_on "Edit this bookmark", match: :first
 
-    fill_in "Title", with: @bookmark.title
+    fill_in "Title", with: @entry.title
     fill_in "Url", with: @bookmark.url
 
     fill_in "Create new tag", with: "rails"
@@ -78,7 +79,7 @@ class BookmarksTest < ApplicationSystemTestCase
     visit bookmark_url(@bookmark)
     click_on "Edit this bookmark", match: :first
 
-    fill_in "Title", with: @bookmark.title
+    fill_in "Title", with: @entry.title
     fill_in "Url", with: @bookmark.url
     fill_in_rich_text_area "Summary", with: Faker::Lorem.paragraphs
     click_on "Update Bookmark"
