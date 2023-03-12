@@ -5,7 +5,7 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks or /bookmarks.json
   def index
-    @entrys = Bookmark.includes(:authors).with_rich_text_summary.all
+    @bookmarks = Entry.bookmarks.published.limit 10
   end
 
   # GET /bookmarks/1 or /bookmarks/1.json

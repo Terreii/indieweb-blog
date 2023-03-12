@@ -18,7 +18,5 @@
 <div class="h-feed">
   <span class="p-name hidden">Posts Feed</span>
 
-  <% @posts.each do |post| %>
-    <%= render post %>
-  <% end %>
+  <%= render @posts, cached: true %>
 </div>

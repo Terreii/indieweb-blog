@@ -7,7 +7,5 @@
 <div id="bookmarks" class="h-feed">
   <span class="p-name hidden">Bookmarks Feed</span>
 
-  <% @bookmarks.each do |bookmark| %>
-    <%= render bookmark %>
-  <% end %>
+  <%= render @bookmarks, cached: true %>
 </div>

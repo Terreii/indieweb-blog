@@ -5,7 +5,5 @@
 <div class="h-feed">
   <span class="p-name hidden">Main Feed</span>
 
-  <% @entries.each do |entry| %>
-    <%= render entry %>
-  <% end %>
+  <%= render @entries, cached: true %>
 </div>
