@@ -5,7 +5,7 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks or /bookmarks.json
   def index
-    @bookmarks = Bookmark.includes(:authors).with_rich_text_summary.all
+    @bookmarks = Bookmark.includes(:authors, :tags).with_rich_text_summary.all
   end
 
   # GET /bookmarks/1 or /bookmarks/1.json

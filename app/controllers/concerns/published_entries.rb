@@ -15,6 +15,6 @@ module PublishedEntries
     end
 
     def published_bookmarks
-      Bookmark.includes(:authors).with_rich_text_summary.limit 10
+      Bookmark.includes(:authors, :tags).with_rich_text_summary.limit 10
     end
 end
