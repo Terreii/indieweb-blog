@@ -25,7 +25,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
   test "should create bookmark" do
     login
 
-    assert_difference("Bookmark.count") do
+    assert_difference ["Bookmark.count", "Entry.count"], 1 do
       post bookmarks_url, params: {
         entry: {
           published: "1",
@@ -37,13 +37,13 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to bookmark_url(Entry.last.bookmark)
+    assert_redirected_to bookmark_url(Bookmark.last)
   end
 
   test "should create a bookmark with a comment" do
     login
 
-    assert_difference("Bookmark.count") do
+    assert_difference ["Bookmark.count", "Entry.count"], 1 do
       post bookmarks_url, params: {
         entry: {
           published: "1",
@@ -56,7 +56,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to bookmark_url(Entry.last.bookmark)
+    assert_redirected_to bookmark_url(Bookmark.last)
   end
 
   test "create should require a session" do

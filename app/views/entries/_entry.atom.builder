@@ -16,5 +16,11 @@ feed.entry entry, {
     feed_entry.category term: tag.name
   end
 
-  render "entries/entryables/#{entry.entryable_name}", entry: feed_entry, entry.entryable_type.downcase.to_sym => entry.entryable
+  # Render entryable part.
+  # The feed entry builder is passed as entry and the entryable type is passed by its name (post ...).
+  render "entries/entryables/#{entry.entryable_name}", {
+    entry: feed_entry,
+    entry.entryable_type.downcase.to_sym => entry.entryable,
+    entry_record: entry
+  }
 end

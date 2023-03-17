@@ -26,8 +26,8 @@ class FeedControllerTest < ActionDispatch::IntegrationTest
   test "should include bookmarks" do
     get feed_url(format: :atom)
 
-    bookmark = bookmarks(:one)
-    assert_match "<title>#{bookmark.title}</title>", @response.body
+    bookmark = bookmarks(:first_bookmark)
+    assert_match "<title>#{bookmark.entry.title}</title>", @response.body
     assert_match bookmark_url(bookmark), @response.body
   end
 end

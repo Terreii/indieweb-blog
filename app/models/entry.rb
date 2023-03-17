@@ -22,7 +22,7 @@ class Entry < ApplicationRecord
 
   validates :title, presence: true
 
-  scope :with_entryables, -> { includes(:entryable, :tags) }
+  scope :with_entryables, -> { preload(:entryable, :tags) }
   scope :published, -> { where.not(published_at: nil).order(published_at: :desc) }
   scope :draft, -> { where(published_at: nil) }
   scope :bookmarks, -> { where(entryable_type: Bookmark.name).includes(:entryable, :tags) }
