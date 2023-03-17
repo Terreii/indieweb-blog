@@ -37,7 +37,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to bookmark_url(Bookmark.last)
+    assert_redirected_to bookmark_url(Entry.last.bookmark)
   end
 
   test "should create a bookmark with a comment" do
@@ -56,7 +56,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to bookmark_url(Bookmark.last)
+    assert_redirected_to bookmark_url(Entry.last.bookmark)
   end
 
   test "create should require a session" do

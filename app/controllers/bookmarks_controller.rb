@@ -14,7 +14,7 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks/new
   def new
-    @entry = Bookmark.new
+    @entry = Entry.new entryable: Bookmark.new
   end
 
   # GET /bookmarks/1/edit

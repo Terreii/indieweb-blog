@@ -1,0 +1,43 @@
+<h1 class="p-name" hidden>Bookmarked: <%= entry.title %></h1>
+<div>
+  <p class="u-bookmark-of h-cite">
+    Bookmarked:
+    <strong>
+      <%= link_to entry.title, entry.bookmark.url %>
+    </strong>
+
+    <% if entry.bookmark.authors.any? %>
+      from
+      <% entry.bookmark.authors.each_with_index do |author, index| %>
+        <% unless index == 0 %>
+          <span>&amp;</span>
+        <% end %>
+        <%= link_to author.name, author.url, class: "h-card p-author" %>
+      <% end %>
+    <% end %>
+  </p>
+
+  <% unless entry.bookmark.summary.nil? || entry.bookmark.summary.empty? %>
+    <div class="e-content"><%= entry.bookmark.summary %></div>
+  <% end %>
+
+  <footer class="post__meta">
+    <%= link_to entry.bookmark, rel: "bookmark" do %>
+      <time datetime="<%= entry.created_at.iso8601 %>" class="dt-published">
+        <%= entry.created_at.localtime.strftime("%Y-%m-%d %H:%M:%S") %>
+      </time>
+    <% end %>
+
+    <span class="hidden">
+      <%= link_to t("general.author-full"), root_url, class: "p-author h-card u-url" %>
+    </span>
+
+    <% unless entry.tags.empty? %>
+      <br />
+      <span itemprop="tags">
+        Tags:
+        <%= render entry.tags %>
+      </span>
+    <% end %>
+  </footer>
+</div>

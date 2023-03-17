@@ -1,8 +1,8 @@
 <h1><%= set_title(t('posts.editing')) %></h1>
 
-<%= render 'entries/form', entry: @entry, tags: @tags %>
+<%= render 'entries/form', entry: @entry %>
 
-<%= link_to 'Destroy', @entry.post, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+<%= button_to 'Destroy this bookmark', @entry.post, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
 
 <br />
 
