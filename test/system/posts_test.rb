@@ -151,7 +151,7 @@ class PostsTest < ApplicationSystemTestCase
 
     sleep 0.1
     page.accept_confirm do
-      click_on "Destroy", match: :first
+      click_on "Destroy this post", match: :first
     end
     sleep 0.1
 

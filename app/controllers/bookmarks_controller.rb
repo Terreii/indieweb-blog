@@ -27,8 +27,8 @@ class BookmarksController < ApplicationController
 
     respond_to do |format|
       if @entry.save
-        format.html { redirect_to bookmark_url(@entry), notice: "Bookmark was successfully created." }
-        format.json { render :show, status: :created, location: @entry }
+        format.html { redirect_to @entry.bookmark, notice: "Bookmark was successfully created." }
+        format.json { render :show, status: :created, location: @entry.bookmark }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
@@ -40,8 +40,8 @@ class BookmarksController < ApplicationController
   def update
     respond_to do |format|
       if @entry.update(bookmark_params)
-        format.html { redirect_to bookmark_url(@entry), notice: "Bookmark was successfully updated." }
-        format.json { render :show, status: :ok, location: @entry }
+        format.html { redirect_to @entry.bookmark, notice: "Bookmark was successfully updated." }
+        format.json { render :show, status: :ok, location: @entry.bookmark }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @entry.errors, status: :unprocessable_entity }

@@ -4,9 +4,9 @@
 
 <br>
 
-<div>
-  <%= link_to "Show this bookmark", @entry.bookmark %> |
-  <%= link_to "Back to bookmarks", bookmarks_path %>
+<%= button_to "Destroy this bookmark", @entry.bookmark, method: :delete, class: "btn btn-danger", data: { turbo_confirm: 'Are you sure?' } %>
 
-  <%= button_to "Destroy this bookmark", @entry.bookmark, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
-</div>
+<br>
+
+<%= link_to "Show this bookmark", @entry.bookmark %> |
+<%= link_to "Back to bookmarks", bookmarks_path %>
