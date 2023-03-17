@@ -17,9 +17,5 @@ class Bookmark < ApplicationRecord
   has_and_belongs_to_many :authors
   has_rich_text :summary
 
-  default_scope { with_all_rich_text }
-
-  def published_at
-    created_at
-  end
+  default_scope { with_all_rich_text.includes(:authors) }
 end
