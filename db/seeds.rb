@@ -46,16 +46,19 @@ Entry.create [
       slug: Post.string_to_slug(draft_title),
       body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
     )
-  }
-]
-
-Bookmark.create([
+  },
   {
     title: "IndieWeb Bookmarks",
-    url: "https://indieweb.org/bookmark"
+    tags: [tags.first],
+    entryable: Bookmark.new(
+      url: "https://indieweb.org/bookmark"
+    )
   },
   {
     title: "IndieWeb h-entry",
-    url: "https://indieweb.org/h-entry"
+    tags: [tags.first],
+    entryable: Bookmark.new(
+      url: "https://indieweb.org/h-entry"
+    )
   }
-])
+]
