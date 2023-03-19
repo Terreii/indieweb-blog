@@ -80,6 +80,24 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_path
   end
 
+  test "should always publish a bookmark" do
+    # TODO: Make private bookmarks
+    login
+
+    assert_difference ["Bookmark.count", "Entry.count"], 1 do
+      post bookmarks_url, params: {
+        entry: {
+          title: Faker::Games::Zelda.game,
+          entryable_attributes: {
+            url: Faker::Internet.url
+          }
+        }
+      }
+    end
+
+    assert Bookmark.last.entry.published?
+  end
+
   test "should show bookmark" do
     get bookmark_url(@bookmark)
     assert_response :success
