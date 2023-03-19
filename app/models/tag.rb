@@ -18,7 +18,6 @@ class Tag < ApplicationRecord
   }
 
   has_and_belongs_to_many :entries
-  has_and_belongs_to_many :bookmarks
 
   default_scope { order :name }
 

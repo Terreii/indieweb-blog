@@ -2,7 +2,8 @@ require "application_system_test_case"
 
 class BookmarksTest < ApplicationSystemTestCase
   setup do
-    @bookmark = bookmarks(:one)
+    @bookmark = bookmarks(:first_bookmark)
+    @entry = @bookmark.entry
   end
 
   test "visiting the index" do
@@ -19,7 +20,7 @@ class BookmarksTest < ApplicationSystemTestCase
 
     fill_in "Title", with: Faker::Games::Zelda.game
     fill_in "Url", with: Faker::Internet.url
-    click_on "Create Bookmark"
+    click_on "Create Entry"
 
     assert_text "Bookmark was successfully created"
     click_on "Back"
@@ -41,7 +42,7 @@ class BookmarksTest < ApplicationSystemTestCase
     check "games"
     check tags(:bands).name
 
-    click_on "Create Bookmark"
+    click_on "Create Entry"
 
     assert_text "Bookmark was successfully created"
     assert_link "games"
@@ -55,7 +56,7 @@ class BookmarksTest < ApplicationSystemTestCase
     visit bookmark_url(@bookmark)
     click_on "Edit this bookmark", match: :first
 
-    fill_in "Title", with: @bookmark.title
+    fill_in "Title", with: @entry.title
     fill_in "Url", with: @bookmark.url
 
     fill_in "Create new tag", with: "rails"
@@ -64,7 +65,7 @@ class BookmarksTest < ApplicationSystemTestCase
     check "rails"
     check tags(:programming).name
 
-    click_on "Update Bookmark"
+    click_on "Update Entry"
 
     assert_text "Bookmark was successfully updated"
     assert_link "rails"
@@ -78,10 +79,10 @@ class BookmarksTest < ApplicationSystemTestCase
     visit bookmark_url(@bookmark)
     click_on "Edit this bookmark", match: :first
 
-    fill_in "Title", with: @bookmark.title
+    fill_in "Title", with: @entry.title
     fill_in "Url", with: @bookmark.url
     fill_in_rich_text_area "Summary", with: Faker::Lorem.paragraphs
-    click_on "Update Bookmark"
+    click_on "Update Entry"
 
     assert_text "Bookmark was successfully updated"
     click_on "Back"
@@ -92,7 +93,9 @@ class BookmarksTest < ApplicationSystemTestCase
 
     visit bookmark_url(@bookmark)
     click_on "Edit this bookmark"
-    click_on "Destroy this bookmark", match: :first
+    page.accept_confirm do
+      click_on "Destroy this bookmark", match: :first
+    end
 
     assert_text "Bookmark was successfully destroyed"
   end

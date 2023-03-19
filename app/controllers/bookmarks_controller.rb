@@ -5,7 +5,7 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks or /bookmarks.json
   def index
-    @bookmarks = Bookmark.includes(:authors, :tags).with_rich_text_summary.all
+    @bookmarks = Entry.bookmarks.published.limit 10
   end
 
   # GET /bookmarks/1 or /bookmarks/1.json
@@ -14,7 +14,7 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks/new
   def new
-    @bookmark = Bookmark.new
+    @entry = Entry.new entryable: Bookmark.new
   end
 
   # GET /bookmarks/1/edit
@@ -23,15 +23,15 @@ class BookmarksController < ApplicationController
 
   # POST /bookmarks or /bookmarks.json
   def create
-    @bookmark = Bookmark.new(bookmark_params)
+    @entry = Entry.new(bookmark_params.merge entryable_type: Bookmark.name, published: true)
 
     respond_to do |format|
-      if @bookmark.save
-        format.html { redirect_to bookmark_url(@bookmark), notice: "Bookmark was successfully created." }
-        format.json { render :show, status: :created, location: @bookmark }
+      if @entry.save
+        format.html { redirect_to @entry.bookmark, notice: "Bookmark was successfully created." }
+        format.json { render :show, status: :created, location: @entry.bookmark }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @bookmark.errors, status: :unprocessable_entity }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -39,19 +39,19 @@ class BookmarksController < ApplicationController
   # PATCH/PUT /bookmarks/1 or /bookmarks/1.json
   def update
     respond_to do |format|
-      if @bookmark.update(bookmark_params)
-        format.html { redirect_to bookmark_url(@bookmark), notice: "Bookmark was successfully updated." }
-        format.json { render :show, status: :ok, location: @bookmark }
+      if @entry.update(bookmark_params)
+        format.html { redirect_to @entry.bookmark, notice: "Bookmark was successfully updated." }
+        format.json { render :show, status: :ok, location: @entry.bookmark }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @bookmark.errors, status: :unprocessable_entity }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /bookmarks/1 or /bookmarks/1.json
   def destroy
-    @bookmark.destroy
+    @entry.destroy
 
     respond_to do |format|
       format.html { redirect_to bookmarks_url, notice: "Bookmark was successfully destroyed." }
@@ -61,17 +61,17 @@ class BookmarksController < ApplicationController
 
   private
     def set_bookmark
-      @bookmark = Bookmark.find(params[:id])
+      @entry = Bookmark.with_rich_text_summary_and_embeds.find(params[:id]).entry
     end
 
     # Only allow a list of trusted parameters through.
     def bookmark_params
-      params.require(:bookmark).permit(:title, :url, :summary, tag_ids: [])
+      params.require(:entry).permit(:title, :published, tag_ids: [], entryable_attributes: [:id, :url, :summary])
     end
 
     def enqueue_jobs
-      return if @bookmark.changed? # changes weren't saved
-      BookmarkAuthorsJob.perform_later @bookmark
-      WebmentionJob.perform_later source: bookmark_url(@bookmark), target: @bookmark.url
+      return if @entry.changed? # changes weren't saved
+      BookmarkAuthorsJob.perform_later @entry.bookmark
+      WebmentionJob.perform_later source: bookmark_url(@entry.bookmark), target: @entry.bookmark.url
     end
 end

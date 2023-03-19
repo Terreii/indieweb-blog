@@ -2,12 +2,18 @@ require "test_helper"
 
 class BookmarksControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @bookmark = bookmarks(:one)
+    @bookmark = bookmarks(:first_bookmark)
+    @entry = @bookmark.entry
   end
 
   test "should get index" do
     get bookmarks_url
     assert_response :success
+  end
+
+  test "should get index as json" do
+    get bookmarks_url, as: :json
+    assert_equal 2, response.parsed_body.length
   end
 
   test "should get new" do
@@ -24,40 +30,49 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
   test "should create bookmark" do
     login
 
-    assert_difference("Bookmark.count") do
+    assert_difference ["Bookmark.count", "Entry.count"], 1 do
       post bookmarks_url, params: {
-        bookmark: {
+        entry: {
+          published: "1",
           title: Faker::Games::Zelda.game,
-          url: Faker::Internet.url
+          entryable_attributes: {
+            url: Faker::Internet.url
+          }
         }
       }
     end
 
-    assert_redirected_to bookmark_url(Bookmark.first)
+    assert_redirected_to bookmark_url(Bookmark.last)
   end
 
   test "should create a bookmark with a comment" do
     login
 
-    assert_difference("Bookmark.count") do
+    assert_difference ["Bookmark.count", "Entry.count"], 1 do
       post bookmarks_url, params: {
-        bookmark: {
+        entry: {
+          published: "1",
           title: Faker::Games::Zelda.game,
-          url: Faker::Internet.url,
-          summary: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+          entryable_attributes: {
+            url: Faker::Internet.url,
+            summary: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+          }
         }
       }
     end
 
-    assert_redirected_to bookmark_url(Bookmark.first)
+    assert_redirected_to bookmark_url(Bookmark.last)
   end
 
   test "create should require a session" do
     assert_no_difference("Bookmark.count") do
       post bookmarks_url, params: {
-        bookmark: {
+        entry: {
+          published: "1",
           title: Faker::Games::Zelda.game,
-          url: Faker::Internet.url
+          entryable_attributes: {
+            url: Faker::Internet.url
+          }
         }
       }
     end
@@ -65,9 +80,42 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_path
   end
 
+  test "should always publish a bookmark" do
+    # TODO: Make private bookmarks
+    login
+
+    assert_difference ["Bookmark.count", "Entry.count"], 1 do
+      post bookmarks_url, params: {
+        entry: {
+          title: Faker::Games::Zelda.game,
+          entryable_attributes: {
+            url: Faker::Internet.url
+          }
+        }
+      }
+    end
+
+    assert Bookmark.last.entry.published?
+  end
+
   test "should show bookmark" do
     get bookmark_url(@bookmark)
     assert_response :success
+  end
+
+  test "should get a bookmark as json" do
+    get bookmark_url(@bookmark), as: :json
+    expected = {
+      "id" => @entry.id,
+      "title" => @entry.title,
+      "published_at" => @entry.published_at.to_json.gsub("\"", ""),
+      "created_at" => @entry.created_at.to_json.gsub("\"", ""),
+      "updated_at" => @entry.updated_at.to_json.gsub("\"", ""),
+      "summary" => @bookmark.summary.body.as_json,
+      "url" => bookmark_url(@bookmark, format: :json),
+      "tags" => @entry.tags.pluck(:name)
+    }
+    assert_equal expected, response.parsed_body
   end
 
   test "should get edit" do
@@ -83,30 +131,49 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
 
   test "should update bookmark" do
     login
-    patch bookmark_url(@bookmark), params: { bookmark: { title: @bookmark.title, url: @bookmark.url } }
+    patch bookmark_url(@bookmark), params: {
+      entry: {
+        published: "1",
+        title: @entry.title,
+        entryable_attributes: {
+          url: @bookmark.url
+        }
+      }
+    }
     assert_redirected_to bookmark_url(@bookmark)
   end
 
   test "should update bookmark with a summary" do
     login
     patch bookmark_url(@bookmark), params: {
-      bookmark: {
-        title: @bookmark.title,
-        url: @bookmark.url,
-        summary: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+      entry: {
+        published: "1",
+        title: @entry.title,
+        entryable_attributes: {
+          url: @bookmark.url,
+          summary: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
+        }
       }
     }
     assert_redirected_to bookmark_url(@bookmark)
   end
 
   test "update should require a session" do
-    patch bookmark_url(@bookmark), params: { bookmark: { title: @bookmark.title, url: @bookmark.url } }
+    patch bookmark_url(@bookmark), params: {
+      entry: {
+        published: "1",
+        title: @entry.title,
+        entryable_attributes: {
+          url: @bookmark.url
+        }
+      }
+    }
     assert_redirected_to login_path
   end
 
   test "should destroy bookmark" do
     login
-    assert_difference("Bookmark.count", -1) do
+    assert_difference ['Entry.count', 'Bookmark.count'], -1 do
       delete bookmark_url(@bookmark)
     end
 
@@ -114,7 +181,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "destroy should require a session" do
-    assert_no_difference("Bookmark.count") do
+    assert_no_difference ['Entry.count', 'Bookmark.count'] do
       delete bookmark_url(@bookmark)
     end
 
@@ -126,9 +193,12 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
 
     assert_enqueued_with job: BookmarkAuthorsJob do
       post bookmarks_url, params: {
-        bookmark: {
+        entry: {
+          published: "1",
           title: Faker::Games::Zelda.game,
-          url: Faker::Internet.url
+          entryable_attributes: {
+            url: Faker::Internet.url
+          }
         }
       }
     end
@@ -139,9 +209,12 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
 
     assert_enqueued_with job: BookmarkAuthorsJob, args: [@bookmark] do
       patch bookmark_url(@bookmark), params: {
-        bookmark: {
-          title: @bookmark.title,
-          url: @bookmark.url
+        entry: {
+          published: "1",
+          title: @entry.title,
+          entryable_attributes: {
+            url: @bookmark.url
+          }
         }
       }
     end
@@ -152,9 +225,12 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
 
     assert_enqueued_with job: WebmentionJob do
       post bookmarks_url, params: {
-        bookmark: {
+        entry: {
+          published: "1",
           title: Faker::Games::Zelda.game,
-          url: Faker::Internet.url
+          entryable_attributes: {
+            url: Faker::Internet.url
+          }
         }
       }
     end
@@ -167,9 +243,12 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
 
     assert_enqueued_with job: WebmentionJob, args: [{ source:, target: }] do
       patch source, params: {
-        bookmark: {
-          title: @bookmark.title,
-          url: target
+        entry: {
+          published: "1",
+          title: @entry.title,
+          entryable_attributes: {
+            url: target
+          }
         }
       }
     end
@@ -180,18 +259,24 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_enqueued_jobs do
       post bookmarks_url, params: {
-        bookmark: {
+        entry: {
+          published: "1",
           title: "",
-          url: Faker::Games::Zelda.game
+          entryable_attributes: {
+            url: Faker::Games::Zelda.game
+          }
         }
       }
     end
 
     assert_no_enqueued_jobs do
       patch bookmark_url(@bookmark), params: {
-        bookmark: {
+        entry: {
+          published: "1",
           title: "",
-          url: Faker::Games::Zelda.game
+          entryable_attributes: {
+            url: Faker::Games::Zelda.game
+          }
         }
       }
     end

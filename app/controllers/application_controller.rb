@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   helper_method :current_session, :logged_in?, :load_scripts?
+  before_action :activate_profiler
 
   def current_session
     return unless session[:user_session_id]
@@ -20,5 +21,11 @@ class ApplicationController < ActionController::Base
 
   def access_denied
     redirect_to(login_path, notice: t('application.access_denied')) and return false
+  end
+
+  def activate_profiler
+    if logged_in?
+      Rack::MiniProfiler.authorize_request
+    end
   end
 end

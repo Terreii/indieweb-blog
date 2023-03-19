@@ -35,7 +35,7 @@ class BookmarkAuthorsJobTest < ActiveJob::TestCase
   end
 
   test "should add authors" do
-    bookmark = bookmarks(:two)
+    bookmark = bookmarks(:second_bookmark)
 
     BookmarkAuthorsJob.perform_now bookmark
 
@@ -46,7 +46,7 @@ class BookmarkAuthorsJobTest < ActiveJob::TestCase
   end
 
   test "should update authors" do
-    bookmark = bookmarks(:one)
+    bookmark = bookmarks(:first_bookmark)
     old_author_id = bookmark.authors.first.id
 
     BookmarkAuthorsJob.perform_now bookmark
@@ -59,7 +59,7 @@ class BookmarkAuthorsJobTest < ActiveJob::TestCase
   end
 
   test "should update existing author" do
-    bookmark = bookmarks(:two)
+    bookmark = bookmarks(:second_bookmark)
     bookmark.authors.create(
       name: Faker::Games::SuperSmashBros.fighter,
       url: "https://en.wikiquote.org/wiki/Homer",

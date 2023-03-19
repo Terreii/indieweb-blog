@@ -46,16 +46,21 @@ Entry.create [
       slug: Post.string_to_slug(draft_title),
       body: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
     )
-  }
-]
-
-Bookmark.create([
+  },
   {
     title: "IndieWeb Bookmarks",
-    url: "https://indieweb.org/bookmark"
+    published_at: DateTime.parse('2020-08-11T14:20:00+00:00'),
+    tags: [tags.first],
+    entryable: Bookmark.new(
+      url: "https://indieweb.org/bookmark"
+    )
   },
   {
     title: "IndieWeb h-entry",
-    url: "https://indieweb.org/h-entry"
+    published_at: DateTime.parse('2020-09-21T14:20:00+00:00'),
+    tags: [tags.first],
+    entryable: Bookmark.new(
+      url: "https://indieweb.org/h-entry"
+    )
   }
-])
+]

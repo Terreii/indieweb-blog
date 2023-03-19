@@ -1,0 +1,11 @@
+<%= entry_form.fields_for :entryable do |form| %>
+  <div class="field">
+    <%= form.label :url %>
+    <%= form.text_field :url, class: "form-input" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :summary %>
+    <%= form.rich_text_area :summary %>
+  </div>
+<% end %>
