@@ -11,6 +11,11 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get index as json" do
+    get bookmarks_url, as: :json
+    assert_equal 2, response.parsed_body.length
+  end
+
   test "should get new" do
     login
     get new_bookmark_url
@@ -78,6 +83,21 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
   test "should show bookmark" do
     get bookmark_url(@bookmark)
     assert_response :success
+  end
+
+  test "should get a bookmark as json" do
+    get bookmark_url(@bookmark), as: :json
+    expected = {
+      "id" => @entry.id,
+      "title" => @entry.title,
+      "published_at" => @entry.published_at.to_json.gsub("\"", ""),
+      "created_at" => @entry.created_at.to_json.gsub("\"", ""),
+      "updated_at" => @entry.updated_at.to_json.gsub("\"", ""),
+      "summary" => @bookmark.summary.body.as_json,
+      "url" => bookmark_url(@bookmark, format: :json),
+      "tags" => @entry.tags.pluck(:name)
+    }
+    assert_equal expected, response.parsed_body
   end
 
   test "should get edit" do
