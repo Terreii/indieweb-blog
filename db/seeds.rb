@@ -49,6 +49,7 @@ Entry.create [
   },
   {
     title: "IndieWeb Bookmarks",
+    published_at: DateTime.parse('2020-08-11T14:20:00+00:00'),
     tags: [tags.first],
     entryable: Bookmark.new(
       url: "https://indieweb.org/bookmark"
@@ -56,6 +57,7 @@ Entry.create [
   },
   {
     title: "IndieWeb h-entry",
+    published_at: DateTime.parse('2020-09-21T14:20:00+00:00'),
     tags: [tags.first],
     entryable: Bookmark.new(
       url: "https://indieweb.org/h-entry"
