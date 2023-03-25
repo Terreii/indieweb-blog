@@ -14,7 +14,13 @@
   margin: 2rem 0rem;
   background-color: var(--dialog-bg-color);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+@media (min-width: 540px) {
+  .post_list__item {
+    flex-direction: row;
+  }
 }
 
 .post_list__item h1 {

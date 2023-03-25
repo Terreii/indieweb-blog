@@ -60,7 +60,15 @@ Entry.create [
     published_at: DateTime.parse('2020-09-21T14:20:00+00:00'),
     tags: [tags.first],
     entryable: Bookmark.new(
+      summary: "<div class=\"trix-content\">\n<pre>Outer radius = inner radius + padding diff.</pre><div>I love it, when you can use easy to follow rules for styling! And what a difference it makes!</div>\n</div>",
       url: "https://indieweb.org/h-entry"
     )
   }
 ]
+
+Post.first.thumbnail.attach(
+  io: File.open(
+    Rails.root.join('test', 'fixtures', 'files', 'sample.jpg')
+  ),
+  filename: 'thumbnail.jpg'
+)
