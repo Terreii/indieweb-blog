@@ -37,6 +37,7 @@
 
 .trix-content pre {
   background-color: var(--code-bg-color);
+  overflow-x: scroll;
 }
 
 trix-toolbar {
