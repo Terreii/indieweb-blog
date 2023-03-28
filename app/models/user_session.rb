@@ -9,13 +9,16 @@
 #  updated_at  :datetime         not null
 #
 class UserSession < ApplicationRecord
+  has_secure_password
+
   # Stores an active session, so that it can be deleted.
   def self.authenticate(username, password, name)
-    return unless Rails.application.credentials.auth[:login] == username
-    return unless Rails.application.credentials.auth[:password] == password
+    username_matches = Rails.application.credentials.auth[:login] == username
+    username_matches = Rails.application.credentials.auth[:login] == username || username_matches
+    return unless Rails.application.credentials.auth[:login] == username || username_matches
 
     user_session = UserSession.new name: name, last_online: DateTime.now
-    return user_session if user_session.save
+    return user_session if user_session.authenticate(password) && user_session.save
   end
 
   def self.find_and_log_current(session_id)
@@ -35,4 +38,15 @@ class UserSession < ApplicationRecord
     end
   }
   after_destroy_commit { broadcast_remove_to("user_sessions") }
+
+  def password_digest
+    Rails.application.credentials.auth[:password_digest]
+  end
+
+  def password_digest=(next_value)
+    if Rails.env.development?
+      puts "This is the new password digest. Store it in credentials!\n"
+      puts next_value
+    end
+  end
 end
