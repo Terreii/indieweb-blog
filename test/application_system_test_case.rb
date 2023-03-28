@@ -7,7 +7,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     visit login_url
 
     fill_in "username", with: Rails.application.credentials.auth[:login]
-    fill_in "password", with: Rails.application.credentials.auth[:password]
+    fill_in "password", with: Rails.application.credentials.auth[:plain_password_for_tests]
     fill_in "name", with: "Test"
 
     click_button "Login"

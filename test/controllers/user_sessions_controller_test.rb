@@ -25,7 +25,7 @@ class UserSessionsControllerTest < ActionDispatch::IntegrationTest
   test "should create user_session" do
     assert_difference('UserSession.count') do
       username = Rails.application.credentials.auth[:login]
-      password = Rails.application.credentials.auth[:password]
+      password = Rails.application.credentials.auth[:plain_password_for_tests]
       post user_sessions_url(username: username, password: password, name: 'Test Session')
     end
 
