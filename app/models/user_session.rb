@@ -13,7 +13,9 @@ class UserSession < ApplicationRecord
 
   # Stores an active session, so that it can be deleted.
   def self.authenticate(username, password, name)
-    return unless Rails.application.credentials.auth[:login] == username
+    username_matches = Rails.application.credentials.auth[:login] == username
+    username_matches = Rails.application.credentials.auth[:login] == username || username_matches
+    return unless Rails.application.credentials.auth[:login] == username || username_matches
 
     user_session = UserSession.new name: name, last_online: DateTime.now
     return user_session if user_session.authenticate(password) && user_session.save
@@ -43,7 +45,7 @@ class UserSession < ApplicationRecord
 
   def password_digest=(next_value)
     if Rails.env.development?
-      puts "This is new password digest. Store it in credentials!"
+      puts "This is the new password digest. Store it in credentials!\n"
       puts next_value
     end
   end
