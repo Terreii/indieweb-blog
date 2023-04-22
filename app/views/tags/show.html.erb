@@ -5,7 +5,7 @@
 <h2>Posts</h2>
 
 <ul>
-  <% @tag.entries.published.each do |entry| %>
+  <% @tag.entries.posts.published.each do |entry| %>
     <li>
       <%= link_to "#{entry.published_at.to_date.to_s} - #{entry.title}", entry.entryable %>
     </li>
@@ -15,9 +15,9 @@
 <h2>Bookmarks</h2>
 
 <ul>
-  <% @tag.bookmarks.each do |bookmark| %>
+  <% @tag.entries.bookmarks.each do |entry| %>
     <li>
-      <%= link_to "#{bookmark.created_at.to_date.to_s} - #{bookmark.title}", bookmark %>
+      <%= link_to "#{entry.created_at.to_date.to_s} - #{entry.title}", entry.entryable %>
     </li>
   <% end %>
 </ul>
