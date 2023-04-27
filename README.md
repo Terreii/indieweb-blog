@@ -24,4 +24,4 @@ Required:
 * Deployment instructions
   * [Install Capistrano](https://gorails.com/deploy/ubuntu/20.04#capistrano)
   * Add your ssh keys.
-  * `cap production deploy`
+  * `cap production deploy` or `bundler exec cap production deploy`
