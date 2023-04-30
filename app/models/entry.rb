@@ -16,7 +16,11 @@
 #  index_entries_on_published_at  (published_at)
 #
 class Entry < ApplicationRecord
-  delegated_type :entryable, types: %w[ Bookmark Post ], dependent: :destroy
+  def self.types
+    %w[ Bookmark Post ]
+  end
+
+  delegated_type :entryable, types: self.types, dependent: :destroy
   accepts_nested_attributes_for :entryable, update_only: true
   has_and_belongs_to_many :tags
 
