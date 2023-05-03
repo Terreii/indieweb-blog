@@ -11,6 +11,7 @@
     <% if load_scripts? %>
       <%= javascript_importmap_tags %>
     <% end %>
+    <link rel="icon" href="/favicon.png" type="image/png">
     <link type="application/atom+xml" rel="alternate" href="<%= feed_url format: :atom %>" title="<%= t('general.title') %>" />
     <meta property="og:title" content="<%= content_for?(:title) ? yield(:title) : t('general.title') %>">
     <meta property="og:type" content="article" />
