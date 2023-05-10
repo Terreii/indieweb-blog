@@ -4,6 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  entryable_type :string           not null
+#  language       :enum             default("english"), not null
 #  published_at   :datetime
 #  title          :string
 #  created_at     :datetime         not null

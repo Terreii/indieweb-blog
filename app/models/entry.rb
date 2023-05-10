@@ -4,6 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  entryable_type :string           not null
+#  language       :enum             default("english"), not null
 #  published_at   :datetime
 #  title          :string
 #  created_at     :datetime         not null
@@ -19,6 +20,10 @@ class Entry < ApplicationRecord
   def self.types
     %w[ Bookmark Post ]
   end
+
+  enum language: {
+    english: "en", german: "de"
+  }, _prefix: true
 
   delegated_type :entryable, types: self.types, dependent: :destroy
   accepts_nested_attributes_for :entryable, update_only: true

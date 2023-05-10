@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_10_183104) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_10_184243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "language_option", ["en", "de"]
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -82,6 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_10_183104) do
     t.bigint "entryable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "language", default: "en", null: false, enum_type: "language_option"
     t.index ["entryable_type", "entryable_id"], name: "index_entries_on_entryable"
     t.index ["published_at"], name: "index_entries_on_published_at"
   end
