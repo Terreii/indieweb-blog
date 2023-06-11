@@ -113,6 +113,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
       "updated_at" => @entry.updated_at.to_json.gsub("\"", ""),
       "summary" => @bookmark.summary.body.as_json,
       "url" => bookmark_url(@bookmark, format: :json),
+      "language" => @entry.language_code,
       "tags" => @entry.tags.pluck(:name)
     }
     assert_equal expected, response.parsed_body

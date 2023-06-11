@@ -5,7 +5,7 @@ feed.entry entry, {
   published: entry.published_at,
   url: full_url_for(entry.entryable)
 } do |feed_entry|
-  feed_entry.title entry.title
+  feed_entry.title entry.title, "xml:lang" => entry.language_code
   feed_entry.author do |author|
     author.name "Christopher Astfalk"
   end

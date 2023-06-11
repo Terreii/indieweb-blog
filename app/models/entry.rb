@@ -52,6 +52,11 @@ class Entry < ApplicationRecord
     published?
   end
 
+  # Get the IANA tag of language
+  def language_code
+    self.class.languages[language]
+  end
+
   private
 
     # Sets the entry property of an entryable model to self.

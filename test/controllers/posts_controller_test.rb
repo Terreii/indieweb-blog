@@ -91,6 +91,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
       "slug" => @post.slug,
       "body" => @post.body.body.as_json,
       "url" => post_url(@post, format: :json),
+      "language" => @entry.language_code,
       "tags" => @entry.tags.pluck(:name)
     }
     assert_equal expected, response.parsed_body
