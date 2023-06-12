@@ -21,6 +21,12 @@ class Entry < ApplicationRecord
     %w[ Bookmark Post ]
   end
 
+  # Get the params permit attributes keys for Entry.
+  # Also add entryable_attributes for delegated types.
+  def self.permitted_attributes(entryable_attributes = {})
+    [:title, :published, :language, tag_ids: [], entryable_attributes:]
+  end
+
   enum language: {
     english: "en", german: "de"
   }, _prefix: true
