@@ -72,7 +72,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:entry).permit(:title, :published, tag_ids: [], entryable_attributes: [:id, :slug, :summary, :thumbnail, :body])
+      params.require(:entry).permit(:title, :published, :language, tag_ids: [], entryable_attributes: [:id, :slug, :summary, :thumbnail, :body])
     end
 
     # Notifies all links in the post about this published post.

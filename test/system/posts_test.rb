@@ -97,7 +97,7 @@ class PostsTest < ApplicationSystemTestCase
     fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs.join("\n")
     check "Published"
 
-    select Entry.languages[:german], from: "language"
+    select "german", from: "entry_language"
 
     click_on "Create Entry"
 

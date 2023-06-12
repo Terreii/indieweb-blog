@@ -59,7 +59,7 @@ class BookmarksTest < ApplicationSystemTestCase
     fill_in "Title", with: Faker::Games::Zelda.game
     fill_in "Url", with: Faker::Internet.url
 
-    select Entry.languages[:german], from: "language"
+    select "german", from: "entry_language"
 
     click_on "Create Entry"
 
