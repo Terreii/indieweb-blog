@@ -87,6 +87,26 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Christophers thoughts"
   end
 
+  test "creating a Post with other language" do
+    login
+
+    visit posts_url
+    click_on "Create new Post"
+
+    fill_in "Title", with: Faker::Games::DnD.alignment
+    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs.join("\n")
+    check "Published"
+
+    select Entry.languages[:german], from: "language"
+
+    click_on "Create Entry"
+
+    assert_text "Post was successfully created"
+    click_on "Christophers thoughts"
+
+    assert_equal "german", Post.last.entry.language
+  end
+
   test "creating a draft Post" do
     login
 

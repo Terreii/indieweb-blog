@@ -35,6 +35,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
         entry: {
           published: "1",
           title: Faker::Games::Zelda.game,
+          language: Entry.languages[:english],
           entryable_attributes: {
             url: Faker::Internet.url
           }
@@ -53,6 +54,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
         entry: {
           published: "1",
           title: Faker::Games::Zelda.game,
+          language: Entry.languages[:english],
           entryable_attributes: {
             url: Faker::Internet.url,
             summary: "<p>#{Faker::Lorem.paragraphs.join '</p><p>'}</p>"
@@ -64,12 +66,32 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to bookmark_url(Bookmark.last)
   end
 
+  test "should create bookmark with other language" do
+    login
+
+    assert_difference ["Bookmark.count", "Entry.count"], 1 do
+      post bookmarks_url, params: {
+        entry: {
+          published: "1",
+          title: Faker::Games::Zelda.game,
+          language: Entry.languages[:german],
+          entryable_attributes: {
+            url: Faker::Internet.url
+          }
+        }
+      }
+    end
+
+    assert_equal "german", Bookmark.last.entry.language
+  end
+
   test "create should require a session" do
     assert_no_difference("Bookmark.count") do
       post bookmarks_url, params: {
         entry: {
           published: "1",
           title: Faker::Games::Zelda.game,
+          language: Entry.languages[:english],
           entryable_attributes: {
             url: Faker::Internet.url
           }
