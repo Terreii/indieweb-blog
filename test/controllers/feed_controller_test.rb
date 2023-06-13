@@ -20,14 +20,15 @@ class FeedControllerTest < ActionDispatch::IntegrationTest
     get feed_url(format: :atom)
 
     post = entries(:first_post)
-    assert_match "<updated>#{post.updated_at.strftime "%FT%TZ"}</updated>", @response.body
+    assert_select "updated", post.updated_at.strftime("%FT%TZ")
   end
 
   test "should include bookmarks" do
     get feed_url(format: :atom)
 
     bookmark = bookmarks(:first_bookmark)
-    assert_match "<title>#{bookmark.entry.title}</title>", @response.body
-    assert_match bookmark_url(bookmark), @response.body
+    assert_select "title", bookmark.entry.title
+    assert_select "link[href=\"#{bookmark_url(bookmark)}\"]"
+    assert_select "source > link[href=\"#{bookmark.url}\"]", nil, "should link to source"
   end
 end

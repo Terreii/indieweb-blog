@@ -16,6 +16,11 @@
     <%= form.text_field :title, class: "form-input" %>
   </div>
 
+  <div class="field">
+    <%= form.label :language %>
+    <%= form.select :language, Entry.languages, Hash.new, class: "form-input" %>
+  </div>
+
   <%= render "entries/entryables/#{entry.entryable_name}_form", entry_form: form %>
 
   <div class="checkbox_field">

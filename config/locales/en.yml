@@ -38,6 +38,9 @@ en:
     latest_entries: Latest
     portfolio: Portfolio
     impressum: Impressum
+    lang:
+      title: Language of the article.
+      inline: Language
 
   application:
     access_denied: Please log in to continue

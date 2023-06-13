@@ -50,6 +50,25 @@ class BookmarksTest < ApplicationSystemTestCase
     click_on "Back"
   end
 
+  test "should create bookmark with other language" do
+    login
+
+    visit bookmarks_url
+    click_on "Create new Bookmark"
+
+    fill_in "Title", with: Faker::Games::Zelda.game
+    fill_in "Url", with: Faker::Internet.url
+
+    select "german", from: "entry_language"
+
+    click_on "Create Entry"
+
+    assert_text "Bookmark was successfully created"
+    click_on "Back"
+
+    assert_equal "german", Bookmark.last.entry.language
+  end
+
   test "should update Bookmark" do
     login
 

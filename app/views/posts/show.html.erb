@@ -4,7 +4,7 @@
     thumbnail: @entry.post.thumbnail.present? ? @entry.post.thumbnail : nil,
     url: full_url_for(@entry.post)
   ) %>
-  <h1 class="post__title p-name" itemprop="name headline"><%= set_title(@entry.title) %></h1>
+  <h1 class="post__title p-name" itemprop="name headline" lang="<%= @entry.language_code %>"><%= set_title(@entry.title) %></h1>
 
   <p class="post__meta">
     <% if @entry.published? %>
@@ -26,6 +26,12 @@
       <%= link_to 'Edit', edit_post_path(@entry.post), class: 'post__edit-link' %>
     <% end %>
 
+    <br />
+    <span itemprop="tags" class="p-category list_joiner">
+      <%= t "general.lang.inline" %>:
+      <%= @entry.language %>
+    </span>
+
     <% unless @entry.tags.empty? %>
       <br />
       <span itemprop="tags">
@@ -43,7 +49,7 @@
     </div>
   <% end %>
 
-  <div class="e-content" itemprop="articleBody">
+  <div class="e-content" itemprop="articleBody" lang="<%= @entry.language_code %>">
     <%= @entry.post.body %>
   </div>
 </article>

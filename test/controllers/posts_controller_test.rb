@@ -37,6 +37,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
         entry: {
           published: "1",
           title: Faker::Games::DnD.alignment,
+          language: Entry.languages[:english],
           entryable_attributes: {
             summary: Faker::Lorem.paragraph,
             body: "<p>#{Faker::Lorem.paragraphs.join "</p><p>"}</p>"
@@ -55,6 +56,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
         entry: {
           published: "1",
           title: Faker::Games::DnD.alignment,
+          language: Entry.languages[:english],
           entryable_attributes: {
             thumbnail: fixture_file_upload("sample.jpg", "image/jpeg", :binary),
             body: "<div>#{Faker::Lorem.paragraph}"
@@ -67,9 +69,33 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert Post.last.thumbnail.present?
   end
 
+  test "should create with other languages" do
+    login
+    assert_difference('Post.count') do
+      post posts_url, params: {
+        entry: {
+          published: "1",
+          title: Faker::Games::DnD.alignment,
+          language: Entry.languages[:german],
+          entryable_attributes: {
+            body: "<div>#{Faker::Lorem.paragraph}"
+          }
+        }
+      }
+    end
+
+    assert_equal "german", Post.last.entry.language
+  end
+
   test "should require a session to create a post" do
     assert_no_difference('Post.count') do
-      post posts_url, params: { entry: { published: "1", title: @entry.title } }
+      post posts_url, params: {
+        entry: {
+          published: "1",
+          title: @entry.title,
+          language: Entry.languages[:english]
+        }
+      }
     end
 
     assert_redirected_to login_path
@@ -91,6 +117,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
       "slug" => @post.slug,
       "body" => @post.body.body.as_json,
       "url" => post_url(@post, format: :json),
+      "language" => @entry.language_code,
       "tags" => @entry.tags.pluck(:name)
     }
     assert_equal expected, response.parsed_body

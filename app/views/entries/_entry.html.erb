@@ -1,3 +1,3 @@
-<article id="<%= dom_id entry %>" class="post_list__item h-entry">
+<article id="<%= dom_id entry %>" class="post_list__item h-entry" lang="<%= entry.language_code %>">
   <%= render "entries/entryables/#{entry.entryable_name}", entry: entry %>
 </article>

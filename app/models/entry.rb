@@ -4,6 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  entryable_type :string           not null
+#  language       :enum             default("english"), not null
 #  published_at   :datetime
 #  title          :string
 #  created_at     :datetime         not null
@@ -19,6 +20,16 @@ class Entry < ApplicationRecord
   def self.types
     %w[ Bookmark Post ]
   end
+
+  # Get the params permit attributes keys for Entry.
+  # Also add entryable_attributes for delegated types.
+  def self.permitted_attributes(entryable_attributes = {})
+    [:title, :published, :language, tag_ids: [], entryable_attributes:]
+  end
+
+  enum language: {
+    english: "en", german: "de"
+  }, _prefix: true
 
   delegated_type :entryable, types: self.types, dependent: :destroy
   accepts_nested_attributes_for :entryable, update_only: true
@@ -45,6 +56,11 @@ class Entry < ApplicationRecord
     return published? if published? == is_published
     self.published_at = is_published ? Time.now : nil
     published?
+  end
+
+  # Get the IANA tag of language
+  def language_code
+    self.class.languages[language]
   end
 
   private
