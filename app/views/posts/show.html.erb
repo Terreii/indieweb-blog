@@ -26,6 +26,12 @@
       <%= link_to 'Edit', edit_post_path(@entry.post), class: 'post__edit-link' %>
     <% end %>
 
+    <br />
+    <span itemprop="tags" class="p-category list_joiner">
+      <%= t "general.lang.inline" %>:
+      <%= @entry.language %>
+    </span>
+
     <% unless @entry.tags.empty? %>
       <br />
       <span itemprop="tags">

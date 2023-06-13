@@ -32,8 +32,14 @@
       <%= link_to t("general.author-full"), root_url, class: "p-author h-card u-url" %>
     </span>
 
+    <br />
+
+    <span itemprop="tags" class="p-category list_joiner" title="<%= t "general.lang.title" %>">
+      <%= entry.language %>
+    </span>
+
     <% unless entry.tags.empty? %>
-      <br />
+      <span class="list_joiner">|</span>
       <span itemprop="tags">
         Tags:
         <%= render entry.tags %>
