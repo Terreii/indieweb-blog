@@ -108,6 +108,7 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
+    dalli (3.2.5)
     date (3.3.3)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -297,6 +298,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.4)
   capistrano-rbenv (~> 2.1, >= 2.1.4)
   capybara
+  dalli
   debug
   ed25519
   faker (>= 2.19.0)
