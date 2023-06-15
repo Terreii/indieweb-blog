@@ -86,4 +86,13 @@ class EntryTest < ActiveSupport::TestCase
     entry.published = "0"
     assert_not entry.published?
   end
+
+  test "should have a class method to get permitted attributes keys" do
+    assert_equal [:title, :published, :language, tag_ids: [], entryable_attributes: []], Entry.permitted_attributes_with
+
+    assert_equal(
+      [:title, :published, :language, tag_ids: [], entryable_attributes: [:test, :other, moar: []]],
+      Entry.permitted_attributes_with(:test, :other, moar: [])
+    )
+  end
 end

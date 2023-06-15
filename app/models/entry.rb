@@ -23,7 +23,7 @@ class Entry < ApplicationRecord
 
   # Get the params permit attributes keys for Entry.
   # Also add entryable_attributes for delegated types.
-  def self.permitted_attributes(entryable_attributes = {})
+  def self.permitted_attributes_with(*entryable_attributes)
     [:title, :published, :language, tag_ids: [], entryable_attributes:]
   end
 
