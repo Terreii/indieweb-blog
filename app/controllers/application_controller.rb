@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_session, :logged_in?, :load_scripts?
+  helper_method :current_session, :logged_in?
   before_action :activate_profiler
 
   def current_session
@@ -13,10 +13,6 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     current_session.present?
-  end
-
-  def load_scripts?
-    logged_in? || !flash[:load_scripts].nil?
   end
 
   def access_denied

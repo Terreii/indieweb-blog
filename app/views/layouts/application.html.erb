@@ -8,9 +8,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <% if load_scripts? %>
-      <%= javascript_importmap_tags %>
-    <% end %>
+    <%= javascript_importmap_tags %>
     <link rel="icon" href="/favicon.png" type="image/png">
     <link type="application/atom+xml" rel="alternate" href="<%= feed_url format: :atom %>" title="<%= t('general.title') %>" />
     <meta property="og:title" content="<%= content_for?(:title) ? yield(:title) : t('general.title') %>">

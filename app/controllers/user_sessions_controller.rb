@@ -57,7 +57,6 @@ class UserSessionsController < ApplicationController
   def logout
     current_session.destroy
     reset_session
-    flash[:load_scripts] = true # load the scripts on the next request, to show the logout message
     respond_to do |format|
       format.html { redirect_to root_path, notice: t("sessions.logout_success"), status: :see_other }
       format.json { head :no_content }
