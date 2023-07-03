@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   get "/portfolio", to: "static_pages#portfolio", as: "portfolio"
   get "/impressum", to: "static_pages#impressum", as: "impressum"
 
+  namespace :admin do
+    get "nav", to: "nav#index"
+  end
+
   get "/:year/:month/:day/:slug", {
     constraints: {
       year:   /\d{4}/,
