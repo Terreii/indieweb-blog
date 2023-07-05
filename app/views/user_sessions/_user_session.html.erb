@@ -21,7 +21,6 @@
       <% unless user_session == current_session %>
         | <%= link_to 'Destroy', user_session, data: {
           turbo_method: :delete,
-          turbo_frame: "_top",
           turbo_confirm: "Are you sure?"
         } %>
       <% end %>
