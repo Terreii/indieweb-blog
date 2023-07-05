@@ -1,4 +1,4 @@
-<%= form_with model: entry, url: entry.entryable, class: "form" do |form| %>
+<%= form_with model: entry, url: entry.entryable, class: "form", data: { controller: "trix" } do |form| %>
   <% if entry.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(entry.errors.count, "error") %> prohibited this <%= entry.entryable_class.name.downcase %> from being saved:</h2>

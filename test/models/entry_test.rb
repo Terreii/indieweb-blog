@@ -36,7 +36,7 @@ class EntryTest < ActiveSupport::TestCase
     entry = entries(:draft_post)
     title = Faker::Kpop.boy_bands
     entry.update(title: title, entryable_attributes: { slug: Post.string_to_slug(title) })
-    assert_equal title, entry.reload.title
+    assert_equal title, entry.title
   end
 
   test "should use the current time when published? is set to true" do
