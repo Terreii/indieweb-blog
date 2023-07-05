@@ -48,7 +48,6 @@ class UserSessionsController < ApplicationController
   def destroy
     @user_session.destroy
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@user_session) }
       format.html { redirect_to user_sessions_path, notice: t("sessions.logout_success"), status: :see_other }
       format.json { head :no_content }
     end
