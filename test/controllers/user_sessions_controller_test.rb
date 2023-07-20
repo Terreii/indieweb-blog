@@ -77,7 +77,7 @@ class UserSessionsControllerTest < ActionDispatch::IntegrationTest
     end
     id = session[:user_session_id]
     assert_changes "UserSession.find(#{id}).last_online" do
-      get root_url
+      get user_sessions_url
     end
   end
 

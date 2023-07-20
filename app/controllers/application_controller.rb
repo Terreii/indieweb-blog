@@ -23,7 +23,12 @@ class ApplicationController < ActionController::Base
   end
 
   def activate_profiler
-    if logged_in? # This causes a set_cookie on every request!
+    # only activate MiniProfiler on not if /?profile is set.
+    # Because logged_in? accesses the session store. Which causes a Set-Cookie header.
+    # Deactivating all caching.
+    # https://stackoverflow.com/questions/42044076/why-is-rails-constantly-sending-back-a-set-cookie-header
+    if params.has_key?(:profile) && logged_in?
+      logger.debug "activate MiniProfiler"
       Rack::MiniProfiler.authorize_request
     end
   end
