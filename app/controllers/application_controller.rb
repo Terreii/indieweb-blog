@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :activate_profiler
 
   def current_session
+    logger.debug "current_session accessed"
     return unless session[:user_session_id]
     @current_session ||= UserSession.find_and_log_current(session[:user_session_id])
   end
@@ -12,7 +13,9 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in?
-    current_session.present?
+    is_logged_in = current_session.present?
+    logger.debug "logged_in? checked; result: #{is_logged_in}"
+    is_logged_in
   end
 
   def access_denied
@@ -20,7 +23,12 @@ class ApplicationController < ActionController::Base
   end
 
   def activate_profiler
-    if logged_in?
+    # only activate MiniProfiler on not if /?profile is set.
+    # Because logged_in? accesses the session store. Which causes a Set-Cookie header.
+    # Deactivating all caching.
+    # https://stackoverflow.com/questions/42044076/why-is-rails-constantly-sending-back-a-set-cookie-header
+    if params.has_key?(:profile) && logged_in?
+      logger.debug "activate MiniProfiler"
       Rack::MiniProfiler.authorize_request
     end
   end
