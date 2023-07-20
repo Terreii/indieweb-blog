@@ -24,7 +24,7 @@ class UserSessionsController < ApplicationController
   def create
     if user_session = UserSession.authenticate(params[:username], params[:password], params[:name])
       session[:user_session_id] = user_session.id
-      redirect_to root_path, notice: t('sessions.successful_login')
+      redirect_to admin_path, notice: t('sessions.successful_login')
     else
       flash.now[:alert] = t('sessions.invalid_login')
       render :new
@@ -59,7 +59,7 @@ class UserSessionsController < ApplicationController
     current_session.destroy
     reset_session
     respond_to do |format|
-      format.html { redirect_to root_path, notice: t("sessions.logout_success"), status: :see_other }
+      format.html { redirect_to login_path, notice: t("sessions.logout_success"), status: :see_other }
       format.json { head :no_content }
     end
   end
