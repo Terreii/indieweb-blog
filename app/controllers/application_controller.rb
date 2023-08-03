@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
 
   def current_session
     logger.debug "current_session accessed"
-    return unless session[:user_session_id]
-    @current_session ||= UserSession.find_and_log_current(session[:user_session_id])
+    return unless cookies.encrypted[:user_session_id]
+    @current_session ||= UserSession.find_and_log_current(cookies.encrypted[:user_session_id])
   end
 
   def authenticate
