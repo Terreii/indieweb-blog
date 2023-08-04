@@ -48,7 +48,8 @@ class PostsTest < ApplicationSystemTestCase
     visit posts_url
     click_on "Create new Post"
 
-    fill_in "Title", with: Faker::Games::DnD.alignment
+    title = Faker::Games::DnD.alignment
+    fill_in "Title", with: title
     fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs.join("\n")
     check "Published"
 
@@ -61,7 +62,7 @@ class PostsTest < ApplicationSystemTestCase
 
     click_on "Create Entry"
 
-    assert_text "Post was successfully created"
+    assert_text title
     assert_link tags(:bands).name
     assert_link "dnd"
     click_on "Christophers thoughts"
@@ -73,7 +74,8 @@ class PostsTest < ApplicationSystemTestCase
     visit posts_url
     click_on "Create new Post"
 
-    fill_in "Title", with: Faker::Games::DnD.alignment
+    title = Faker::Games::DnD.alignment
+    fill_in "Title", with: title
     fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs.join("\n")
     attach_file "Thumbnail", file_fixture("sample.jpg")
     check "Published"
@@ -82,7 +84,7 @@ class PostsTest < ApplicationSystemTestCase
 
     click_on "Create Entry"
 
-    assert_text "Post was successfully created"
+    assert_text title
     assert_css "img#thumbnail"
     click_on "Christophers thoughts"
   end
@@ -93,16 +95,19 @@ class PostsTest < ApplicationSystemTestCase
     visit posts_url
     click_on "Create new Post"
 
-    fill_in "Title", with: Faker::Games::DnD.alignment
+    title = Faker::Games::DnD.alignment
+    fill_in "Title", with: title
     fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs.join("\n")
     check "Published"
 
     select "german", from: "entry_language"
 
     click_on "Create Entry"
+    sleep 0.1
 
-    assert_text "Post was successfully created"
+    assert_text title
     click_on "Christophers thoughts"
+    assert_css "article[lang=de]"
 
     assert_equal "german", Post.last.entry.language
   end
@@ -115,12 +120,18 @@ class PostsTest < ApplicationSystemTestCase
     title = Faker::Games::DnD.alignment
 
     fill_in "Title", with: title
-    fill_in_rich_text_area "Body", with: Faker::Lorem.paragraphs
+    fill_in_rich_text_area "Body", with: "hello world! " + Faker::Lorem.paragraphs.join
+    uncheck "Published"
     click_on "Create Entry"
 
-    assert_text "Post was successfully created"
+    visit posts_url
+    within ".drafts_list" do
+      assert_text title
+    end
 
     click_on "Logout"
+    sleep 0.1
+    visit posts_url
     assert_no_text title
   end
 
@@ -144,7 +155,8 @@ class PostsTest < ApplicationSystemTestCase
     click_on @entry.title
     click_on "Edit"
 
-    fill_in "Title", with: @entry.title
+    title = Faker::Kpop.iii_groups
+    fill_in "Title", with: title
 
     fill_in "Create new tag", with: "music"
     click_on "Create Tag"
@@ -156,7 +168,7 @@ class PostsTest < ApplicationSystemTestCase
 
     click_on "Update Entry"
 
-    assert_text "Post was successfully updated"
+    assert_text title
     assert_link tags(:bands).name
     assert_link "music"
     click_on "Christophers thoughts"
@@ -170,11 +182,13 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Edit"
 
     sleep 0.1
-    page.accept_confirm do
-      click_on "Destroy this post", match: :first
+    assert_difference ["Entry.count", "Post.count"], -1 do
+      page.accept_confirm do
+        click_on "Destroy this post", match: :first
+      end
+      sleep 0.1
     end
-    sleep 0.1
 
-    assert_text "Post was successfully destroyed"
+    assert_no_text @entry.title
   end
 end
