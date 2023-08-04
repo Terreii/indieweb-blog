@@ -1,3 +1,8 @@
+<% set_meta_data(
+  description: @entry.bookmark.summary.to_plain_text,
+  thumbnail: nil,
+  url: full_url_for(@entry.bookmark)
+) %>
 <% set_title t("bookmarks.show", title: @entry.title) %>
 <%= render @entry %>
 

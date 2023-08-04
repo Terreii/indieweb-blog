@@ -141,6 +141,15 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_equal expected, response.parsed_body
   end
 
+  test "should set Open Graph meta tags" do
+    get bookmark_url(@bookmark)
+
+    assert_dom "meta[property=\"og:title\"][content*=\"#{@entry.title}\"]"
+    assert_dom "meta[property=\"og:type\"][content*=article]"
+    assert_dom "meta[property=\"og:description\"][content*=\"#{@bookmark.summary.to_plain_text}\"]"
+    assert_dom "meta[property=\"og:url\"][content*=\"#{bookmark_url(@bookmark)}\"]"
+  end
+
   test "should get edit" do
     login
     get edit_bookmark_url(@bookmark)

@@ -123,6 +123,17 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_equal expected, response.parsed_body
   end
 
+  test "Post should set Open Graph meta tags" do
+    get post_url(@post)
+
+    assert_dom "meta[property=\"og:title\"][content*=\"#{@entry.title}\"]"
+    assert_dom "meta[property=\"og:type\"][content*=article]"
+    assert_dom "meta[property=\"og:description\"][content*=\"#{@post.summary}\"]"
+    assert_dom "meta[property=\"og:image\"][content*=\"#{url_for @post.thumbnail}\"]"
+    assert_dom "meta[property=\"og:url\"][content*=\"#{post_url @post}\"]"
+    assert_dom "meta[name=\"twitter:card\"][content*=\"summary_large_image\"]"
+  end
+
   test "should get edit" do
     login
     get edit_post_url(@post)
