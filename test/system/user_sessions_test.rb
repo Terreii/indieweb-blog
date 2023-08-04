@@ -27,7 +27,10 @@ class UserSessionsTest < ApplicationSystemTestCase
 
     click_button "Login"
 
-    assert_text "Logged in successfully"
+    within "nav" do
+      assert_text "Logout"
+      assert_text "Sessions"
+    end
     click_on "Christophers thoughts"
   end
 
@@ -63,7 +66,10 @@ class UserSessionsTest < ApplicationSystemTestCase
     assert_difference 'UserSession.count', -1 do
       click_on "Logout"
 
-      assert_text "You successfully logged out"
+      within "nav" do
+        assert_no_text "Logout"
+        assert_no_text "Sessions"
+      end
     end
   end
 end

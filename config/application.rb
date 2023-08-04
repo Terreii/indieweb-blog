@@ -11,6 +11,10 @@ module IndiewebBlog
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    # no session/flash messages
+    # Delete if cookie_store doesn't update the cookie on every request.
+    config.session_store :disabled
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
