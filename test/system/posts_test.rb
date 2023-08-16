@@ -93,9 +93,8 @@ class PostsTest < ApplicationSystemTestCase
 
     click_on "Create Entry"
 
-    using_wait_time 0.5 do
-      assert_text title
-    end
+    assert_no_text title # fix idea from https://nts.strzibny.name/avoid-sleep-rails-system-tests/
+    assert_text title
     click_on "Christophers thoughts"
     assert_css "article[lang=de]"
 
