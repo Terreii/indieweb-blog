@@ -92,9 +92,10 @@ class PostsTest < ApplicationSystemTestCase
     select "german", from: "entry_language"
 
     click_on "Create Entry"
-    sleep 0.3
 
-    assert_text title
+    using_wait_time 0.5 do
+      assert_text title
+    end
     click_on "Christophers thoughts"
     assert_css "article[lang=de]"
 
