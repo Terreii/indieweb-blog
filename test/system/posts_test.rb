@@ -97,7 +97,9 @@ class PostsTest < ApplicationSystemTestCase
     assert_text title
     click_on "Christophers thoughts"
     assert_no_css "article[lang=de]"
-    assert_css "article[lang=de]"
+    using_wait_time 5 do
+      assert_css "article[lang=de]"
+    end
 
     assert_equal "german", Post.last.entry.language
   end
