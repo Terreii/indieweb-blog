@@ -31,6 +31,10 @@
 .post_list__item_thumbnail {
   margin-right: 1rem;
 }
+.post_list__item_thumbnail > img {
+  max-width: 150px;
+  height: auto;
+}
 
 .post__title {
   font-size: x-large;

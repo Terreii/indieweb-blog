@@ -44,7 +44,8 @@
   <% if @entry.post.thumbnail.present? %>
     <div>
       <%= link_to @entry.post.thumbnail do %>
-        <%= image_tag @entry.post.thumbnail, id: "thumbnail", class: "post_thumbnail", alt: "" %>
+        <% height, width = attached_media_size(@entry.post.thumbnail) %>
+        <%= image_tag @entry.post.thumbnail, id: "thumbnail", height:, width:, class: "post_thumbnail", alt: "" %>
       <% end %>
     </div>
   <% end %>

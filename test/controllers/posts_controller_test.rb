@@ -14,6 +14,11 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "post with thumbnail should show it in lists" do
+    get posts_url
+    assert_select "##{dom_id @post.entry} .post_list__item_thumbnail img"
+  end
+
   test "should get index as json" do
     get posts_url, as: :json
     assert_equal 3, response.parsed_body.length

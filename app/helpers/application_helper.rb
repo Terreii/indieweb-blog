@@ -23,4 +23,12 @@ module ApplicationHelper
     return "#{url}?s=#{size}" unless size.nil?
     url
   end
+
+  def attached_media_size(attachment)
+    if attachment.analyzed?
+      attachment.metadata.fetch_values :height, :width
+    else
+      [nil, nil]
+    end
+  end
 end
