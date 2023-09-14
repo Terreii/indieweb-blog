@@ -1,11 +1,7 @@
 <% if entry.post.thumbnail.present? %>
   <%= link_to entry.post, class: "post_list__item_thumbnail" do %>
     <% thumbnail = entry.post.thumbnail %>
-    <% height, width = if thumbnail.analyzed?
-                         thumbnail.metadata.fetch_values :height, :width
-                       else
-                         [nil, nil]
-                       end %>
+    <% height, width = attached_media_size(thumbnail) %>
     <%= image_tag thumbnail.variant(resize_to_limit: [150, 150]), height:, width:, alt: "" %>
   <% end %>
 <% end %>
