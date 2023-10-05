@@ -61,9 +61,6 @@ gem "bcrypt_pbkdf"
 # Parsing microformats [https://github.com/microformats/microformats-ruby]
 gem 'microformats', '~> 4.4', '>= 4.4.1'
 
-# Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-gem "rack-mini-profiler"
-
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -79,6 +76,9 @@ group :development do
 
   # Add a comment summarizing the current schema to the top or bottom of each model, fixture and test
   gem "annotate"
+
+  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
+  # gem "rack-mini-profiler"
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
