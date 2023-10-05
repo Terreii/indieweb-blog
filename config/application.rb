@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module IndiewebBlog
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
 
     # no session/flash messages
     # Delete if cookie_store doesn't update the cookie on every request.
