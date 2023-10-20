@@ -1,14 +1,15 @@
 <%= turbo_frame_tag "admin_nav", target: "_top" do %>
-  <% if logged_in? %>
-    <span class="nav__item"></span>
-    <span class="nav__item">
-      <%= link_to t('application.admin'), admin_path, class: 'nav__link' %>
-    </span>
-    <span class="nav__item">
-      <%= link_to t('sessions.sessions'), user_sessions_path, class: 'nav__link' %>
-    </span>
-    <span class="nav__item">
-      <%= link_to t('sessions.logout'), logout_path, class: 'nav__link' %>
-    </span>
+  <%= render "header" do %>
+    <% if logged_in? %>
+      <span class="nav__item">
+        <%= link_to t('application.admin'), admin_path, class: 'nav__link' %>
+      </span>
+      <span class="nav__item">
+        <%= link_to t('sessions.sessions'), user_sessions_path, class: 'nav__link' %>
+      </span>
+      <span class="nav__item">
+        <%= link_to t('sessions.logout'), logout_path, class: 'nav__link' %>
+      </span>
+    <% end %>
   <% end %>
 <% end %>
