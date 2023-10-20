@@ -1,19 +1,19 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby file: ".ruby-version"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.6"
+gem "rails", "~> 7.1.1"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
 # Use pg as the database for Active Record
-gem "pg", "~> 1.4"
+gem "pg", "~> 1.5"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 6.3"
+gem "puma", "~> 6.4"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -51,7 +51,7 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
-gem "capistrano", "~> 3.17"
+gem "capistrano", "~> 3.18"
 gem "capistrano-rails", "~> 1.6"
 gem "capistrano-passenger", "~> 0.2.0"
 gem "capistrano-rbenv", "~> 2.1", ">= 2.1.4"
@@ -60,9 +60,6 @@ gem "bcrypt_pbkdf"
 
 # Parsing microformats [https://github.com/microformats/microformats-ruby]
 gem 'microformats', '~> 4.4', '>= 4.4.1'
-
-# Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-gem "rack-mini-profiler"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -80,6 +77,9 @@ group :development do
   # Add a comment summarizing the current schema to the top or bottom of each model, fixture and test
   gem "annotate"
 
+  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
+  # gem "rack-mini-profiler"
+
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
@@ -88,7 +88,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem "webdrivers"
 end
 
 group :production do

@@ -1,6 +1,8 @@
 <% if entry.post.thumbnail.present? %>
   <%= link_to entry.post, class: "post_list__item_thumbnail" do %>
-    <%= image_tag entry.post.thumbnail.variant(resize_to_limit: [150, 150]), alt: "" %>
+    <% thumbnail = entry.post.thumbnail %>
+    <% height, width = attached_media_size(thumbnail) %>
+    <%= image_tag thumbnail.variant(resize_to_limit: [150, 150]), height:, width:, alt: "" %>
   <% end %>
 <% end %>
 

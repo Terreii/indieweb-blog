@@ -23,7 +23,12 @@ class UserSessionsController < ApplicationController
   # POST /user_sessions or /user_sessions.json
   def create
     if user_session = UserSession.authenticate(params[:username], params[:password], params[:name])
-      session[:user_session_id] = user_session.id
+      cookies.encrypted[:user_session_id] = {
+        value: user_session.id,
+        secure: Rails.env.production?,
+        httponly: true,
+        expires: 1.month
+      }
       redirect_to admin_path, notice: t('sessions.successful_login')
     else
       flash.now[:alert] = t('sessions.invalid_login')
@@ -57,7 +62,7 @@ class UserSessionsController < ApplicationController
   # Not crud, makes destroy and set_user_session simpler
   def logout
     current_session.destroy
-    reset_session
+    cookies.delete :user_session_id
     respond_to do |format|
       format.html { redirect_to login_path, notice: t("sessions.logout_success"), status: :see_other }
       format.json { head :no_content }

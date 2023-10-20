@@ -75,7 +75,8 @@ class UserSessionsControllerTest < ActionDispatch::IntegrationTest
     travel_to 1.day.ago do
       login
     end
-    id = session[:user_session_id]
+    jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
+    id = jar.encrypted[:user_session_id]
     assert_changes "UserSession.find(#{id}).last_online" do
       get user_sessions_url
     end

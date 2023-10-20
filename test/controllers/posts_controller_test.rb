@@ -14,6 +14,11 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "post with thumbnail should show it in lists" do
+    get posts_url
+    assert_select "##{dom_id @post.entry} .post_list__item_thumbnail img"
+  end
+
   test "should get index as json" do
     get posts_url, as: :json
     assert_equal 3, response.parsed_body.length
@@ -121,6 +126,17 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
       "tags" => @entry.tags.pluck(:name)
     }
     assert_equal expected, response.parsed_body
+  end
+
+  test "Post should set Open Graph meta tags" do
+    get post_url(@post)
+
+    assert_dom "meta[property=\"og:title\"][content*=\"#{@entry.title}\"]"
+    assert_dom "meta[property=\"og:type\"][content*=article]"
+    assert_dom "meta[property=\"og:description\"][content*=\"#{@post.summary}\"]"
+    assert_dom "meta[property=\"og:image\"][content*=\"#{url_for @post.thumbnail}\"]"
+    assert_dom "meta[property=\"og:url\"][content*=\"#{post_url @post}\"]"
+    assert_dom "meta[name=\"twitter:card\"][content*=\"summary_large_image\"]"
   end
 
   test "should get edit" do

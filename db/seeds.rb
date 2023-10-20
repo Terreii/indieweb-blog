@@ -72,3 +72,4 @@ Post.first.thumbnail.attach(
   ),
   filename: 'thumbnail.jpg'
 )
+Post.first.thumbnail.analyze

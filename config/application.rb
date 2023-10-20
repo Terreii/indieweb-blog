@@ -9,7 +9,19 @@ Bundler.require(*Rails.groups)
 module IndiewebBlog
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
+
+    # no session/flash messages
+    # Delete if cookie_store doesn't update the cookie on every request.
+    config.session_store :disabled
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w(assets tasks))
+
+    # Change the format of the cache entry.
+    config.active_support.cache_format_version = 7.1
 
     # Configuration for the application, engines, and railties goes here.
     #

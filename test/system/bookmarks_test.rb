@@ -18,11 +18,12 @@ class BookmarksTest < ApplicationSystemTestCase
     visit bookmarks_url
     click_on "Create new Bookmark"
 
-    fill_in "Title", with: Faker::Games::Zelda.game
+    title = Faker::Games::Zelda.game
+    fill_in "Title", with: title
     fill_in "Url", with: Faker::Internet.url
     click_on "Create Entry"
 
-    assert_text "Bookmark was successfully created"
+    assert_text title
     click_on "Back"
   end
 
@@ -32,7 +33,8 @@ class BookmarksTest < ApplicationSystemTestCase
     visit bookmarks_url
     click_on "Create new Bookmark"
 
-    fill_in "Title", with: Faker::Games::Zelda.game
+    title = Faker::Games::Zelda.game
+    fill_in "Title", with: title
     fill_in "Url", with: Faker::Internet.url
     fill_in_rich_text_area "Summary", with: Faker::Lorem.paragraphs
 
@@ -44,7 +46,7 @@ class BookmarksTest < ApplicationSystemTestCase
 
     click_on "Create Entry"
 
-    assert_text "Bookmark was successfully created"
+    assert_text title
     assert_link "games"
     assert_link tags(:bands).name
     click_on "Back"
@@ -56,14 +58,15 @@ class BookmarksTest < ApplicationSystemTestCase
     visit bookmarks_url
     click_on "Create new Bookmark"
 
-    fill_in "Title", with: Faker::Games::Zelda.game
+    title = Faker::Games::Zelda.game
+    fill_in "Title", with: title
     fill_in "Url", with: Faker::Internet.url
 
     select "german", from: "entry_language"
 
     click_on "Create Entry"
 
-    assert_text "Bookmark was successfully created"
+    assert_text title
     click_on "Back"
 
     assert_equal "german", Bookmark.last.entry.language
@@ -75,7 +78,8 @@ class BookmarksTest < ApplicationSystemTestCase
     visit bookmark_url(@bookmark)
     click_on "Edit this bookmark", match: :first
 
-    fill_in "Title", with: @entry.title
+    title = @entry.title + " Hello World!"
+    fill_in "Title", with: title
     fill_in "Url", with: @bookmark.url
 
     fill_in "Create new tag", with: "rails"
@@ -86,13 +90,13 @@ class BookmarksTest < ApplicationSystemTestCase
 
     click_on "Update Entry"
 
-    assert_text "Bookmark was successfully updated"
+    assert_text title
     assert_link "rails"
     assert_link tags(:programming).name
     click_on "Back"
   end
 
-  test "should update Bookmark a summary" do
+  test "should update Bookmark summary" do
     login
 
     visit bookmark_url(@bookmark)
@@ -100,22 +104,28 @@ class BookmarksTest < ApplicationSystemTestCase
 
     fill_in "Title", with: @entry.title
     fill_in "Url", with: @bookmark.url
-    fill_in_rich_text_area "Summary", with: Faker::Lorem.paragraphs
+    summary = Faker::Lorem.paragraphs.join
+    fill_in_rich_text_area "Summary", with: summary
     click_on "Update Entry"
 
-    assert_text "Bookmark was successfully updated"
+    assert_text summary
     click_on "Back"
   end
 
   test "should destroy Bookmark" do
     login
 
+    title = @bookmark.entry.title
     visit bookmark_url(@bookmark)
     click_on "Edit this bookmark"
-    page.accept_confirm do
-      click_on "Destroy this bookmark", match: :first
+
+    assert_difference ["Entry.count", "Bookmark.count"], -1 do
+      page.accept_confirm do
+        click_on "Destroy this bookmark", match: :first
+      end
+      sleep 0.1
     end
 
-    assert_text "Bookmark was successfully destroyed"
+    assert_no_text title
   end
 end

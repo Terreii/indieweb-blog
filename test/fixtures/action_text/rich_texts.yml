@@ -22,3 +22,8 @@ draft_post_body:
   record: draft_post (Post)
   name: body
   body: <p>Dear World,<br />today I learned to ...</p>
+
+first_bookmark_summary:
+  record: first_bookmark (Bookmark)
+  name: summary
+  body: <p>This is a example bookmark</p>
