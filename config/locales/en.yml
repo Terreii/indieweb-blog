@@ -80,3 +80,8 @@ en:
     successful_login: Logged in successfully
     invalid_login: Invalid login/password combination
     logout_success: You successfully logged out
+
+  admin:
+    index: Admin area
+    draft: Draft
+    delete_check: Are your sure?

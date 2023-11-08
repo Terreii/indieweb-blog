@@ -1,0 +1,18 @@
+.admin_table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.admin_table thead {
+  background-color: #80808050;
+}
+.admin_table :is(td, th) {
+  border: 1px solid grey;
+  padding: 0.25rem 0.75rem;
+}
+
+.admin_table span.actions_cell {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.5rem;
+}

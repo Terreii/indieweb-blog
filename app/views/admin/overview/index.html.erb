@@ -1,1 +1,17 @@
-<h1>Hello</h1>
+<h1><%= set_title t("admin.index") %></h1>
+
+<table class="admin_table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Type</th>
+      <th>Published at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @entries.each do |entry| %>
+      <%= render partial: "entry", locals: { entry: } %>
+    <% end %>
+  </tbody>
+</table>
