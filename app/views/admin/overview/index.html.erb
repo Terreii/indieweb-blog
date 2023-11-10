@@ -1,15 +1,18 @@
-<h1><%= set_title t("admin.index") %></h1>
+<h1 class="admin_title"><%= set_title t("admin.index") %></h1>
+
+<%= turbo_stream_from "admin_entries" %>
 
 <table class="admin_table">
   <thead>
     <tr>
       <th>Title</th>
       <th>Type</th>
+      <th>Language</th>
       <th>Published at</th>
       <th>Actions</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="entries">
     <% @entries.each do |entry| %>
       <%= render partial: "entry", locals: { entry: } %>
     <% end %>
