@@ -3,22 +3,33 @@
   <td lang="<%= entry.language_code %>" class="admin_table__field">
     <%= link_to entry.title, entry.entryable %>
   </td>
+
   <td class="admin_table__field">
     <div class="admin_table__mobile_info">Type:</div>
     <%= entry.entryable_type %>
   </td>
+
   <td class="admin_table__field">
     <div class="admin_table__mobile_info">Language:</div>
     <%= entry.language.capitalize %>
   </td>
+
   <td class="admin_table__field">
     <div class="admin_table__mobile_info">Published at:</div>
-    <%= entry.published_at || t("admin.draft") %>
+    <% if entry.published? %>
+      <time datetime="<%= entry.published_at.iso8601 %>">
+        <%= entry.published_at %>
+      </time>
+    <% else %>
+      <%= t("admin.draft") %>
+    <% end %>
   </td>
+
   <td class="admin_table__field">
     <div class="admin_table__actions_cell">
-      <%= link_to "Edit", [:edit, entry.entryable] %> |
-      <%= button_to "Delete", entry.entryable, method: :delete, class: "btn btn-danger", data: {
+      <%= link_to t("admin.edit"), [:edit, entry.entryable] %> |
+
+      <%= button_to t("admin.delete"), entry.entryable, method: :delete, class: "btn btn-danger", data: {
         turbo_confirm: t("admin.delete_check")
       } %>
     </div>

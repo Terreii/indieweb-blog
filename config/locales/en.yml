@@ -83,5 +83,10 @@ en:
 
   admin:
     index: Admin area
+    create: Create
+    existing: Existing
     draft: Draft
+    edit: Edit
+    delete: Delete
     delete_check: Are your sure?
+    saving: Saving...
