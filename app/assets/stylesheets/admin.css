@@ -40,6 +40,15 @@
   gap: 0.5rem;
 }
 
+.admin_table__filter {
+  width: fit-content;
+}
+.admin_table__filter_button_row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 @media (max-width: 690px) {
   .admin_title {
     text-align: center;

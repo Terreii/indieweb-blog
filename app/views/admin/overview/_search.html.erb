@@ -1,0 +1,20 @@
+<%# locals: (types:, types_map:, published:) -%>
+
+<%= form_with url: admin_search_path, class: "admin_table__filter" do |form| %>
+  <%= form.collection_check_boxes :types, Entry.types, :to_s, :to_s do |b| %>
+    <%= b.check_box(checked: types.empty? || types_map.has_key?(b.value)) + b.label %>
+  <% end %>
+  <br>
+
+  <%= form.radio_button :published, nil, checked: published.nil? %>
+  <%= form.label :published, "All" %>
+  <% %w[draft published].each do |published_value| %>
+    <%= form.radio_button :published, published_value, checked: published_value == published %>
+    <%= form.label "published_#{published_value}", published_value.capitalize %>
+  <% end %>
+
+  <div class="admin_table__filter_button_row">
+    <%= form.submit value: "filter", name: nil %>
+    <%= link_to "Show all", admin_path %>
+  </div>
+<% end %>

@@ -14,6 +14,8 @@
 
 <h2 class="admin_sub_header">📤 <%= t "admin.existing" %></h2>
 
+<%= render "search", types: @types, types_map: @types_map, published: @published %>
+
 <table class="admin_table">
   <thead>
     <tr>
