@@ -2,33 +2,42 @@
 
 <%= turbo_stream_from "admin_entries" %>
 
-<h2 class="admin_sub_header">📝 <%= t "admin.create" %></h2>
+<div id="admin_container">
+  <div class="admin_sidebar_sticky">
+    <aside class="admin_sidebar">
+      <h2 class="admin_sub_header">📝 <%= t "admin.create" %></h2>
 
-<ul id="admin_create__list">
-  <% Entry.types.each do |type| %>
-    <li>
-      <%= link_to type, [:new, type.downcase.to_sym] %>
-    </li>
-  <% end %>
-</ul>
+      <ul id="admin_create__list">
 
-<h2 class="admin_sub_header">📤 <%= t "admin.existing" %></h2>
+        <% Entry.types.each do |type| %>
+          <li>
+            <%= link_to type, [:new, type.downcase.to_sym] %>
+          </li>
+        <% end %>
+      </ul>
+    </aside>
 
-<%= render "search", types: @types, types_map: @types_map, published: @published %>
+    <aside class="admin_sidebar">
+      <h2 class="admin_sub_header">🔍 <%= t "admin.filter.title" %></h2>
 
-<table class="admin_table">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Type</th>
-      <th>Language</th>
-      <th>Published at</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody id="entries">
-    <% @entries.each do |entry| %>
-      <%= render partial: "entry", locals: { entry: } %>
-    <% end %>
-  </tbody>
-</table>
+      <%= render "filter", types: @types, types_map: @types_map, published: @published %>
+    </aside>
+  </div>
+
+  <table class="admin_table">
+    <thead>
+      <tr>
+        <th><%= t "admin.table.title" %></th>
+        <th><%= t "admin.table.type" %></th>
+        <th><%= t "admin.table.lang" %></th>
+        <th><%= t "admin.table.published" %></th>
+        <th><%= t "admin.table.action" %></th>
+      </tr>
+    </thead>
+    <tbody id="entries">
+      <% @entries.each do |entry| %>
+        <%= render partial: "entry", locals: { entry: } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

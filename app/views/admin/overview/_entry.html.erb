@@ -5,17 +5,17 @@
   </td>
 
   <td class="admin_table__field">
-    <div class="admin_table__mobile_info">Type:</div>
+    <div class="admin_table__mobile_info"><%= t "admin.table.type" %>:</div>
     <%= entry.entryable_type %>
   </td>
 
   <td class="admin_table__field">
-    <div class="admin_table__mobile_info">Language:</div>
+    <div class="admin_table__mobile_info"><%= t "admin.table.lang" %>:</div>
     <%= entry.language.capitalize %>
   </td>
 
   <td class="admin_table__field">
-    <div class="admin_table__mobile_info">Published at:</div>
+    <div class="admin_table__mobile_info"><%= t "admin.table.published" %>:</div>
     <% if entry.published? %>
       <time datetime="<%= entry.published_at.iso8601 %>">
         <%= entry.published_at %>
@@ -27,10 +27,10 @@
 
   <td class="admin_table__field">
     <div class="admin_table__actions_cell">
-      <%= link_to t("admin.edit"), [:edit, entry.entryable] %> |
+      <%= link_to t("admin.table.edit"), [:edit, entry.entryable] %> |
 
-      <%= button_to t("admin.delete"), entry.entryable, method: :delete, class: "btn btn-danger", data: {
-        turbo_confirm: t("admin.delete_check")
+      <%= button_to t("admin.table.delete"), entry.entryable, method: :delete, class: "btn btn-danger", data: {
+        turbo_confirm: t("admin.table.delete_check")
       } %>
     </div>
   </td>

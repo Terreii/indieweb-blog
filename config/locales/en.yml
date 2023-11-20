@@ -84,9 +84,22 @@ en:
   admin:
     index: Admin area
     create: Create
-    existing: Existing
-    draft: Draft
-    edit: Edit
-    delete: Delete
-    delete_check: Are your sure?
     saving: Saving...
+    draft: Draft
+    published: Published
+    table:
+      title: Title
+      type: Type
+      lang: Language
+      published: Published at
+      action: Actions
+      edit: Edit
+      delete: Delete
+      delete_check: Are your sure?
+    filter:
+      title: Filter
+      types: Types
+      all_publisheding_states: All
+      send: filter
+      sending: filtering ...
+      all: Show all

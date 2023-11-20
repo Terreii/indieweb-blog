@@ -1,6 +1,21 @@
 .admin_sub_header {
   margin-bottom: 0.5rem;
 }
+.admin_sub_header:first-child {
+  margin-top: 0px;
+}
+
+#admin_container {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.admin_controls {
+  accent-color: var(--link-color);
+}
+.admin_controls > h3 {
+  margin-block: 0.25rem 0.125rem;
+}
 
 #admin_create__list {
   list-style: none;
@@ -8,24 +23,63 @@
   padding-left: 0px;
 }
 
-@media (min-width: 500px) {
-  #admin_create__list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1rem;
+@media (min-width: 690px) {
+  #admin_container {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto 1fr;
+    gap: 0.5rem;
+    align-items: flex-start;
+    width: calc(100% + 2rem);
+    position: relative;
+    left: -1rem;
+  }
+
+  .admin_sidebar_sticky {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 2;
+    display: grid;
+    grid-template-rows: subgrid;
+    position: sticky;
+    top: 20px;
+  }
+
+  .admin_sidebar {
+    grid-column: 1 / span 1;
+    border: 2px solid var(--dialog-bg-color);
+  }
+  .admin_sidebar > :not(h2) {
+    margin-inline: 0.5rem;
+  }
+  .admin_sidebar > h2 {
+    background-color: var(--dialog-bg-color);
+    font-size: 1.3rem;
+    padding: 0.25rem;
+  }
+
+  .admin_controls > h3 {
+    font-size: 1.3rem;
+  }
+  .admin_controls > span {
+    display: block;
+  }
+
+  .admin_table {
+    grid-column: 2 / span 1;
+    grid-row: 1 / -1;
   }
 }
 
 .admin_table {
   border-collapse: collapse;
   width: 100%;
+  border-width: 2px;
+  font-variant-numeric: tabular-nums;
 }
 .admin_table thead {
-  background-color: #80808050;
+  background-color: var(--dialog-bg-color);
 }
 .admin_table th, .admin_table__field {
-  border: 1px solid grey;
+  border: 1px solid var(--dialog-bg-color);
   padding: 0.25rem 0.75rem;
 }
 
@@ -45,8 +99,10 @@
 }
 .admin_table__filter_button_row {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
+  gap: 0.75rem;
+  margin-block: 0.75rem 0.5rem;
 }
 
 @media (max-width: 690px) {
@@ -91,5 +147,16 @@
     display: block;
     font-weight: 500;
     font-size: 0.9rem;
+  }
+
+  .admin_table__filter_button_row {
+    flex-direction: row;
+  }
+
+  .admin_sidebar {
+    border: 2px solid var(--dialog-bg-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
   }
 }
