@@ -28,8 +28,8 @@ class Admin::OverviewControllerTest < ActionDispatch::IntegrationTest
       assert_select "##{dom_id entry}" do
         assert_select "a", 2
         assert_select "a", entry.title
-        assert_select "a", I18n.t("admin.table.edit")
-        assert_select "button", I18n.t("admin.table.delete")
+        assert_select "a[title=\"#{I18n.t("admin.table.edit")}\"] svg"
+        assert_select "button[title=\"#{I18n.t("admin.table.delete")}\"] svg"
       end
     end
   end

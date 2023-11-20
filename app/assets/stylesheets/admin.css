@@ -29,9 +29,6 @@
     grid-template-rows: auto auto 1fr;
     gap: 0.5rem;
     align-items: flex-start;
-    width: calc(100% + 2rem);
-    position: relative;
-    left: -1rem;
   }
 
   .admin_sidebar_sticky {
@@ -73,7 +70,6 @@
   border-collapse: collapse;
   width: 100%;
   border-width: 2px;
-  font-variant-numeric: tabular-nums;
 }
 .admin_table thead {
   background-color: var(--dialog-bg-color);
@@ -87,11 +83,24 @@
   display: none;
 }
 
-.admin_table__actions_cell {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 0.5rem;
+.admin_table__field.date {
+  font-variant-numeric: tabular-nums;
+}
+
+.admin_table__actions_button {
+  background: transparent;
+  border: 0px;
+  cursor: pointer;
+}
+.admin_table__actions_button.danger {
+  color: var(--btn-danger-color);
+}
+.admin_table__actions_button.danger:hover {
+  color: var(--btn-danger-hover-color);
+}
+.admin_table__actions_button > svg {
+  height: 24px;
+  width: 24px;
 }
 
 .admin_table__filter {
@@ -139,8 +148,13 @@
     border: 0px;
     font-weight: bold;
   }
-  .admin_table__field:is(:first-child, :nth-last-child(-n + 2)) {
+  .admin_table__field:is(:first-child, .date) {
     grid-column: span 2;
+  }
+  .admin_table__field.admin_table__button_cell {
+    grid-column: span 1;
+    width: fit-content;
+    justify-self: center;
   }
 
   .admin_table__mobile_info {
