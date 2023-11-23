@@ -66,10 +66,11 @@ Entry.create [
   }
 ]
 
-Post.first.thumbnail.attach(
+first_post = Post.first
+first_post.thumbnail.attach(
   io: File.open(
     Rails.root.join('test', 'fixtures', 'files', 'sample.jpg')
   ),
   filename: 'thumbnail.jpg'
 )
-Post.first.thumbnail.analyze
+first_post.thumbnail.reload.analyze
