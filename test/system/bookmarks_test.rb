@@ -15,8 +15,7 @@ class BookmarksTest < ApplicationSystemTestCase
   test "should create bookmark" do
     login
 
-    visit bookmarks_url
-    click_on "Create new Bookmark"
+    click_on "Bookmark" # Create Post in admin area
 
     title = Faker::Games::Zelda.game
     fill_in "Title", with: title
@@ -24,14 +23,12 @@ class BookmarksTest < ApplicationSystemTestCase
     click_on "Create Entry"
 
     assert_text title
-    click_on "Back"
   end
 
   test "should create bookmark with a summary" do
     login
 
-    visit bookmarks_url
-    click_on "Create new Bookmark"
+    click_on "Bookmark" # Create Post in admin area
 
     title = Faker::Games::Zelda.game
     fill_in "Title", with: title
@@ -49,14 +46,12 @@ class BookmarksTest < ApplicationSystemTestCase
     assert_text title
     assert_link "games"
     assert_link tags(:bands).name
-    click_on "Back"
   end
 
   test "should create bookmark with other language" do
     login
 
-    visit bookmarks_url
-    click_on "Create new Bookmark"
+    click_on "Bookmark" # Create Post in admin area
 
     title = Faker::Games::Zelda.game
     fill_in "Title", with: title
@@ -67,7 +62,7 @@ class BookmarksTest < ApplicationSystemTestCase
     click_on "Create Entry"
 
     assert_text title
-    click_on "Back"
+    click_on "Admin"
 
     assert_equal "german", Bookmark.last.entry.language
   end
@@ -75,8 +70,9 @@ class BookmarksTest < ApplicationSystemTestCase
   test "should update Bookmark" do
     login
 
-    visit bookmark_url(@bookmark)
-    click_on "Edit this bookmark", match: :first
+    within "##{dom_id(@entry)}" do
+      click_on "Edit"
+    end
 
     title = @entry.title + " Hello World!"
     fill_in "Title", with: title
@@ -93,14 +89,14 @@ class BookmarksTest < ApplicationSystemTestCase
     assert_text title
     assert_link "rails"
     assert_link tags(:programming).name
-    click_on "Back"
   end
 
   test "should update Bookmark summary" do
     login
 
-    visit bookmark_url(@bookmark)
-    click_on "Edit this bookmark", match: :first
+    within "##{dom_id(@entry)}" do
+      click_on "Edit"
+    end
 
     fill_in "Title", with: @entry.title
     fill_in "Url", with: @bookmark.url
@@ -109,15 +105,29 @@ class BookmarksTest < ApplicationSystemTestCase
     click_on "Update Entry"
 
     assert_text summary
-    click_on "Back"
+  end
+
+  test "should destroy Bookmark from admin area" do
+    login
+
+    assert_difference ["Entry.count", "Bookmark.count"], -1 do
+      page.accept_confirm do
+        within "##{dom_id(@entry)}" do
+          click_on "Delete"
+        end
+      end
+      sleep 0.1
+    end
+
+    assert_no_text title
   end
 
   test "should destroy Bookmark" do
     login
 
-    title = @bookmark.entry.title
-    visit bookmark_url(@bookmark)
-    click_on "Edit this bookmark"
+    within "##{dom_id(@entry)}" do
+      click_on "Edit"
+    end
 
     assert_difference ["Entry.count", "Bookmark.count"], -1 do
       page.accept_confirm do

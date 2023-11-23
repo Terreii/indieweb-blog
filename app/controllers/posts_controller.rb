@@ -5,9 +5,6 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    if logged_in?
-      @drafts = Entry.posts.draft.all
-    end
     @posts = Entry.posts.published.limit 10
   end
 
