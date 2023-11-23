@@ -20,4 +20,15 @@ class ApplicationController < ActionController::Base
   def access_denied
     redirect_to(login_path, notice: t('application.access_denied')) and return false
   end
+
+  # Set the default cache headers for public facing routes.
+  def default_cache(items = [])
+    unless Rails.env.local?
+      fresh_when items, public: true, cache_control: {
+        max_age: 10.seconds,
+        "s-maxage": 15.seconds,
+        must_revalidate: true
+      }
+    end
+  end
 end
