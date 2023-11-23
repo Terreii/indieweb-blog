@@ -1,0 +1,36 @@
+<%# locals: (types:, types_map:, published:) -%>
+
+<%= form_with url: admin_search_path, class: "admin_table__filter" do |form| %>
+  <section class="admin_controls">
+    <h3><%= t "admin.filter.types" %></h3>
+
+    <%= form.collection_check_boxes :types, Entry.types, :to_s, :to_s do |b| %>
+      <span>
+        <%= b.check_box(checked: types.empty? || types_map.has_key?(b.value)) + b.label %>
+      </span>
+    <% end %>
+  </section>
+
+  <section class="admin_controls">
+    <h3><%= t "admin.filter.published" %></h3>
+
+    <span>
+      <%= form.radio_button :published, nil, checked: published.nil? %>
+      <%= form.label :published, t("admin.filter.all_publisheding_states") %>
+    </span>
+
+    <% %w[draft published].each do |published_value| %>
+      <span>
+        <%= form.radio_button :published, published_value, checked: published_value == published %>
+        <%= form.label "published_#{published_value}", t(published_value, scope: :admin) %>
+      </span>
+    <% end %>
+  </section>
+
+  <div class="admin_table__filter_button_row">
+    <%= form.submit value: t("admin.filter.send"), name: nil, class: "btn", data: {
+      turbo_submits_with: t("admin.filter.sending")
+    } %>
+    <%= link_to t("admin.filter.all"), admin_path unless types.empty? && published.nil? %>
+  </div>
+<% end %>

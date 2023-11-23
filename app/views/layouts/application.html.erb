@@ -30,32 +30,10 @@
 
   <body>
     <header class="header">
-      <nav class="header_layout">
-        <div id="header__title">
-          <%= link_to t('general.title'), root_path, class: 'c-site-title header__home' %>
-        </div>
-        <div id="header__nav">
-          <span class="sr-only">
-            <%= link_to t('general.home'), root_path, class: 'nav__link' %>
-          </span>
-          <span class="nav__item">
-            <%= link_to t('posts.title'), posts_path, class: 'nav__link' %>
-          </span>
-          <span class="nav__item">
-            <%= link_to t('bookmarks.title'), bookmarks_path, class: 'nav__link' %>
-          </span>
-          <span class="nav__item">
-            <%= link_to t('general.portfolio'), '/portfolio', class: 'nav__link' %>
-          </span>
-          <span class="nav__item">
-            <%= link_to 'usePouchDB', 'https://terreii.github.io/use-pouchdb', class: 'nav__link' %>
-          </span>
-          <span class="nav__item">
-            <%= link_to t('general.impressum'), '/impressum', class: 'nav__link' %>
-          </span>
-          <%= turbo_frame_tag "admin_nav", src: admin_nav_path, target: "_top" %>
-        </div>
-      </nav>
+      <%= turbo_frame_tag "admin_nav", src: admin_nav_path, target: "_top" do %>
+        <%= render "admin/nav/header" do %>
+        <% end %>
+      <% end %>
     </header>
 
     <main>

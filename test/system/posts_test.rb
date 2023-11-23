@@ -17,8 +17,6 @@ class PostsTest < ApplicationSystemTestCase
 
     visit posts_url
     assert_selector "h1", text: "📨 Latest Posts"
-    assert_selector "h2", text: "📝 Drafts"
-    assert_selector "h2", text: "📤 Published"
   end
 
   test "visiting a Post" do
@@ -34,8 +32,7 @@ class PostsTest < ApplicationSystemTestCase
   test "creating a Post" do
     login
 
-    visit posts_url
-    click_on "Create new Post"
+    click_on "Post" # Create Post in admin area
 
     title = Faker::Games::DnD.alignment
     fill_in "Title", with: title
@@ -60,8 +57,7 @@ class PostsTest < ApplicationSystemTestCase
   test "creating a Post with thumbnail" do
     login
 
-    visit posts_url
-    click_on "Create new Post"
+    click_on "Post" # Create Post in admin area
 
     title = Faker::Games::DnD.alignment
     fill_in "Title", with: title
@@ -81,8 +77,7 @@ class PostsTest < ApplicationSystemTestCase
   test "creating a Post with other language" do
     login
 
-    visit posts_url
-    click_on "Create new Post"
+    click_on "Post" # Create Post in admin area
 
     title = Faker::Games::DnD.alignment
     fill_in "Title", with: title
@@ -105,8 +100,7 @@ class PostsTest < ApplicationSystemTestCase
   test "creating a draft Post" do
     login
 
-    visit posts_url
-    click_on "Create new Post"
+    click_on "Post" # Create Post in admin area
     title = Faker::Games::DnD.alignment
 
     fill_in "Title", with: title
@@ -114,8 +108,8 @@ class PostsTest < ApplicationSystemTestCase
     uncheck "Published"
     click_on "Create Entry"
 
-    visit posts_url
-    within ".drafts_list" do
+    visit admin_url
+    within "table" do
       assert_text title
     end
 
@@ -141,9 +135,9 @@ class PostsTest < ApplicationSystemTestCase
   test "updating a Post" do
     login
 
-    visit posts_url
-    click_on @entry.title
-    click_on "Edit"
+    within "##{dom_id(@entry)}" do
+      click_on "Edit"
+    end
 
     title = Faker::Kpop.iii_groups
     fill_in "Title", with: title
@@ -164,12 +158,27 @@ class PostsTest < ApplicationSystemTestCase
     click_on "Christophers thoughts"
   end
 
+  test "destroying a Post from admin area" do
+    login
+
+    assert_difference ["Entry.count", "Post.count"], -1 do
+      page.accept_confirm do
+        within "##{dom_id(@entry)}" do
+          click_on "Delete"
+        end
+      end
+      sleep 0.1
+    end
+
+    assert_no_text @entry.title
+  end
+
   test "destroying a Post" do
     login
 
-    visit posts_url
-    click_on @entry.title
-    click_on "Edit"
+    within "##{dom_id(@entry)}" do
+      click_on "Edit"
+    end
 
     sleep 0.1
     assert_difference ["Entry.count", "Post.count"], -1 do

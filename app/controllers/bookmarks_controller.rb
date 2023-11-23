@@ -6,10 +6,12 @@ class BookmarksController < ApplicationController
   # GET /bookmarks or /bookmarks.json
   def index
     @bookmarks = Entry.bookmarks.published.limit 10
+    default_cache @bookmarks
   end
 
   # GET /bookmarks/1 or /bookmarks/1.json
   def show
+    default_cache @entry
   end
 
   # GET /bookmarks/new

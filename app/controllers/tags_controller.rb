@@ -1,10 +1,12 @@
 class TagsController < ApplicationController
   def index
     @tags = Tag.all
+    default_cache @tags
   end
 
   def show
     @tag = Tag.find_by(name: params[:name])
+    default_cache @tag
   end
 
   def create

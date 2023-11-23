@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get "/impressum", to: "static_pages#impressum", as: "impressum"
 
   namespace :admin do
+    get "/", to: "overview#index"
+    post "search", to: "overview#create"
     get "nav", to: "nav#index"
   end
 

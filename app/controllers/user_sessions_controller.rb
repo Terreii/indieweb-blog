@@ -29,7 +29,7 @@ class UserSessionsController < ApplicationController
         httponly: true,
         expires: 1.month
       }
-      redirect_to root_path, notice: t('sessions.successful_login')
+      redirect_to admin_path, notice: t('sessions.successful_login')
     else
       flash.now[:alert] = t('sessions.invalid_login')
       render :new
@@ -64,7 +64,7 @@ class UserSessionsController < ApplicationController
     current_session.destroy
     cookies.delete :user_session_id
     respond_to do |format|
-      format.html { redirect_to root_path, notice: t("sessions.logout_success"), status: :see_other }
+      format.html { redirect_to login_path, notice: t("sessions.logout_success"), status: :see_other }
       format.json { head :no_content }
     end
   end

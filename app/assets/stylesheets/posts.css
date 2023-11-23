@@ -4,11 +4,6 @@
  * You can use Sass (SCSS) here: https://sass-lang.com/
  */
 
-.drafts_list {
-  list-style: disclosure-closed;
-  padding-left: 2rem;
-}
-
 .post_list__item {
   padding: 1rem;
   margin: 2rem 0rem;

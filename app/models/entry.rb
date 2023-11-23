@@ -45,6 +45,8 @@ class Entry < ApplicationRecord
 
   before_validation :set_self_on_new_entryable
 
+  broadcasts_to ->(entry) { "admin_entries" }, inserts_by: :prepend, partial: "admin/overview/entry"
+
   def published?
     published_at.present?
   end

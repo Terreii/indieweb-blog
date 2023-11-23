@@ -1,9 +1,5 @@
 <h1><%= set_title t("bookmarks.title") %></h1>
 
-<% if logged_in? %>
-  <%= link_to t("bookmarks.create"), new_bookmark_path %>
-<% end %>
-
 <div id="bookmarks" class="h-feed">
   <span class="p-name hidden">Bookmarks Feed</span>
 

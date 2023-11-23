@@ -5,10 +5,3 @@
 ) %>
 <% set_title t("bookmarks.show", title: @entry.title) %>
 <%= render @entry %>
-
-<% if logged_in? %>
-  <div>
-    <%= link_to "Edit this bookmark", edit_bookmark_path(@entry.bookmark) %> |
-    <%= link_to "Back to bookmarks", bookmarks_path %>
-  </div>
-<% end %>

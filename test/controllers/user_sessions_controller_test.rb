@@ -29,7 +29,7 @@ class UserSessionsControllerTest < ActionDispatch::IntegrationTest
       post user_sessions_url(username: username, password: password, name: 'Test Session')
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to admin_path
   end
 
   test "should show user_session" do

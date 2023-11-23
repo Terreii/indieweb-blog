@@ -20,9 +20,8 @@
         post_url(@entry.post),
         class: "u-url"
       ) %>
-    <% end %>
-
-    <% if logged_in? %>
+    <% elsif logged_in? %>
+      <em>Draft</em>
       <%= link_to 'Edit', edit_post_path(@entry.post), class: 'post__edit-link' %>
     <% end %>
 

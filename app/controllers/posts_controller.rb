@@ -5,16 +5,17 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    if logged_in?
-      @drafts = Entry.posts.draft.all
-    end
     @posts = Entry.posts.published.limit 10
+    default_cache @posts
   end
 
   # GET /posts/slug or /posts/slug.json
   def show
     unless @entry.published? || logged_in?
       access_denied
+    end
+    if @entry.published?
+      default_cache @entry
     end
   end
 

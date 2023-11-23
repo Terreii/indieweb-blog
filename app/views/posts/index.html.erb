@@ -1,20 +1,5 @@
 <h1>📨 <%= set_title(t 'posts.latest') %></h1>
 
-<% if logged_in? %>
-  <h2>📝 <%= t('posts.drafts') %></h2>
-
-  ➕ <%= link_to t('posts.create'), new_post_path %>
-  <br>
-
-  <ul class="drafts_list">
-    <% @drafts.each do |draft| %>
-      <li><%= link_to draft.title, edit_post_path(draft.post) %></li>
-    <% end %>
-  </ul>
-
-  <h2>📤 <%= t("posts.published") %></h2>
-<% end %>
-
 <div class="h-feed">
   <span class="p-name hidden">Posts Feed</span>
 

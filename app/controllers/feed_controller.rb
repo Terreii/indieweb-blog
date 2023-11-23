@@ -5,7 +5,9 @@ class FeedController < ApplicationController
 
     respond_to do |format|
       format.any { redirect_to feed_url(format: :atom), status: :moved_permanently }
-      format.atom
+      format.atom {
+        default_cache @entries
+      }
     end
   end
 end
