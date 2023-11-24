@@ -40,8 +40,8 @@ class Entry < ApplicationRecord
   scope :with_entryables, -> { preload(:entryable, :tags) }
   scope :published, -> { where.not(published_at: nil).order(published_at: :desc) }
   scope :draft, -> { where(published_at: nil) }
-  scope :bookmarks, -> { where(entryable_type: Bookmark.name).includes(:entryable, :tags) }
-  scope :posts, -> { where(entryable_type: Post.name).includes(:entryable, :tags) }
+  scope :bookmarks, -> { where(entryable_type: Bookmark.name).preload(:entryable, :tags) }
+  scope :posts, -> { where(entryable_type: Post.name).preload(:entryable, :tags) }
 
   before_validation :set_self_on_new_entryable
 

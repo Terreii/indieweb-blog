@@ -6,6 +6,7 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     @posts = Entry.posts.published.limit 10
+    default_cache @posts
   end
 
   # GET /posts/slug or /posts/slug.json
