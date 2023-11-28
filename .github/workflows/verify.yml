@@ -84,7 +84,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
+          sudo apt-get install libvips
 
       - name: Build assets
         run: bin/rails assets:precompile
