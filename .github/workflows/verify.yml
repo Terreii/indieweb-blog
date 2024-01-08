@@ -45,6 +45,7 @@ jobs:
           DATABASE_URL: postgres://indieweb_blog:pass@localhost/indieweb_blog_test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: bin/rails t
+        timeout-minutes: 5
 
   system-tests:
     name: System Tests
@@ -85,6 +86,7 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           sudo -- sh -c 'apt-get update && apt-get upgrade && apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips libvips-dev'
+        timeout-minutes: 5
 
       - name: Build assets
         run: bin/rails assets:precompile
@@ -95,4 +97,5 @@ jobs:
           DATABASE_URL: postgres://indieweb_blog:pass@localhost/indieweb_blog_test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: bin/rails test:system
+        timeout-minutes: 10
 
