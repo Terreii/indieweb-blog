@@ -14,6 +14,8 @@ require 'faker'
 require "test_helper"
 
 class PostTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   test "should create post" do
     post = Entry.new(
       title: Faker::Games::DnD.alignment,

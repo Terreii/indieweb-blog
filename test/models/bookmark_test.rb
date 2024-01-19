@@ -12,6 +12,8 @@
 require "test_helper"
 
 class BookmarkTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   test "should create a bookmark" do
     bookmark = Entry.new(
       title: Faker::Games::DnD.alignment,

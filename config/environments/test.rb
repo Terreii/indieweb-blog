@@ -59,6 +59,11 @@ Rails.application.configure do
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
+  # Fixes hanging tests
+  # https://github.com/rails/rails/issues/48468#issuecomment-1771628266
+  # Deactivated because it breaks system tests.
+  # config.active_job.queue_adapter = :test
+
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 end

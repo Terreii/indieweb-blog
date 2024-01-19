@@ -19,6 +19,8 @@
 require "test_helper"
 
 class EntryTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   test "should create post" do
     entry = Entry.new(
       title: Faker::Games::Zelda.game,
