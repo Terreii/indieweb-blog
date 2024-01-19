@@ -14,6 +14,8 @@
 require "test_helper"
 
 class TagTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   test "should create Tag" do
     tag = Tag.new
     tag.name = "tests"

@@ -11,6 +11,8 @@
 require "test_helper"
 
 class UserSessionTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   setup do
     @username = Rails.application.credentials.auth[:login]
     @password = Rails.application.credentials.auth[:plain_password_for_tests]
