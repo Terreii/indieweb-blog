@@ -77,6 +77,9 @@ group :development do
   # Add a comment summarizing the current schema to the top or bottom of each model, fixture and test
   gem "annotate"
 
+  # Ruby LSP addon for extra Rails editor features. [https://github.com/Shopify/ruby-lsp-rails]
+  gem "ruby-lsp-rails"
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
