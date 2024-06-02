@@ -183,7 +183,7 @@ GEM
     minitest (5.23.1)
     msgpack (1.7.2)
     mutex_m (0.2.0)
-    net-imap (0.4.11)
+    net-imap (0.4.12)
       date
       net-protocol
     net-pop (0.1.2)
@@ -203,7 +203,7 @@ GEM
     nokogiri (1.16.5-x86_64-linux)
       racc (~> 1.4)
     pg (1.5.6)
-    prism (0.27.0)
+    prism (0.29.0)
     psych (5.1.2)
       stringio
     public_suffix (5.0.5)
@@ -253,20 +253,19 @@ GEM
       psych (>= 4.0.0)
     redis (5.2.0)
       redis-client (>= 0.22.0)
-    redis-client (0.22.1)
+    redis-client (0.22.2)
       connection_pool
     regexp_parser (2.9.2)
     reline (0.5.8)
       io-console (~> 0.5)
     rexml (3.2.8)
       strscan (>= 3.0.9)
-    ruby-lsp (0.16.6)
+    ruby-lsp (0.17.1)
       language_server-protocol (~> 3.17.0)
-      prism (>= 0.23.0, < 0.28)
+      prism (>= 0.29.0, < 0.30)
       sorbet-runtime (>= 0.5.10782)
-    ruby-lsp-rails (0.3.6)
-      ruby-lsp (>= 0.16.5, < 0.17.0)
-      sorbet-runtime (>= 0.5.9897)
+    ruby-lsp-rails (0.3.7)
+      ruby-lsp (>= 0.17.0, < 0.18.0)
     ruby-vips (2.2.1)
       ffi (~> 1.12)
     rubyzip (2.3.2)
@@ -275,7 +274,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sorbet-runtime (0.5.11385)
+    sorbet-runtime (0.5.11406)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -357,7 +356,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.3.1p55
+   ruby 3.3.2p78
 
 BUNDLED WITH
-   2.5.10
+   2.5.11
