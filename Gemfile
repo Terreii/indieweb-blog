@@ -51,7 +51,7 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
-gem "capistrano", "~> 3.18"
+gem "capistrano", "~> 3.19"
 gem "capistrano-rails", "~> 1.6"
 gem "capistrano-passenger", "~> 0.2.0"
 gem "capistrano-rbenv", "~> 2.1", ">= 2.1.4"
