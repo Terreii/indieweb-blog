@@ -75,8 +75,8 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
-    addressable (2.8.6)
-      public_suffix (>= 2.0.2, < 6.0)
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
     airbrussh (1.5.2)
       sshkit (>= 1.6.1, != 1.7.0)
     annotate (3.2.0)
@@ -140,7 +140,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    good_job (3.29.5)
+    good_job (3.99.1)
       activejob (>= 6.0.0)
       activerecord (>= 6.0.0)
       concurrent-ruby (>= 1.0.2)
@@ -158,7 +158,7 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.7.2)
-    irb (1.13.2)
+    irb (1.14.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jbuilder (2.12.0)
@@ -180,12 +180,12 @@ GEM
     microformats (4.5.0)
       json
       nokogiri
-    mini_magick (4.12.0)
+    mini_magick (4.13.2)
     mini_mime (1.1.5)
-    minitest (5.24.0)
+    minitest (5.24.1)
     msgpack (1.7.2)
     mutex_m (0.2.0)
-    net-imap (0.4.12)
+    net-imap (0.4.14)
       date
       net-protocol
     net-pop (0.1.2)
@@ -208,12 +208,12 @@ GEM
     prism (0.30.0)
     psych (5.1.2)
       stringio
-    public_suffix (5.0.5)
+    public_suffix (6.0.0)
     puma (6.4.2)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.0)
-    rack (3.1.4)
+    rack (3.1.7)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -264,12 +264,12 @@ GEM
       io-console (~> 0.5)
     rexml (3.3.1)
       strscan
-    ruby-lsp (0.17.6)
+    ruby-lsp (0.17.7)
       language_server-protocol (~> 3.17.0)
       prism (>= 0.29.0, < 0.31)
       rbs (>= 3, < 4)
       sorbet-runtime (>= 0.5.10782)
-    ruby-lsp-rails (0.3.9)
+    ruby-lsp-rails (0.3.10)
       ruby-lsp (>= 0.17.2, < 0.18.0)
     ruby-vips (2.2.1)
       ffi (~> 1.12)
@@ -280,7 +280,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sorbet-runtime (0.5.11478)
+    sorbet-runtime (0.5.11480)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -315,7 +315,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.8.1)
-    websocket (1.2.10)
+    websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -342,7 +342,7 @@ DEPENDENCIES
   debug
   ed25519
   faker (>= 2.19.0)
-  good_job
+  good_job (~> 3.0)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
