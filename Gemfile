@@ -31,7 +31,7 @@ gem "jbuilder"
 gem "redis", "~> 5.2"
 
 # Use https://github.com/bensheldon/good_job for jobs
-gem "good_job", "~> 4.0"
+gem "good_job", "~> 4.1"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
