@@ -12,13 +12,6 @@ updates:
       day: "thursday"
     versioning-strategy: increase
     groups:
-      rails:
-        patterns:
-          - "rails"
-        update-types:
-          - "major"
-          - "minor"
-          - "patch"
       non-breaking-updates:
         patterns:
           - "*" # All dependecies that are minor or patch.
