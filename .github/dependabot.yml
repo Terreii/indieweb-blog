@@ -18,9 +18,12 @@ updates:
         update-types:
           - "major"
           - "minor"
+          - "patch"
       non-breaking-updates:
         patterns:
           - "*" # All dependecies that are minor or patch.
+        exclude-patterns:
+          - "rails"
         update-types:
           - "minor"
           - "patch"
