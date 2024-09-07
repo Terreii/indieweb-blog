@@ -27,9 +27,9 @@ class Entry < ApplicationRecord
     [:title, :published, :language, tag_ids: [], entryable_attributes:]
   end
 
-  enum language: {
+  enum :language, {
     english: "en", german: "de"
-  }, _prefix: true
+  }, prefix: true
 
   delegated_type :entryable, types: self.types, dependent: :destroy
   accepts_nested_attributes_for :entryable, update_only: true
