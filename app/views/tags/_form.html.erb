@@ -1,4 +1,4 @@
-<div id="<%= name %>_tags_list" class="field flex-col">
+<div id="tags_list" class="field flex-col">
   <%= turbo_stream_from "tags" %>
 
   <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b|

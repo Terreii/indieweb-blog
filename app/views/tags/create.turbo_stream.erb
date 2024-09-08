@@ -2,3 +2,9 @@
       dom_id(Tag.new),
       partial: "create",
       locals: {}) %>
+
+<%= turbo_stream.append(
+  "tags_list",
+  partial: "checkbox",
+  locals: { tag: @tag }
+) %>

@@ -26,13 +26,8 @@ class Tag < ApplicationRecord
   end
 
   after_create_commit {
-    broadcast_append_later_to "tags", target: "post_tags_list", partial: "tags/checkbox", locals: {
-      tag: self,
-      model_name: "entry"
-    }
-    broadcast_append_later_to "tags", target: "bookmark_tags_list", partial: "tags/checkbox", locals: {
-      tag: self,
-      model_name: "bookmark"
+    broadcast_append_later_to "tags", target: "tags_list", partial: "tags/checkbox", locals: {
+      tag: self
     }
   }
 end
