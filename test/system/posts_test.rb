@@ -88,10 +88,8 @@ class PostsTest < ApplicationSystemTestCase
 
     click_on "Create Entry"
 
-    assert_no_text title # fix idea from https://nts.strzibny.name/avoid-sleep-rails-system-tests/
     assert_text title
     click_on "Christophers thoughts"
-    assert_no_css "article[lang=de]"
     assert_css "article[lang=de]"
 
     assert_equal "german", Post.last.entry.language

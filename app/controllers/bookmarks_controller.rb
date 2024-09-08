@@ -25,7 +25,8 @@ class BookmarksController < ApplicationController
 
   # POST /bookmarks or /bookmarks.json
   def create
-    @entry = Entry.new(bookmark_params.merge entryable_type: Bookmark.name, published: true)
+    bookmark = Bookmark.new bookmark_params[:entryable_attributes]
+    @entry = Entry.new(bookmark_params.except(:entryable_attributes).merge entryable: bookmark, published: true)
 
     respond_to do |format|
       if @entry.save
