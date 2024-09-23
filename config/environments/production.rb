@@ -74,10 +74,6 @@ Rails.application.configure do
   config.active_job.queue_adapter = :good_job
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "indieweb_blog_production"
-  config.good_job.execution_mode = :async
-  config.good_job.retry_on_unhandled_error = true
-  config.good_job.queues = '*'
-  config.good_job.max_threads = 2 # Change if I need more
 
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
