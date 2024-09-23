@@ -28,6 +28,8 @@ class UserSession < ApplicationRecord
     user_session
   end
 
+  scope :outdated, -> { where("last_online < ?", 31.days.ago) }
+
   after_create_commit { broadcast_prepend_later_to("user_sessions", target: "session_list") }
   after_update_commit {
     # Return if only last_online did change (count == 2 because updated_at will always be updated, too.

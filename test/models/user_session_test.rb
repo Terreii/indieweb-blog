@@ -60,4 +60,10 @@ class UserSessionTest < ActiveSupport::TestCase
     user_session.destroy
     assert_raise(ActiveRecord::RecordNotFound) { UserSession.find(user_session.id) }
   end
+
+  test "should have a scope for old sessions" do
+    sessions = UserSession.outdated
+    assert_equal 1, sessions.count
+    assert_equal user_sessions(:old), sessions.first
+  end
 end
