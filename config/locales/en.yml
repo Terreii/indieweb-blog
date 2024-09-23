@@ -45,6 +45,7 @@ en:
   application:
     access_denied: Please log in to continue
     admin: Admin
+    good_job: Jobs
 
   posts:
     title: Posts

@@ -18,3 +18,11 @@ Rails.application.configure do
     }
   }
 end
+
+ActiveSupport.on_load(:good_job_application_controller) do
+  include Authenticatable
+
+  before_action do
+    raise ActionController::RoutingError.new('Not Found') unless logged_in?
+  end
+end

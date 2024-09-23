@@ -11,6 +11,6 @@ class Admin::NavControllerTest < ActionDispatch::IntegrationTest
     login
     get admin_nav_url
     assert_response :success
-    assert_select "turbo-frame#admin_nav span.nav__item", count: 13
+    assert_select "turbo-frame#admin_nav span.nav__item", count: 14
   end
 end
