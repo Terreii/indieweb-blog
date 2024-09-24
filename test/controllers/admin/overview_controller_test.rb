@@ -101,4 +101,15 @@ class Admin::OverviewControllerTest < ActionDispatch::IntegrationTest
     post admin_search_path, params: { published: "draft" }
     assert_redirected_to login_path
   end
+
+  test "good_job dashboard should require a session" do
+    get good_job_url
+    assert_response :missing
+  end
+
+  test "loading good_job dashboard" do
+    login
+    get good_job_url
+    assert_redirected_to good_job::jobs_url
+  end
 end
