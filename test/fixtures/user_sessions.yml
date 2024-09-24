@@ -12,3 +12,7 @@
 existing:
   name: Firefox ESR
   last_online: <%= 7.days.ago %>
+
+old:
+  name: Firefox Dev
+  last_online: <%= 32.days.ago %>
