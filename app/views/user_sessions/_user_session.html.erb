@@ -4,7 +4,7 @@
 
     <p>
       <strong>Last Online:</strong>
-      <% if user_session == current_session %>
+      <% if defined?(current_session) && user_session == current_session %>
         <%= tag.span t("sessions.current"), title: user_session.last_online.localtime.strftime("%F %T %:z") %>
       <% else %>
         <%= tag.time(
