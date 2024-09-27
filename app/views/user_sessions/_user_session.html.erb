@@ -7,6 +7,9 @@
       <% if defined?(current_session) && user_session == current_session %>
         <%= tag.span t("sessions.current"), title: user_session.last_online.localtime.strftime("%F %T %:z") %>
       <% else %>
+        <%# Only update sessions which aren't the current one. %>
+        <%= turbo_stream_from user_session %>
+
         <%= tag.time(
           datetime: user_session.last_online.iso8601,
           title: user_session.last_online.localtime.strftime("%F %T %:z")

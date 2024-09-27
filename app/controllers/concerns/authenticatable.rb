@@ -8,6 +8,8 @@ module Authenticatable
       logger.debug "current_session accessed"
       return unless cookies.encrypted[:user_session_id]
       @current_session ||= UserSession.find_and_log_current(cookies.encrypted[:user_session_id])
+    rescue
+      return # ActiveJob does not have access to cookies.
     end
 
     def authenticate

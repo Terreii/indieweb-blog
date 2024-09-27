@@ -30,13 +30,13 @@ class UserSession < ApplicationRecord
 
   scope :outdated, -> { where("last_online < ?", 31.days.ago) }
 
-  after_create_commit { broadcast_prepend_later_to("user_sessions", target: "session_list") }
+  after_create_commit { broadcast_prepend_later_to("user_sessions") }
   after_update_commit {
     # Return if only last_online did change (count == 2 because updated_at will always be updated, too.
     # This fixes a race condition when updating the current session. A replace would be send,
     # because of updating last_online.
     unless previous_changes.count == 2 && last_online_previously_changed?
-      broadcast_replace_later_to("user_sessions")
+      broadcast_replace_later
     end
   }
   after_destroy_commit { broadcast_remove_to("user_sessions") }
