@@ -25,6 +25,7 @@
     <% if content_for? :share_url %>
       <meta property="og:url" content="<%= yield(:share_url) %>">
     <% end %>
+    <meta name="fediverse:creator" content="<%= Rails.configuration.x.accounts.dig :mastodon, :user %>">
     <meta name="twitter:creator" content="<%= Rails.configuration.x.accounts.dig :twitter, :user %>">
   </head>
 
