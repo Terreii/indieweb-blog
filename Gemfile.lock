@@ -202,6 +202,10 @@ GEM
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     ostruct (0.6.1)
+    passenger (6.0.23)
+      rack (>= 1.6.13)
+      rackup
+      rake (>= 12.3.3)
     pg (1.5.9)
     prism (1.2.0)
     psych (5.2.0)
@@ -344,6 +348,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   microformats (~> 4.4, >= 4.4.1)
+  passenger (>= 5.0.25)
   pg (~> 1.5)
   puma (~> 6.4)
   rails (~> 7.2.2)
