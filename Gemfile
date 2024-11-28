@@ -13,7 +13,7 @@ gem "sprockets-rails"
 gem "pg", "~> 1.5"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 6.4"
+gem "puma", "~> 6.5"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -31,7 +31,7 @@ gem "jbuilder"
 gem "redis", "~> 5.3"
 
 # Use https://github.com/bensheldon/good_job for jobs
-gem "good_job", "~> 4.4"
+gem "good_job", "~> 4.5"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
