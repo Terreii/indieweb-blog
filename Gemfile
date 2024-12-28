@@ -81,6 +81,9 @@ group :development do
   # Ruby LSP addon for extra Rails editor features. [https://github.com/Shopify/ruby-lsp-rails]
   gem "ruby-lsp-rails"
 
+  # Live-reloading system for Hotwire applications. [https://github.com/hotwired/spark]
+  gem "hotwire-spark"
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
