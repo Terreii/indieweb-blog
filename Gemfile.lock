@@ -98,7 +98,7 @@ GEM
       capistrano (~> 3.1)
     capistrano-passenger (0.2.1)
       capistrano (~> 3.0)
-    capistrano-rails (1.6.3)
+    capistrano-rails (1.7.0)
       capistrano (~> 3.1)
       capistrano-bundler (>= 1.1, < 3)
     capistrano-rbenv (2.2.0)
@@ -138,7 +138,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    good_job (4.6.0)
+    good_job (4.7.0)
       activejob (>= 6.1.0)
       activerecord (>= 6.1.0)
       concurrent-ruby (>= 1.3.1)
@@ -172,7 +172,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.6.4)
-    loofah (2.23.1)
+    loofah (2.24.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
@@ -204,9 +204,9 @@ GEM
       net-protocol
     net-ssh (7.3.0)
     nio4r (2.7.4)
-    nokogiri (1.18.0-arm64-darwin)
+    nokogiri (1.18.1-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.0-x86_64-linux-gnu)
+    nokogiri (1.18.1-x86_64-linux-gnu)
       racc (~> 1.4)
     ostruct (0.6.1)
     passenger (6.0.24)
@@ -347,14 +347,14 @@ DEPENDENCIES
   bootsnap
   capistrano (~> 3.19)
   capistrano-passenger (~> 0.2.0)
-  capistrano-rails (~> 1.6)
+  capistrano-rails (~> 1.7)
   capistrano-rbenv (~> 2.1, >= 2.1.4)
   capybara
   dalli
   debug
   ed25519
   faker (>= 2.19.0)
-  good_job (~> 4.6)
+  good_job (~> 4.7)
   hotwire-spark
   image_processing (~> 1.13)
   importmap-rails
