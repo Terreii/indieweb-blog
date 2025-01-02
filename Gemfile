@@ -31,7 +31,7 @@ gem "jbuilder"
 gem "redis", "~> 5.3"
 
 # Use https://github.com/bensheldon/good_job for jobs
-gem "good_job", "~> 4.6"
+gem "good_job", "~> 4.7"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -52,7 +52,7 @@ gem "bootsnap", require: false
 gem "image_processing", "~> 1.13"
 
 gem "capistrano", "~> 3.19"
-gem "capistrano-rails", "~> 1.6"
+gem "capistrano-rails", "~> 1.7"
 gem "capistrano-passenger", "~> 0.2.0"
 gem "capistrano-rbenv", "~> 2.1", ">= 2.1.4"
 gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
