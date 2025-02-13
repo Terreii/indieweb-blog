@@ -31,7 +31,7 @@ gem "jbuilder"
 gem "redis", "~> 5.3"
 
 # Use https://github.com/bensheldon/good_job for jobs
-gem "good_job", "~> 4.8"
+gem "good_job", "~> 4.9"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -49,7 +49,7 @@ gem "bootsnap", require: false
 # gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.13"
+gem "image_processing", "~> 1.14"
 
 gem "capistrano", "~> 3.19"
 gem "capistrano-rails", "~> 1.7"
