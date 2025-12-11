@@ -10,7 +10,7 @@ gem "rails", "~> 7.2.2"
 gem "sprockets-rails"
 
 # Use pg as the database for Active Record
-gem "pg", "~> 1.5"
+gem "pg", "~> 1.6"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.6"
@@ -31,7 +31,7 @@ gem "jbuilder"
 gem "redis", "~> 5.4"
 
 # Use https://github.com/bensheldon/good_job for jobs
-gem "good_job", "~> 4.10"
+gem "good_job", "~> 4.13"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
